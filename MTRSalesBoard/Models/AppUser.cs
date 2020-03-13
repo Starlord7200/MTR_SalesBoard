@@ -12,14 +12,19 @@ namespace MTRSalesBoard.Models
         public string Name { get; set; }
         public string Email { get; set; }
 
-        List<Sale> Sales { get { return Sales; } }     
+        public List<Sale> Sales { get { return sales; } }     
         
         public void AddSale(Sale s)
         {
-            sales.Add(s);
+            Sales.Add(s);
         }
 
-        public decimal CalcSales()
+        public int GetSalesCount()
+        {
+            return Sales.Count();
+        }
+
+        public decimal CalcUserSales()
         {
             decimal amt = 0; 
             foreach (Sale s in sales)

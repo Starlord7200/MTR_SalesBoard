@@ -12,12 +12,10 @@ namespace MTRSalesBoard.Controllers
 {
     public class HomeController : Controller
     {
-        private Repository Repository;
-        private readonly ILogger<HomeController> _logger;
+        IRepository Repository;
 
-        public HomeController(ILogger<HomeController> logger, Repository r)
+        public HomeController(IRepository r)
         {
-            _logger = logger;
             Repository = r;
         }
 
@@ -39,6 +37,7 @@ namespace MTRSalesBoard.Controllers
         {
             AppUser user = Repository.UsersList.Find(u2 => u2.Name == name);
             Sale s = new Sale() { SaleAmount = salePrice };
+            Repository.AddSale(s);
             user.AddSale(s);
 
             return View();

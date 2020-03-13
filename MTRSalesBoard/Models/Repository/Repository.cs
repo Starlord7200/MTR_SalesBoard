@@ -27,10 +27,20 @@ namespace MTRSalesBoard.Models.Repository
             return UsersList.Count();
         }
 
-        public int GetSalesount()
+        public int GetSalesCount()
         {
-            return UsersList.Count();
+            return SalesList.Count();
         }
 
+        public decimal CalcTotalSales()
+        {
+            decimal amt = 0;
+            foreach (Sale s in SalesList)
+            {
+                amt += s.SaleAmount;
+            }
+
+            return amt;
+        }
     }
 }
