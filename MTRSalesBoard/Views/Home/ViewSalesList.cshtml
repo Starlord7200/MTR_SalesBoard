@@ -1,0 +1,13 @@
+﻿@model AppUser
+
+<h1>Sales for @Model.Name</h1>
+
+<div>
+    @foreach (Sale s in Model.Sales)
+    {
+        <div>
+            Sale Date: @s.saleDate <br />
+            Sale Amount: @s.SaleAmount <br />
+        </div>
+    }
+</div>

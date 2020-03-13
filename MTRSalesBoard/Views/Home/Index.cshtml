@@ -1,8 +1,14 @@
-﻿@{
+﻿@model List<AppUser>
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    @foreach(AppUser u in Model)
+    {
+        <div>
+            Name: @u.Name <br />
+            Total Sales To Date: @u.CalcUserSales()
+        </div>
+    }
 </div>

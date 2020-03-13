@@ -9,6 +9,7 @@ namespace MTRSalesBoard.Models.Repository
     {
         List<AppUser> UsersList { get; }
         void AddUser(AppUser u);
+        AppUser FindAppUserbyName(string Name);
         void AddSale(Sale s);
         int GetSalesCount();
         decimal CalcTotalSales();

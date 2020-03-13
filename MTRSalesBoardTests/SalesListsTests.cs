@@ -16,7 +16,7 @@ namespace MTRSalesBoardTests
             var controller = new HomeController(repo);
 
             //Act
-            Sale s = new Sale() { SaleAmount = 1000 };
+            Sale s = new Sale() { SaleAmount = 1000, saleDate = DateTime.Today };
             repo.AddSale(s);
 
             //Assert
@@ -32,8 +32,8 @@ namespace MTRSalesBoardTests
             var controller = new HomeController(repo);
 
             //Act
-            Sale s = new Sale() { SaleAmount = 1000 };
-            Sale s2 = new Sale() { SaleAmount = 2000 };
+            Sale s = new Sale() { SaleAmount = 1000, saleDate = DateTime.Today };
+            Sale s2 = new Sale() { SaleAmount = 2000, saleDate = DateTime.Today };
             repo.AddSale(s);
             repo.AddSale(s2);
 

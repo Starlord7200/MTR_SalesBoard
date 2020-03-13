@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MTRSalesBoard.Models;
+using MTRSalesBoard.Models.Repository;
 
 namespace MTRSalesBoard
 {
@@ -26,8 +27,10 @@ namespace MTRSalesBoard
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            //services.AddTransient<IRepository, Repository>();
+
             //services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>()
-                                                         //.AddDefaultTokenProviders();
+            //.AddDefaultTokenProviders();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -17,6 +17,12 @@ namespace MTRSalesBoard.Models.Repository
             UsersList.Add(u);
         }
 
+        public AppUser FindAppUserbyName(string Name)
+        {
+            AppUser u = UsersList.Find(u2 => u2.Name == Name);
+            return u;
+        }
+
         public void AddSale(Sale s)
         {
             SalesList.Add(s);

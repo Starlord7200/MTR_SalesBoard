@@ -9,5 +9,6 @@ namespace MTRSalesBoard.Models
     {
         //public int SaleID;
         public decimal SaleAmount { get; set; }
+        public DateTime saleDate { get; set; } 
     }
 }

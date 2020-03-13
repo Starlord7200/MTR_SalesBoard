@@ -5,34 +5,46 @@ using System.Threading.Tasks;
 
 namespace MTRSalesBoard.Models.Repository
 {
-    public class Repository
+    public static class Repository
     {
-        private List<AppUser> usersList = new List<AppUser>();
-        private List<Sale> salesList = new List<Sale>();
-        public List<AppUser> UsersList { get { return usersList; } }
-        public List<Sale> SalesList { get { return salesList; } }
+        private static List<AppUser> usersList = new List<AppUser>();
+        private static List<Sale> salesList = new List<Sale>();
 
-        public void AddUser(AppUser u)
+        static Repository()
+        {
+            AddTestData();
+        }
+
+        public static List<AppUser> UsersList { get { return usersList; } }
+        public static List<Sale> SalesList { get { return salesList; } }
+
+        public static void AddUser(AppUser u)
         {
             UsersList.Add(u);
         }
 
-        public void AddSale(Sale s)
+        public static AppUser FindAppUserbyName(string Name)
+        {
+            AppUser u = UsersList.Find(u2 => u2.Name == Name);
+            return u;
+        }
+
+        public static void AddSale(Sale s)
         {
             SalesList.Add(s);
         }
 
-        public int GetUserCount()
+        public static int GetUserCount()
         {
             return UsersList.Count();
         }
 
-        public int GetSalesCount()
+        public static int GetSalesCount()
         {
             return SalesList.Count();
         }
 
-        public decimal CalcTotalSales()
+        public static decimal CalcTotalSales()
         {
             decimal amt = 0;
             foreach (Sale s in SalesList)
@@ -41,6 +53,39 @@ namespace MTRSalesBoard.Models.Repository
             }
 
             return amt;
+        }
+
+        static void AddTestData()
+        {
+            AppUser u = new AppUser()
+            {
+                Name = "James",
+                Email = "James@example.com",
+            };
+            Repository.AddUser(u);
+
+            AppUser u2 = new AppUser()
+            {
+                Name = "test",
+                Email = "@example.com",
+            };
+            Repository.AddUser(u2);
+
+            Sale s = new Sale()
+            {
+                SaleAmount = 1000,
+                saleDate = DateTime.Today
+            };
+            u.AddSale(s);
+            Repository.AddSale(s);
+
+            Sale s2 = new Sale()
+            {
+                SaleAmount = 3000,
+                saleDate = DateTime.Today
+            };
+            u2.AddSale(s2);
+            Repository.AddSale(s2);
         }
     }
 }
