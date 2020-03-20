@@ -3,12 +3,22 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    @foreach(AppUser u in Model)
-    {
-        <div>
-            Name: @u.Name <br />
-            Total Sales To Date: @u.CalcUserSales()
-        </div>
-    }
-</div>
+    <div class="text-center">
+        <table class="table table-striped" style="width:100%">
+            <tr>
+                <th>Name</th>
+                <th>Sales Today</th>
+                <th>Sales Amt Last Week</th>
+                <th>Total Sales</th>
+            </tr>
+            @foreach (AppUser u in Model)
+            {
+                <tr>
+                    <td>@u.Name</td>
+                    <td>0</td>
+                    <td>@u.CalcLastWeekUserSales()</td>
+                    <td>@u.CalcUserSales()</td>
+                </tr>
+            }
+        </table>
+    </div>

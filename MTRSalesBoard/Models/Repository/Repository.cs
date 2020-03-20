@@ -74,7 +74,7 @@ namespace MTRSalesBoard.Models.Repository
             Sale s = new Sale()
             {
                 SaleAmount = 1000,
-                saleDate = DateTime.Today
+                saleDate = DateTime.Parse("03/13/2020")
             };
             u.AddSale(s);
             Repository.AddSale(s);
@@ -82,7 +82,7 @@ namespace MTRSalesBoard.Models.Repository
             Sale s2 = new Sale()
             {
                 SaleAmount = 3000,
-                saleDate = DateTime.Today
+                saleDate = DateTime.Parse("03/13/2020")
             };
             u2.AddSale(s2);
             Repository.AddSale(s2);
