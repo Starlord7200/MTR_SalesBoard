@@ -8,18 +8,24 @@
             <tr>
                 <th>Name</th>
                 <th>Sales Today</th>
+                <th>Month To Date</th>
                 <th>Sales Amt Last Week</th>
                 <th>Sales Amt 2 Week</th>
-                <th>Total Sales</th>
+                <th>Sales Amt 3 Week</th>
+                <th>Sales Amt 4 Week</th>
+                <th>Total Sales Year To Date</th>
             </tr>
             @foreach (AppUser u in Model)
             {
                 <tr>
                     <td>@u.Name</td>
                     <td>0</td>
+                    <td>@u.CalcMonthToDateUserSales()</td>
                     <td>@u.CalcLastWeekUserSales()</td>
                     <td>@u.CalcLastTwoWeekUserSales()</td>
-                    <td>@u.CalcUserSales()</td>
+                    <td>@u.CalcLastThreeWeekUserSales()</td>
+                    <td>@u.CalcLastFourWeekUserSales()</td>
+                    <td>@u.CalcTotalUserSales()</td>
                 </tr>
             }
         </table>
