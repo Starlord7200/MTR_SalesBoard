@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using MTRSalesBoard.Models;
 using MTRSalesBoard.Models.Repository;
 
@@ -50,7 +47,14 @@ namespace MTRSalesBoard.Controllers
         public IActionResult ViewSales(string name)
         {
             AppUser user = Repository.FindAppUserbyName(name);
-            return View("ViewSalesList",user);
+            if(user == null)
+            {
+                return ViewSales();
+            }
+            else
+            {
+                return View("ViewSalesList", user);
+            }           
         }
         public IActionResult ViewSalesList(AppUser u) => View(u);
 

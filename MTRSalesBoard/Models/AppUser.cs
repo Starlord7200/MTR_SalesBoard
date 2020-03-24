@@ -41,6 +41,23 @@ namespace MTRSalesBoard.Models
             return amt;
         }
 
+        public decimal CalcLastTwoWeekUserSales()
+        {
+            DayOfWeek desiredSaturDay = DayOfWeek.Saturday;
+            DayOfWeek desiredSunDay = DayOfWeek.Sunday;
+            int offSetAmtFriday = (int)desiredSaturDay - (int)DateTime.Now.DayOfWeek;
+            int offSetAmtSunday = (int)desiredSunDay - (int)DateTime.Now.DayOfWeek;
+            var sundayOfLastWeek = DateTime.Now.AddDays(-14 + offSetAmtSunday);
+            var SaturdayOfLastWeek = DateTime.Now.AddDays(-14 + offSetAmtFriday);
+            decimal amt = 0;
+            foreach (Sale s in sales.Where(s => s.saleDate.Day > sundayOfLastWeek.Day && s.saleDate.Day < SaturdayOfLastWeek.Day))
+            {
+                amt += s.SaleAmount;
+            }
+
+            return amt;
+        }
+
         public decimal CalcUserSales()
         {
             decimal amt = 0; 
