@@ -137,7 +137,7 @@ namespace MTRSalesBoard.Models.Repository
 
             Sale s9 = new Sale()
             {
-                SaleAmount = 10,
+                SaleAmount = 15,
                 saleDate = DateTime.Now
             };
             u.AddSale(s9);

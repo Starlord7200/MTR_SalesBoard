@@ -7,25 +7,25 @@
         <table class="table table-striped" style="width:100%">
             <tr>
                 <th>Name</th>
-                <th>Sales Today</th>
-                <th>Sales Amt Last Week</th>
-                <th>Sales Amt 2 Week</th>
-                <th>Sales Amt 3 Week</th>
-                <th>Sales Amt 4 Week</th>
+                <th>Today</th>
+                <th>Last Week</th>
+                <th>Last Two Weeks</th>
+                <th>Last Three Weeks</th>
+                <th>Last Four Weeks</th>
                 <th>Month To Date</th>
-                <th>Total Sales Year To Date</th>
+                <th>Year To Date</th>
             </tr>
             @foreach (AppUser u in Model)
             {
                 <tr>
                     <td class="font-weight-bold">@u.Name</td>
-                    <td>@u.CalcTodaySalesAmt()</td>
-                    <td>@u.CalcLastWeekUserSales()</td>
-                    <td>@u.CalcLastTwoWeekUserSales()</td>
-                    <td>@u.CalcLastThreeWeekUserSales()</td>
-                    <td>@u.CalcLastFourWeekUserSales()</td>
-                    <td>@u.CalcMonthToDateUserSales()</td>
-                    <td>@u.CalcTotalUserSales()</td>
+                    <td>$@u.CalcTodaySalesAmt()</td>
+                    <td>$@u.CalcLastWeekUserSales()</td>
+                    <td>$@u.CalcLastTwoWeekUserSales()</td>
+                    <td>$@u.CalcLastThreeWeekUserSales()</td>
+                    <td>$@u.CalcLastFourWeekUserSales()</td>
+                    <td>$@u.CalcMonthToDateUserSales()</td>
+                    <td>$@u.CalcYearToDateUserSales()</td>
                 </tr>
             }
         </table>
