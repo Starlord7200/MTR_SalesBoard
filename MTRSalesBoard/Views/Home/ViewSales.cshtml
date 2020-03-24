@@ -1,6 +1,12 @@
-﻿
+﻿@{
+    ViewData["Title"] = "Sales History";
+}
+<h1>@ViewData["Title"]</h1>
+
 <form method="post">
-    <label for = "name">Name</label>
-    <input name="name"/>
-    <button type="submit">Submit</button>
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input class="form-control col-md-6" name="name" />
+    </div>
+    <button class="btn btn-primary" type="submit">Submit</button>
 </form>

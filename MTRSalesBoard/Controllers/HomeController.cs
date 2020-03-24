@@ -37,7 +37,8 @@ namespace MTRSalesBoard.Controllers
                 Repository.AddSale(s);
                 user.AddSale(s);
             }
-            return View();
+            List<AppUser> users = Repository.UsersList;
+            return View("Index", users);
         }
 
         [HttpGet]

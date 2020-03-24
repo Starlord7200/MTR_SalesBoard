@@ -1,22 +1,22 @@
 ﻿@{
-    ViewData["Title"] = "SalesBoard";
+    ViewData["Title"] = "Enter Your Sale";
 }
 <h1>@ViewData["Title"]</h1>
 
-<div class="text-center">
+<div class="container justify-content-md-center">
     <form method="post">
         <div class="form-group">
             <div class="form-group">
                 <label for="name">Name</label>
-                <input name="name" />
+                <input class="form-control col-md-4" name="name" />
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input name="email" />
+                <input class="form-control col-md-4" name="email" />
             </div>
             <div class="form-group">
                 <label>Sale</label>
-                <input name="salePrice" />
+                <input class="form-control col-md-4" name="salePrice" />
             </div>
             <button class="btn btn-primary" type="submit">Submit</button>
         </div>
