@@ -86,6 +86,22 @@ namespace MTRSalesBoard.Models.Repository
             };
             u2.AddSale(s2);
             Repository.AddSale(s2);
+
+            Sale s3 = new Sale()
+            {
+                SaleAmount = 1000,
+                saleDate = DateTime.Parse("03/16/2020")
+            };
+            u.AddSale(s3);
+            Repository.AddSale(s3);
+
+            Sale s4 = new Sale()
+            {
+                SaleAmount = 500,
+                saleDate = DateTime.Parse("03/20/2020")
+            };
+            u2.AddSale(s4);
+            Repository.AddSale(s4);
         }
     }
 }
