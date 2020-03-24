@@ -24,6 +24,20 @@ namespace MTRSalesBoard.Models
             return Sales.Count();
         }
 
+        public decimal CalcTodaySalesAmt()
+        {
+            DateTime today = DateTime.Now;
+            decimal amt = 0;
+            foreach (Sale s in sales.Where(s => s.saleDate.Day == today.Day && 
+                                                s.saleDate.Month == today.Month && 
+                                                s.saleDate.Year == today.Year))
+            {
+                amt += s.SaleAmount;
+            }
+
+            return amt;
+        }
+
         public decimal CalcLastWeekUserSales()
         {
             DayOfWeek desiredSaturDay = DayOfWeek.Saturday;

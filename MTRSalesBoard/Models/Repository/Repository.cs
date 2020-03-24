@@ -60,14 +60,14 @@ namespace MTRSalesBoard.Models.Repository
             AppUser u = new AppUser()
             {
                 Name = "James",
-                Email = "James@example.com",
+                Email = "james@example.com"
             };
             Repository.AddUser(u);
 
             AppUser u2 = new AppUser()
             {
                 Name = "test",
-                Email = "@example.com",
+                Email = "test@example.com"
             };
             Repository.AddUser(u2);
 
@@ -118,6 +118,30 @@ namespace MTRSalesBoard.Models.Repository
             };
             u2.AddSale(s6);
             Repository.AddSale(s6);
+
+            Sale s7 = new Sale()
+            {
+                SaleAmount = 50,
+                saleDate = DateTime.Parse("02/24/2020")
+            };
+            u.AddSale(s7);
+            Repository.AddSale(s7);
+
+            Sale s8 = new Sale()
+            {
+                SaleAmount = 50,
+                saleDate = DateTime.Parse("02/27/2020")
+            };
+            u2.AddSale(s8);
+            Repository.AddSale(s8);
+
+            Sale s9 = new Sale()
+            {
+                SaleAmount = 10,
+                saleDate = DateTime.Now
+            };
+            u.AddSale(s9);
+            Repository.AddSale(s9);
         }
     }
 }

@@ -18,8 +18,8 @@
             @foreach (AppUser u in Model)
             {
                 <tr>
-                    <td>@u.Name</td>
-                    <td>0</td>
+                    <td class="font-weight-bold">@u.Name</td>
+                    <td>@u.CalcTodaySalesAmt()</td>
                     <td>@u.CalcLastWeekUserSales()</td>
                     <td>@u.CalcLastTwoWeekUserSales()</td>
                     <td>@u.CalcLastThreeWeekUserSales()</td>
