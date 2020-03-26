@@ -19,8 +19,8 @@
             {
                 <tr>
                     <td class="font-weight-bold">@u.Name</td>
-                    <td>$@u.CalcTodaySalesAmt()</td>
-                    <td>$@u.CalcLastWeekUserSales()</td>
+                    <td>$@u.CalcTodaySalesAmt().ToString("#,##0.###")</td>
+                    <td>$@u.CalcLastWeekUserSales().ToString("#,##0.###")</td>
                     <td>$@u.CalcLastTwoWeekUserSales()</td>
                     <td>$@u.CalcLastThreeWeekUserSales()</td>
                     <td>$@u.CalcLastFourWeekUserSales()</td>
