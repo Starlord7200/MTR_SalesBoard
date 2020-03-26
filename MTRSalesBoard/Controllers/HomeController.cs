@@ -31,17 +31,12 @@ namespace MTRSalesBoard.Controllers
             
             if(user == null)
             {
-                AppUser u = new AppUser() { Name = name, Email = email };
-                Sale sa = new Sale() { SaleAmount = salePrice, saleDate = DateTime.Today };
-                Repository.AddUser(u);
-                Repository.AddSale(sa);
-                u.AddSale(sa);
+                return View("SalesEntry");
             }
             else
             {
-                Sale s = new Sale() { SaleAmount = salePrice, saleDate = DateTime.Today };
-                Repository.AddSale(s);
-                user.AddSale(s);
+                Sale s = new Sale() { SaleAmount = salePrice, SaleDate = DateTime.Today };
+                Repository.AddSale(s, user);
             }
             List<AppUser> users = Repository.Users;
             return View("Index", users);

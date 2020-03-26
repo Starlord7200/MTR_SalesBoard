@@ -29,6 +29,8 @@ namespace MTRSalesBoard.Models.Repository
             Sales.Add(s);
         }
 
+        public void AddSale(Sale s, AppUser u) { }
+
         public int GetUserCount()
         {
             return Users.Count();

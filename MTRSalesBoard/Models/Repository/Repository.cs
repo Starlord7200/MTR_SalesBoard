@@ -45,9 +45,13 @@ namespace MTRSalesBoard.Models.Repository
             return u;
         }
 
-        public void AddSale(Sale s)
+        public void AddSale(Sale s, AppUser User)
         {
-            context.Sales.Add(s);
+            context.Sales.Add(s);         
+            context.SaveChanges();
+
+            User.Sales.Add(s);
+            context.Update(User);
             context.SaveChanges();
         }
 
@@ -63,7 +67,7 @@ namespace MTRSalesBoard.Models.Repository
 
         public decimal CalcTotalSales()
         {
-            decimal amt = 0;
+            decimal amt = 0m;
             foreach (Sale s in Sales)
             {
                 amt += s.SaleAmount;

@@ -37,8 +37,8 @@ namespace MTRSalesBoardTests
 
             //Act
             AppUser user = new AppUser() { Name = "James", Email = "example@example.com" };
-            Sale s = new Sale() { SaleAmount = 1000, saleDate = DateTime.Today };
-            Sale s2 = new Sale() { SaleAmount = 3000, saleDate = DateTime.Today };
+            Sale s = new Sale() { SaleAmount = 1000, SaleDate = DateTime.Today };
+            Sale s2 = new Sale() { SaleAmount = 3000, SaleDate = DateTime.Today };
 
             repo.AddUser(user);
             user.AddSale(s);

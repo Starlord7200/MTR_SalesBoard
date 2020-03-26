@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace MTRSalesBoard.Models
         [Key]
         public int SaleID { get; set; }
         public decimal SaleAmount { get; set; }
-        public DateTime saleDate { get; set; } 
-        public AppUser name { get; set; }
+        public DateTime SaleDate { get; set; } 
+        public AppUser Name { get; set; }
     }
 }

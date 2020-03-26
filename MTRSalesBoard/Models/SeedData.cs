@@ -31,64 +31,64 @@ namespace MTRSalesBoard.Models
 
                     Sale s = new Sale()
                     {
-                        SaleAmount = 1000,
-                        saleDate = DateTime.Parse("03/13/2020")
+                        SaleAmount = 1000m,
+                        SaleDate = DateTime.Parse("03/13/2020")
                     };
                     u.AddSale(s);
                     context.Sales.Add(s);
 
                     Sale s2 = new Sale()
                     {
-                        SaleAmount = 3000,
-                        saleDate = DateTime.Parse("03/13/2020")
+                        SaleAmount = 3000m,
+                        SaleDate = DateTime.Parse("03/13/2020")
                     };
                     u2.AddSale(s2);
                     context.Sales.Add(s2);
 
                     Sale s3 = new Sale()
                     {
-                        SaleAmount = 1000,
-                        saleDate = DateTime.Parse("03/16/2020")
+                        SaleAmount = 1000m,
+                        SaleDate = DateTime.Parse("03/16/2020")
                     };
                     u.AddSale(s3);
                     context.Sales.Add(s3);
 
                     Sale s4 = new Sale()
                     {
-                        SaleAmount = 500,
-                        saleDate = DateTime.Parse("03/20/2020")
+                        SaleAmount = 500m,
+                        SaleDate = DateTime.Parse("03/20/2020")
                     };
                     u2.AddSale(s4);
                     context.Sales.Add(s4);
 
                     Sale s5 = new Sale()
                     {
-                        SaleAmount = 100,
-                        saleDate = DateTime.Parse("03/4/2020")
+                        SaleAmount = 100m,
+                        SaleDate = DateTime.Parse("03/4/2020")
                     };
                     u.AddSale(s5);
                     context.Sales.Add(s5);
 
                     Sale s6 = new Sale()
                     {
-                        SaleAmount = 200,
-                        saleDate = DateTime.Parse("03/5/2020")
+                        SaleAmount = 200m,
+                        SaleDate = DateTime.Parse("03/5/2020")
                     };
                     u2.AddSale(s6);
                     context.Sales.Add(s6);
 
                     Sale s7 = new Sale()
                     {
-                        SaleAmount = 50,
-                        saleDate = DateTime.Parse("02/24/2020")
+                        SaleAmount = 50m,
+                        SaleDate = DateTime.Parse("02/24/2020")
                     };
                     u.AddSale(s7);
                     context.Sales.Add(s7);
 
                     Sale s8 = new Sale()
                     {
-                        SaleAmount = 50,
-                        saleDate = DateTime.Parse("02/27/2020")
+                        SaleAmount = 50m,
+                        SaleDate = DateTime.Parse("02/27/2020")
                     };
                     u2.AddSale(s8);
                     context.Sales.Add(s8);
@@ -96,7 +96,7 @@ namespace MTRSalesBoard.Models
                     Sale s9 = new Sale()
                     {
                         SaleAmount = 15.13m,
-                        saleDate = DateTime.Now
+                        SaleDate = DateTime.Now
                     };
                     u.AddSale(s9);
                     context.Sales.Add(s9);
