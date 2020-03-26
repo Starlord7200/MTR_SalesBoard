@@ -7,7 +7,8 @@ namespace MTRSalesBoard.Models.Repository
 {
     public interface IRepository
     {
-        List<AppUser> UsersList { get; }
+        List<AppUser> Users { get; }
+        List<Sale> Sales { get; }
         void AddUser(AppUser u);
         AppUser FindAppUserbyName(string Name);
         void AddSale(Sale s);

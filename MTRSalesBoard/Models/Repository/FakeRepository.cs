@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MTRSalesBoard.Models;
 
 namespace MTRSalesBoard.Models.Repository
 {
@@ -9,39 +10,39 @@ namespace MTRSalesBoard.Models.Repository
     {
         private List<AppUser> usersList = new List<AppUser>();
         private List<Sale> salesList = new List<Sale>();
-        public List<AppUser> UsersList { get { return usersList; } }
-        public List<Sale> SalesList { get { return salesList; } }
+        public List<AppUser> Users { get { return usersList; } }
+        public List<Sale> Sales { get { return salesList; } }
 
         public void AddUser(AppUser u)
         {
-            UsersList.Add(u);
+            Users.Add(u);
         }
 
         public AppUser FindAppUserbyName(string Name)
         {
-            AppUser u = UsersList.Find(u2 => u2.Name == Name);
+            AppUser u = Users.Find(u2 => u2.Name == Name);
             return u;
         }
 
         public void AddSale(Sale s)
         {
-            SalesList.Add(s);
+            Sales.Add(s);
         }
 
         public int GetUserCount()
         {
-            return UsersList.Count();
+            return Users.Count();
         }
 
         public int GetSalesCount()
         {
-            return SalesList.Count();
+            return Sales.Count();
         }
 
         public decimal CalcTotalSales()
         {
             decimal amt = 0;
-            foreach (Sale s in SalesList)
+            foreach (Sale s in Sales)
             {
                 amt += s.SaleAmount;
             }

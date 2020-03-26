@@ -7,8 +7,9 @@ namespace MTRSalesBoard.Models
 {
     public class Sale
     {
-        //public int SaleID;
+        public int SaleID;
         public decimal SaleAmount { get; set; }
         public DateTime saleDate { get; set; } 
+        public AppUser name { get; set; }
     }
 }

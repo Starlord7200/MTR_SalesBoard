@@ -21,7 +21,7 @@ namespace MTRSalesBoardTests
 
             //Assert
             Assert.Equal(1, repo.GetSalesCount());
-            Assert.Equal(1000, repo.SalesList[repo.SalesList.Count - 1].SaleAmount);
+            Assert.Equal(1000, repo.Sales[repo.Sales.Count - 1].SaleAmount);
         }
 
         [Fact]
@@ -39,8 +39,8 @@ namespace MTRSalesBoardTests
 
             //Assert
             Assert.Equal(2, repo.GetSalesCount());
-            Assert.Equal(1000, repo.SalesList[0].SaleAmount);
-            Assert.Equal(2000, repo.SalesList[repo.SalesList.Count - 1].SaleAmount);
+            Assert.Equal(1000, repo.Sales[0].SaleAmount);
+            Assert.Equal(2000, repo.Sales[repo.Sales.Count - 1].SaleAmount);
             Assert.Equal(3000, repo.CalcTotalSales());
         }
     }

@@ -8,7 +8,7 @@ namespace MTRSalesBoard.Models
     public class AppUser
     {
         private List<Sale> sales = new List<Sale>();
-
+        public int UserID { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
 

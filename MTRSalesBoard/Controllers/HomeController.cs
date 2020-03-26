@@ -9,9 +9,15 @@ namespace MTRSalesBoard.Controllers
 {
     public class HomeController : Controller
     {
+        IRepository Repository;
+        public HomeController(IRepository r)
+        {
+            Repository = r;
+        }
+
         public IActionResult Index()
         {
-            List<AppUser> users = Repository.UsersList;
+            List<AppUser> users = Repository.Users;
             return View(users);
         }
 
@@ -37,7 +43,7 @@ namespace MTRSalesBoard.Controllers
                 Repository.AddSale(s);
                 user.AddSale(s);
             }
-            List<AppUser> users = Repository.UsersList;
+            List<AppUser> users = Repository.Users;
             return View("Index", users);
         }
 
