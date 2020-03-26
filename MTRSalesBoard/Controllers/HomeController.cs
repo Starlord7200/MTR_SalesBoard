@@ -25,7 +25,7 @@ namespace MTRSalesBoard.Controllers
         public IActionResult SalesEntry() => View();
 
         [HttpPost]
-        public IActionResult SalesEntry(string name, string email, decimal salePrice)
+        public IActionResult SalesEntry(string name, decimal salePrice)
         {
             AppUser user = Repository.FindAppUserbyName(name);
             
