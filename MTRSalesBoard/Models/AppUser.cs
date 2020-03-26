@@ -48,10 +48,12 @@ namespace MTRSalesBoard.Models
             int offSetAmtFriday = (int)desiredSaturDay - (int)DateTime.Now.DayOfWeek;
             int offSetAmtSunday = (int)desiredSunDay - (int)DateTime.Now.DayOfWeek;
             var sundayOfLastWeek = DateTime.Now.AddDays(-7 + offSetAmtSunday);
-            var SaturdayOfLastWeek = DateTime.Now.AddDays(-7 + offSetAmtFriday);
+            var saturdayOfLastWeek = DateTime.Now.AddDays(-7 + offSetAmtFriday);
             decimal amt = 0m;
             foreach (Sale s in sales.Where(s => s.SaleDate.Day > sundayOfLastWeek.Day && 
-                                                s.SaleDate.Day < SaturdayOfLastWeek.Day))
+                                                s.SaleDate.Day < saturdayOfLastWeek.Day &&
+                                                s.SaleDate.Month == sundayOfLastWeek.Month &&
+                                                s.SaleDate.Month == saturdayOfLastWeek.Month))
             {
                 amt += s.SaleAmount;
             }
@@ -66,10 +68,12 @@ namespace MTRSalesBoard.Models
             int offSetAmtFriday = (int)desiredSaturDay - (int)DateTime.Now.DayOfWeek;
             int offSetAmtSunday = (int)desiredSunDay - (int)DateTime.Now.DayOfWeek;
             var sundayOfLastWeek = DateTime.Now.AddDays(-14 + offSetAmtSunday);
-            var SaturdayOfLastWeek = DateTime.Now.AddDays(-14 + offSetAmtFriday);
+            var saturdayOfLastWeek = DateTime.Now.AddDays(-14 + offSetAmtFriday);
             decimal amt = 0m;
             foreach (Sale s in sales.Where(s => s.SaleDate.Day > sundayOfLastWeek.Day && 
-                                                s.SaleDate.Day < SaturdayOfLastWeek.Day))
+                                                s.SaleDate.Day < saturdayOfLastWeek.Day &&
+                                                s.SaleDate.Month == sundayOfLastWeek.Month &&
+                                                s.SaleDate.Month == saturdayOfLastWeek.Month))
             {
                 amt += s.SaleAmount;
             }
@@ -84,10 +88,12 @@ namespace MTRSalesBoard.Models
             int offSetAmtFriday = (int)desiredSaturDay - (int)DateTime.Now.DayOfWeek;
             int offSetAmtSunday = (int)desiredSunDay - (int)DateTime.Now.DayOfWeek;
             var sundayOfLastWeek = DateTime.Now.AddDays(-21 + offSetAmtSunday);
-            var SaturdayOfLastWeek = DateTime.Now.AddDays(-21 + offSetAmtFriday);
+            var saturdayOfLastWeek = DateTime.Now.AddDays(-21 + offSetAmtFriday);
             decimal amt = 0m;
             foreach (Sale s in sales.Where(s => s.SaleDate.Day > sundayOfLastWeek.Day && 
-                                                s.SaleDate.Day < SaturdayOfLastWeek.Day))
+                                                s.SaleDate.Day < saturdayOfLastWeek.Day &&
+                                                s.SaleDate.Month == sundayOfLastWeek.Month &&
+                                                s.SaleDate.Month == saturdayOfLastWeek.Month))
             {
                 amt += s.SaleAmount;
             }
@@ -102,10 +108,12 @@ namespace MTRSalesBoard.Models
             int offSetAmtFriday = (int)desiredSaturDay - (int)DateTime.Now.DayOfWeek;
             int offSetAmtSunday = (int)desiredSunDay - (int)DateTime.Now.DayOfWeek;
             var sundayOfLastWeek = DateTime.Now.AddDays(-28 + offSetAmtSunday);
-            var SaturdayOfLastWeek = DateTime.Now.AddDays(-28 + offSetAmtFriday);
+            var saturdayOfLastWeek = DateTime.Now.AddDays(-28 + offSetAmtFriday);
             decimal amt = 0m;
             foreach (Sale s in sales.Where(s => s.SaleDate.Day > sundayOfLastWeek.Day && 
-                                                s.SaleDate.Day < SaturdayOfLastWeek.Day))
+                                                s.SaleDate.Day < saturdayOfLastWeek.Day &&
+                                                s.SaleDate.Month == sundayOfLastWeek.Month &&
+                                                s.SaleDate.Month == saturdayOfLastWeek.Month))
             {
                 amt += s.SaleAmount;
             }

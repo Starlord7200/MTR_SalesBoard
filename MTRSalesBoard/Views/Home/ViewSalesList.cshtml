@@ -11,7 +11,7 @@
         @foreach (Sale s in Model.Sales)
         {
             <tr>
-                <td>@s.SaleAmount.ToString("n")</td>
+                <td>@s.SaleAmount.ToString("c")</td>
                 <td>@s.SaleDate.ToString("MM/dd/yyyy")</td>
             </tr>
         }
