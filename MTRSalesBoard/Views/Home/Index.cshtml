@@ -19,13 +19,13 @@
             {
                 <tr>
                     <td class="font-weight-bold">@u.Name</td>
-                    <td>$@u.CalcTodaySalesAmt().ToString("#,##0.###")</td>
-                    <td>$@u.CalcLastWeekUserSales().ToString("#,##0.###")</td>
-                    <td>$@u.CalcLastTwoWeekUserSales()</td>
-                    <td>$@u.CalcLastThreeWeekUserSales()</td>
-                    <td>$@u.CalcLastFourWeekUserSales()</td>
-                    <td>$@u.CalcMonthToDateUserSales()</td>
-                    <td>$@u.CalcYearToDateUserSales()</td>
+                    <td>@u.CalcTodaySalesAmt().ToString("c")</td>
+                    <td>@u.CalcLastWeekUserSales().ToString("c")</td>
+                    <td>@u.CalcLastTwoWeekUserSales().ToString("c")</td>
+                    <td>@u.CalcLastThreeWeekUserSales()</td>
+                    <td>@u.CalcLastFourWeekUserSales().ToString("c")</td>
+                    <td>@u.CalcMonthToDateUserSales().ToString("c")</td>
+                    <td>@u.CalcYearToDateUserSales().ToString("c")</td>
                 </tr>
             }
         </table>

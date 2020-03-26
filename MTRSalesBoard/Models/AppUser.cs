@@ -131,11 +131,9 @@ namespace MTRSalesBoard.Models
         public decimal CalcYearToDateUserSales()
         {
             DateTime now = DateTime.Now;
-            var startDate = new DateTime(now.Year, 1, 1);
-            var endDate = startDate.AddMonths(12).AddDays(-1);
+            var currentYear = now.Year;
             decimal amt = 0m;
-            foreach (Sale s in sales.Where(s => s.SaleDate.Month >= startDate.Month && 
-                                                s.SaleDate.Month <= endDate.Month))
+            foreach (Sale s in sales.Where(s => s.SaleDate.Year == currentYear))
             {
                 amt += s.SaleAmount;
             }
