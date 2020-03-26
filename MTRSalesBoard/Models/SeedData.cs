@@ -100,6 +100,8 @@ namespace MTRSalesBoard.Models
                     };
                     u.AddSale(s9);
                     context.Sales.Add(s9);
+
+                    context.SaveChanges();
                 }
             }
  

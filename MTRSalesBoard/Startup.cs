@@ -79,7 +79,7 @@ namespace MTRSalesBoard
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            //context.Database.Migrate();
+            context.Database.Migrate();
 
             SeedData.Seed(context);
         }
