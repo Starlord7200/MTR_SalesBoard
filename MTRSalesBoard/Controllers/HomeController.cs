@@ -9,7 +9,6 @@ namespace MTRSalesBoard.Controllers
 {
     public class HomeController : Controller
     {
-        //TODO: Allow Users to edit sales
         //TODO: Allow Users to delete sales
         //TODO: Allow Sign in
         //TODO: Allow Admin to add/delete sales for people
@@ -24,6 +23,8 @@ namespace MTRSalesBoard.Controllers
             List<AppUser> users = Repository.Users;
             return View(users);
         }
+
+        public IActionResult ViewSalesList(AppUser u) => View(u);
 
         [HttpGet]
         public IActionResult SalesEntry() => View();
@@ -62,8 +63,7 @@ namespace MTRSalesBoard.Controllers
         }
 
         [HttpGet]
-        public IActionResult UpdateSale(string title) {
-            int id = int.Parse(title);
+        public IActionResult UpdateSale(int id) {
             Sale sale = Repository.FindSaleById(id);
             return View(sale);
         }
@@ -81,7 +81,10 @@ namespace MTRSalesBoard.Controllers
             return RedirectToAction("index");
         }
 
-        public IActionResult ViewSalesList(AppUser u) => View(u);
+        public RedirectToActionResult DeleteSale(int id) {
+            Repository.DeleteSale(id);
+            return RedirectToAction("Index");
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error() {

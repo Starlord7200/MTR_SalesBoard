@@ -56,6 +56,12 @@ namespace MTRSalesBoard.Models.Repository
             return context.SaveChanges();
         }
 
+        public int DeleteSale(int id) {
+            var saleFromDb = context.Sales.First(s1 => s1.SaleID == id);
+            context.Remove(saleFromDb);
+            return context.SaveChanges();
+        }
+
         public int GetUserCount() {
             return context.Users.Count();
         }
