@@ -1,19 +1,27 @@
-﻿@model AppUser
+﻿@model MTRSalesBoard.Models.Sale
 
-<h1 class="text-center">Sales for @Model.Name</h1>
+@{
+    ViewData["Title"] = "Update Sale";
+}
 
-<div class="text-center">
-    <table class="table table-striped" style="width:100%">
-        <tr>
-            <th>Sale Amt</th>
-            <th>Sale Date</th>
-        </tr>
-        @foreach (Sale s in Model.Sales)
-        {
-            <tr>
-                <td>@s.SaleAmount.ToString("c")</td>
-                <td>@s.SaleDate.ToString("MM/dd/yyyy")</td>
-            </tr>
-        }
-    </table>
+<div>
+    <form method="post">
+        <div>
+            <label for="SaleAmount">SaleAmount</label><br />
+            <input name="saleamount" value="@Model.SaleAmount" />
+        </div>
+        <div>
+            <label for="date">Sale Date</label><br />
+            <input name="date" value="@Model.SaleDate" />
+        </div>
+        <input name="name" value="@Model.Name" type="hidden" />
+        <input name="saleid" value="@Model.SaleID" type="hidden" />
+        <div>
+            <input type="submit" value="Enter" />
+        </div>
+    </form>
 </div>
+
+<p>
+    <a asp-action="Index">Back to List</a>
+</p>

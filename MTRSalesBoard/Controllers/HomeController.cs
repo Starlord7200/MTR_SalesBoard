@@ -61,11 +61,25 @@ namespace MTRSalesBoard.Controllers
             }
         }
 
-        public IActionResult UpdateSale(int id) {
+        [HttpGet]
+        public IActionResult UpdateSale(string title) {
+            int id = int.Parse(title);
             Sale sale = Repository.FindSaleById(id);
-            return View();
+            return View(sale);
         }
 
+        [HttpPost]
+        public RedirectToActionResult UpdateSale(string name, int saleid, DateTime date, decimal saleamount) {
+            Sale s = new Sale
+            {
+                SaleID = saleid,
+                SaleDate = date,
+                SaleAmount = saleamount
+            };
+
+            Repository.EditSale(s);
+            return RedirectToAction("index");
+        }
 
         public IActionResult ViewSalesList(AppUser u) => View(u);
 

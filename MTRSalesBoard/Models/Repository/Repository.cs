@@ -51,6 +51,11 @@ namespace MTRSalesBoard.Models.Repository
             context.SaveChanges();
         }
 
+        public int EditSale(Sale s) {
+            context.Update(s);
+            return context.SaveChanges();
+        }
+
         public int GetUserCount() {
             return context.Users.Count();
         }

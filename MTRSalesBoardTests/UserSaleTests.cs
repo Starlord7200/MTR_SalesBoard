@@ -9,8 +9,7 @@ namespace MTRSalesBoardTests
     public class UserSaleTests
     {
         [Fact]
-        public void AddUserTest()
-        {
+        public void AddUserTest() {
             //Arrange 
             var repo = new FakeRepository();
             var controller = new HomeController(repo);
@@ -29,8 +28,7 @@ namespace MTRSalesBoardTests
         }
 
         [Fact]
-        public void CalcTotalUserSalesTest()
-        {
+        public void CalcTotalUserSalesTest() {
             //Arrange 
             var repo = new FakeRepository();
             var controller = new HomeController(repo);
@@ -54,8 +52,7 @@ namespace MTRSalesBoardTests
         }
 
         [Fact]
-        public void AddUserSaleControllerTest()
-        {
+        public void AddUserSaleControllerTest() {
             //Arrange 
             var repo = new FakeRepository();
             var controller = new HomeController(repo);
@@ -64,7 +61,7 @@ namespace MTRSalesBoardTests
             AppUser user = new AppUser() { Name = "James", Email = "example@example.com" };
             repo.AddUser(user);
 
-            controller.SalesEntry("James", "email", 2000);
+            controller.SalesEntry("James", 2000);
 
             //Assert
             Assert.Equal(1, repo.GetUserCount());

@@ -13,6 +13,8 @@
             <tr>
                 <td>@s.SaleAmount.ToString("c")</td>
                 <td>@s.SaleDate.ToString("MM/dd/yyyy")</td>
+                <td><a asp-action="UpdateSale" asp-route-title="@s.SaleID">Update</a></td>
+                <td>Delete</td>
             </tr>
         }
     </table>

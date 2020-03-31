@@ -9,8 +9,7 @@ namespace MTRSalesBoardTests
     public class ViewSalesTests
     {
         [Fact]
-        public void ViewSalesTest()
-        {
+        public void ViewSalesTest() {
             //Arrange 
             var repo = new FakeRepository();
             var controller = new HomeController(repo);
@@ -19,7 +18,7 @@ namespace MTRSalesBoardTests
             AppUser user = new AppUser() { Name = "James", Email = "example@example.com" };
             Sale s = new Sale() { SaleAmount = 1000 };
 
-            controller.SalesEntry(user.Name, user.Email, s.SaleAmount);
+            controller.SalesEntry(user.Name, s.SaleAmount);
             repo.AddUser(user);
             user.AddSale(s);
 
