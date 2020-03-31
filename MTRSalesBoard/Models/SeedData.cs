@@ -16,6 +16,7 @@ namespace MTRSalesBoard.Models
                 {
                     AppUser u = new AppUser()
                     {
+                        UserName = "JmanMTR",
                         Name = "James",
                         Email = "james@example.com"
                     };
@@ -23,6 +24,7 @@ namespace MTRSalesBoard.Models
 
                     AppUser u2 = new AppUser()
                     {
+                        UserName = "testMTR",
                         Name = "test",
                         Email = "test@example.com"
                     };

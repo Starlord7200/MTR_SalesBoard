@@ -57,7 +57,7 @@ namespace MTRSalesBoard.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> SignUp(RegisterViewModel model, string returnUrl) {
+        public async Task<IActionResult> SignUp(CreateUserViewModel model, string returnUrl) {
             if (ModelState.IsValid)
             {
                 AppUser user = new AppUser

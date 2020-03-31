@@ -14,14 +14,14 @@ namespace MTRSalesBoard.Models.Repository
             context = appDbContext;
         }
 
-        public List<AppUser> Users
-        {
-            get
-            {
-                return context.Users.Include("Sales")
-                                    .ToList();
-            }
-        }
+        //public List<AppUser> Users
+        //{
+        //    get
+        //    {
+        //        return context.Users.Include("Sales")
+        //                            .ToList();
+        //    }
+        //}
 
         public List<Sale> Sales
         {
@@ -38,8 +38,8 @@ namespace MTRSalesBoard.Models.Repository
         }
 
         public AppUser FindAppUserbyName(string Name) {
-            AppUser u = Users.Find(u2 => u2.Name == Name);
-            return u;
+            //AppUser u = context.Users.Find(u2 => u2.Name == Name);
+            return null;
         }
 
         public void AddSale(Sale s, AppUser User) {

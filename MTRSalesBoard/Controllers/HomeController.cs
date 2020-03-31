@@ -4,9 +4,14 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using MTRSalesBoard.Models;
 using MTRSalesBoard.Models.Repository;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
+using System.Linq;
 
 namespace MTRSalesBoard.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         //TODO: Allow Sign in
@@ -15,12 +20,18 @@ namespace MTRSalesBoard.Controllers
         //TODO: Allow Admin to edit people and roles
 
         IRepository Repository;
-        public HomeController(IRepository r) {
+        private UserManager<AppUser> userManager;
+        private Task<AppUser> CurrentUser =>
+            userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+
+        public HomeController(IRepository r, UserManager<AppUser> userMgr) {
             Repository = r;
+            userManager = userMgr;
         }
 
+
         public IActionResult Index() {
-            List<AppUser> users = Repository.Users;
+            List<AppUser> users = userManager.Users.ToList();
             return View(users);
         }
 
@@ -30,8 +41,8 @@ namespace MTRSalesBoard.Controllers
         public IActionResult SalesEntry() => View();
 
         [HttpPost]
-        public IActionResult SalesEntry(string name, decimal salePrice) {
-            AppUser user = Repository.FindAppUserbyName(name);
+        public async Task<IActionResult> SalesEntry(string name, decimal salePrice) {
+            AppUser user = await userManager.FindByNameAsync(name);
 
             if (user == null)
             {
@@ -42,7 +53,7 @@ namespace MTRSalesBoard.Controllers
                 Sale s = new Sale() { SaleAmount = salePrice, SaleDate = DateTime.Today };
                 Repository.AddSale(s, user);
             }
-            List<AppUser> users = Repository.Users;
+            List<AppUser> users = userManager.Users.ToList();
             return View("Index", users);
         }
 
@@ -84,11 +95,6 @@ namespace MTRSalesBoard.Controllers
         public RedirectToActionResult DeleteSale(int id) {
             Repository.DeleteSale(id);
             return RedirectToAction("Index");
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error() {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

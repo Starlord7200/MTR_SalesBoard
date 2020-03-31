@@ -12,7 +12,7 @@ namespace MTRSalesBoardTests
         public void AddUserTest() {
             //Arrange 
             var repo = new FakeRepository();
-            var controller = new HomeController(repo);
+            var controller = new HomeController(repo, null);
 
             //Act
             AppUser user = new AppUser() { Name = "James", Email = "example@example.com" };
@@ -31,7 +31,7 @@ namespace MTRSalesBoardTests
         public void CalcTotalUserSalesTest() {
             //Arrange 
             var repo = new FakeRepository();
-            var controller = new HomeController(repo);
+            var controller = new HomeController(repo, null);
 
             //Act
             AppUser user = new AppUser() { Name = "James", Email = "example@example.com" };
@@ -55,7 +55,7 @@ namespace MTRSalesBoardTests
         public void AddUserSaleControllerTest() {
             //Arrange 
             var repo = new FakeRepository();
-            var controller = new HomeController(repo);
+            var controller = new HomeController(repo, null);
 
             //Act
             AppUser user = new AppUser() { Name = "James", Email = "example@example.com" };

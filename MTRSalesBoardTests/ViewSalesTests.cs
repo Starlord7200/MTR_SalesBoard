@@ -12,7 +12,7 @@ namespace MTRSalesBoardTests
         public void ViewSalesTest() {
             //Arrange 
             var repo = new FakeRepository();
-            var controller = new HomeController(repo);
+            var controller = new HomeController(repo, null);
 
             //Act
             AppUser user = new AppUser() { Name = "James", Email = "example@example.com" };
