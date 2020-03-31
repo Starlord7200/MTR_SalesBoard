@@ -15,24 +15,21 @@ namespace MTRSalesBoard.Models
         public string Name { get; set; }
         public string Email { get; set; }
 
-        public List<Sale> Sales { get { return sales; } }     
-        
-        public void AddSale(Sale s)
-        {
+        public List<Sale> Sales { get { return sales; } }
+
+        public void AddSale(Sale s) {
             Sales.Add(s);
         }
 
-        public int GetSalesCount()
-        {
+        public int GetSalesCount() {
             return Sales.Count();
         }
 
-        public decimal CalcTodaySalesAmt()
-        {
+        public decimal CalcTodaySalesAmt() {
             DateTime today = DateTime.Now;
             decimal amt = 0m;
-            foreach (Sale s in sales.Where(s => s.SaleDate.Day == today.Day && 
-                                                s.SaleDate.Month == today.Month && 
+            foreach (Sale s in sales.Where(s => s.SaleDate.Day == today.Day &&
+                                                s.SaleDate.Month == today.Month &&
                                                 s.SaleDate.Year == today.Year))
             {
                 amt += s.SaleAmount;
@@ -41,8 +38,7 @@ namespace MTRSalesBoard.Models
             return amt;
         }
 
-        public decimal CalcLastWeekUserSales()
-        {
+        public decimal CalcLastWeekUserSales() {
             DayOfWeek desiredSaturDay = DayOfWeek.Saturday;
             DayOfWeek desiredSunDay = DayOfWeek.Sunday;
             int offSetAmtFriday = (int)desiredSaturDay - (int)DateTime.Now.DayOfWeek;
@@ -50,7 +46,7 @@ namespace MTRSalesBoard.Models
             var sundayOfLastWeek = DateTime.Now.AddDays(-7 + offSetAmtSunday);
             var saturdayOfLastWeek = DateTime.Now.AddDays(-7 + offSetAmtFriday);
             decimal amt = 0m;
-            foreach (Sale s in sales.Where(s => s.SaleDate.Day > sundayOfLastWeek.Day && 
+            foreach (Sale s in sales.Where(s => s.SaleDate.Day > sundayOfLastWeek.Day &&
                                                 s.SaleDate.Day < saturdayOfLastWeek.Day &&
                                                 s.SaleDate.Month == sundayOfLastWeek.Month &&
                                                 s.SaleDate.Month == saturdayOfLastWeek.Month))
@@ -61,8 +57,7 @@ namespace MTRSalesBoard.Models
             return amt;
         }
 
-        public decimal CalcLastTwoWeekUserSales()
-        {
+        public decimal CalcLastTwoWeekUserSales() {
             DayOfWeek desiredSaturDay = DayOfWeek.Saturday;
             DayOfWeek desiredSunDay = DayOfWeek.Sunday;
             int offSetAmtFriday = (int)desiredSaturDay - (int)DateTime.Now.DayOfWeek;
@@ -70,7 +65,7 @@ namespace MTRSalesBoard.Models
             var sundayOfLastWeek = DateTime.Now.AddDays(-14 + offSetAmtSunday);
             var saturdayOfLastWeek = DateTime.Now.AddDays(-14 + offSetAmtFriday);
             decimal amt = 0m;
-            foreach (Sale s in sales.Where(s => s.SaleDate.Day > sundayOfLastWeek.Day && 
+            foreach (Sale s in sales.Where(s => s.SaleDate.Day > sundayOfLastWeek.Day &&
                                                 s.SaleDate.Day < saturdayOfLastWeek.Day &&
                                                 s.SaleDate.Month == sundayOfLastWeek.Month &&
                                                 s.SaleDate.Month == saturdayOfLastWeek.Month))
@@ -81,8 +76,7 @@ namespace MTRSalesBoard.Models
             return amt;
         }
 
-        public decimal CalcLastThreeWeekUserSales()
-        {
+        public decimal CalcLastThreeWeekUserSales() {
             DayOfWeek desiredSaturDay = DayOfWeek.Saturday;
             DayOfWeek desiredSunDay = DayOfWeek.Sunday;
             int offSetAmtFriday = (int)desiredSaturDay - (int)DateTime.Now.DayOfWeek;
@@ -90,7 +84,7 @@ namespace MTRSalesBoard.Models
             var sundayOfLastWeek = DateTime.Now.AddDays(-21 + offSetAmtSunday);
             var saturdayOfLastWeek = DateTime.Now.AddDays(-21 + offSetAmtFriday);
             decimal amt = 0m;
-            foreach (Sale s in sales.Where(s => s.SaleDate.Day > sundayOfLastWeek.Day && 
+            foreach (Sale s in sales.Where(s => s.SaleDate.Day > sundayOfLastWeek.Day &&
                                                 s.SaleDate.Day < saturdayOfLastWeek.Day &&
                                                 s.SaleDate.Month == sundayOfLastWeek.Month &&
                                                 s.SaleDate.Month == saturdayOfLastWeek.Month))
@@ -101,8 +95,7 @@ namespace MTRSalesBoard.Models
             return amt;
         }
 
-        public decimal CalcLastFourWeekUserSales()
-        {
+        public decimal CalcLastFourWeekUserSales() {
             DayOfWeek desiredSaturDay = DayOfWeek.Saturday;
             DayOfWeek desiredSunDay = DayOfWeek.Sunday;
             int offSetAmtFriday = (int)desiredSaturDay - (int)DateTime.Now.DayOfWeek;
@@ -110,7 +103,7 @@ namespace MTRSalesBoard.Models
             var sundayOfLastWeek = DateTime.Now.AddDays(-28 + offSetAmtSunday);
             var saturdayOfLastWeek = DateTime.Now.AddDays(-28 + offSetAmtFriday);
             decimal amt = 0m;
-            foreach (Sale s in sales.Where(s => s.SaleDate.Day > sundayOfLastWeek.Day && 
+            foreach (Sale s in sales.Where(s => s.SaleDate.Day > sundayOfLastWeek.Day &&
                                                 s.SaleDate.Day < saturdayOfLastWeek.Day &&
                                                 s.SaleDate.Month == sundayOfLastWeek.Month &&
                                                 s.SaleDate.Month == saturdayOfLastWeek.Month))
@@ -121,13 +114,12 @@ namespace MTRSalesBoard.Models
             return amt;
         }
 
-        public decimal CalcMonthToDateUserSales()
-        {
+        public decimal CalcMonthToDateUserSales() {
             DateTime now = DateTime.Now;
             var startDate = new DateTime(now.Year, now.Month, 1);
             var endDate = startDate.AddMonths(1).AddDays(-1);
             decimal amt = 0m;
-            foreach (Sale s in sales.Where(s => s.SaleDate.Month == startDate.Month && 
+            foreach (Sale s in sales.Where(s => s.SaleDate.Month == startDate.Month &&
                                            s.SaleDate.Year <= endDate.Year))
             {
                 amt += s.SaleAmount;
@@ -136,8 +128,7 @@ namespace MTRSalesBoard.Models
             return amt;
         }
 
-        public decimal CalcYearToDateUserSales()
-        {
+        public decimal CalcYearToDateUserSales() {
             DateTime now = DateTime.Now;
             var currentYear = now.Year;
             decimal amt = 0m;
@@ -148,9 +139,8 @@ namespace MTRSalesBoard.Models
             return amt;
         }
 
-        public decimal CalcTotalUserSales()
-        {
-            decimal amt = 0m; 
+        public decimal CalcTotalUserSales() {
+            decimal amt = 0m;
             foreach (Sale s in sales)
             {
                 amt += s.SaleAmount;

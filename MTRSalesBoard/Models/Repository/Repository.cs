@@ -10,8 +10,7 @@ namespace MTRSalesBoard.Models.Repository
     {
         private ApplicationDBContext context;
 
-        public Repository(ApplicationDBContext appDbContext)
-        {
+        public Repository(ApplicationDBContext appDbContext) {
             context = appDbContext;
         }
 
@@ -33,21 +32,18 @@ namespace MTRSalesBoard.Models.Repository
             }
         }
 
-        public void AddUser(AppUser u)
-        {
+        public void AddUser(AppUser u) {
             context.Users.Add(u);
             context.SaveChanges();
         }
 
-        public AppUser FindAppUserbyName(string Name)
-        {
+        public AppUser FindAppUserbyName(string Name) {
             AppUser u = Users.Find(u2 => u2.Name == Name);
             return u;
         }
 
-        public void AddSale(Sale s, AppUser User)
-        {
-            context.Sales.Add(s);         
+        public void AddSale(Sale s, AppUser User) {
+            context.Sales.Add(s);
             context.SaveChanges();
 
             User.Sales.Add(s);
@@ -55,18 +51,15 @@ namespace MTRSalesBoard.Models.Repository
             context.SaveChanges();
         }
 
-        public int GetUserCount()
-        {
+        public int GetUserCount() {
             return context.Users.Count();
         }
 
-        public int GetSalesCount()
-        {
+        public int GetSalesCount() {
             return context.Sales.Count();
         }
 
-        public decimal CalcTotalSales()
-        {
+        public decimal CalcTotalSales() {
             decimal amt = 0m;
             foreach (Sale s in Sales)
             {
@@ -74,6 +67,11 @@ namespace MTRSalesBoard.Models.Repository
             }
 
             return amt;
+        }
+
+        public Sale FindSaleById(int id) {
+            Sale s = Sales.First(s1 => s1.SaleID == id);
+            return s;
         }
     }
 }

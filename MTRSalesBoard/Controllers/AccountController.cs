@@ -14,8 +14,7 @@ namespace MTRSalesBoard.Controllers
         private SignInManager<AppUser> signInManager;
 
         public AccountController(UserManager<AppUser> userMgr,
-        SignInManager<AppUser> signinMgr, RoleManager<IdentityRole> roleMgr)
-        {
+        SignInManager<AppUser> signinMgr, RoleManager<IdentityRole> roleMgr) {
             userManager = userMgr;
             signInManager = signinMgr;
             roleManager = roleMgr;
@@ -23,8 +22,7 @@ namespace MTRSalesBoard.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public IActionResult Login(string returnUrl)
-        {
+        public IActionResult Login(string returnUrl) {
             ViewBag.returnUrl = returnUrl;
             return View();
         }
@@ -32,8 +30,7 @@ namespace MTRSalesBoard.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl)
-        {
+        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl) {
             if (ModelState.IsValid)
             {
                 AppUser user = await userManager.FindByEmailAsync(model.Email);
@@ -53,16 +50,14 @@ namespace MTRSalesBoard.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult SignUp(string returnUrl)
-        {
+        public IActionResult SignUp(string returnUrl) {
             ViewBag.returnUrl = returnUrl;
             return View();
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> SignUp(RegisterViewModel model, string returnUrl)
-        {
+        public async Task<IActionResult> SignUp(RegisterViewModel model, string returnUrl) {
             if (ModelState.IsValid)
             {
                 AppUser user = new AppUser
@@ -98,8 +93,7 @@ namespace MTRSalesBoard.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> Logout()
-        {
+        public async Task<IActionResult> Logout() {
             await signInManager.SignOutAsync();
             return RedirectToAction("index", "Home");
         }

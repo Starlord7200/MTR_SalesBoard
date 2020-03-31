@@ -10,8 +10,7 @@ namespace MTRSalesBoard.Models
 {
     public class SeedData
     {
-        public static void Seed(ApplicationDBContext context)
-        {
+        public static void Seed(ApplicationDBContext context) {
             if (!context.Users.Any())
             {
                 {
@@ -104,7 +103,7 @@ namespace MTRSalesBoard.Models
                     context.SaveChanges();
                 }
             }
- 
+
         }
     }
 }

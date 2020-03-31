@@ -13,36 +13,30 @@ namespace MTRSalesBoard.Models.Repository
         public List<AppUser> Users { get { return usersList; } }
         public List<Sale> Sales { get { return salesList; } }
 
-        public void AddUser(AppUser u)
-        {
+        public void AddUser(AppUser u) {
             Users.Add(u);
         }
 
-        public AppUser FindAppUserbyName(string Name)
-        {
+        public AppUser FindAppUserbyName(string Name) {
             AppUser u = Users.Find(u2 => u2.Name == Name);
             return u;
         }
 
-        public void AddSale(Sale s)
-        {
+        public void AddSale(Sale s) {
             Sales.Add(s);
         }
 
         public void AddSale(Sale s, AppUser u) { }
 
-        public int GetUserCount()
-        {
+        public int GetUserCount() {
             return Users.Count();
         }
 
-        public int GetSalesCount()
-        {
+        public int GetSalesCount() {
             return Sales.Count();
         }
 
-        public decimal CalcTotalSales()
-        {
+        public decimal CalcTotalSales() {
             decimal amt = 0;
             foreach (Sale s in Sales)
             {
@@ -50,6 +44,11 @@ namespace MTRSalesBoard.Models.Repository
             }
 
             return amt;
+        }
+
+        public Sale FindSaleById(int id) {
+            Sale s = Sales.First(s1 => s1.SaleID == id);
+            return s;
         }
     }
 }

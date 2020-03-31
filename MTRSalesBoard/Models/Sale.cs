@@ -12,7 +12,7 @@ namespace MTRSalesBoard.Models
         [Key]
         public int SaleID { get; set; }
         public decimal SaleAmount { get; set; }
-        public DateTime SaleDate { get; set; } 
+        public DateTime SaleDate { get; set; }
         public AppUser Name { get; set; }
     }
 }

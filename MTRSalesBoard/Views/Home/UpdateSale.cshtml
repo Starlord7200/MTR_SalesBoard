@@ -1,0 +1,19 @@
+﻿@model AppUser
+
+<h1 class="text-center">Sales for @Model.Name</h1>
+
+<div class="text-center">
+    <table class="table table-striped" style="width:100%">
+        <tr>
+            <th>Sale Amt</th>
+            <th>Sale Date</th>
+        </tr>
+        @foreach (Sale s in Model.Sales)
+        {
+            <tr>
+                <td>@s.SaleAmount.ToString("c")</td>
+                <td>@s.SaleDate.ToString("MM/dd/yyyy")</td>
+            </tr>
+        }
+    </table>
+</div>
