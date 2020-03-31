@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace MTRSalesBoard.Models
 {
-    public class CreateUserViewModel
+    public class RegisterUserViewModel
     {
+        [Required]
+        public string UserName { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]

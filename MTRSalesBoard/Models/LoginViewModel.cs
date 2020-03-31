@@ -9,10 +9,11 @@ namespace MTRSalesBoard.Models
     public class LoginViewModel
     {
         [Required]
-        [UIHint("email")]
-        public string Email { get; set; }
+        [UIHint("username")]
+        public string UserName { get; set; }
         [Required]
         [UIHint("password")]
+        [RegularExpression("^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$")]
         public string Password { get; set; }
     }
 }

@@ -34,7 +34,8 @@ namespace MTRSalesBoard.Controllers
             {
                 AppUser user = new AppUser
                 {
-                    UserName = model.Name,
+                    UserName = model.UserName,
+                    Name = model.Name,
                     Email = model.Email
                 };
                 IdentityResult result
@@ -91,11 +92,19 @@ namespace MTRSalesBoard.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Edit(string id, string email,
-                string password) {
+                string password, string name, string username) {
             AppUser user = await userManager.FindByIdAsync(id);
             if (user != null)
             {
+                user.UserName = username;
+                user.Name = name;
                 user.Email = email;
+                IdentityResult validUserName
+                    = await userValidator.ValidateAsync(userManager, user);
+                if (!validUserName.Succeeded)
+                {
+                    AddErrorsFromResult(validUserName);
+                }
                 IdentityResult validEmail
                     = await userValidator.ValidateAsync(userManager, user);
                 if (!validEmail.Succeeded)

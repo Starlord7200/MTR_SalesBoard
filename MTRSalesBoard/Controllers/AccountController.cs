@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MTRSalesBoard.Controllers
 {
-    //TODO: Fix Logout
     public class AccountController : Controller
     {
         private RoleManager<IdentityRole> roleManager;
@@ -33,7 +32,7 @@ namespace MTRSalesBoard.Controllers
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl) {
             if (ModelState.IsValid)
             {
-                AppUser user = await userManager.FindByEmailAsync(model.Email);
+                AppUser user = await userManager.FindByNameAsync(model.UserName);
                 if (user != null)
                 {
                     await signInManager.SignOutAsync();
@@ -43,7 +42,7 @@ namespace MTRSalesBoard.Controllers
                         return Redirect(returnUrl ?? "/");
                     }
                 }
-                ModelState.AddModelError(nameof(LoginViewModel.Email), "Invalid user or password");
+                ModelState.AddModelError(nameof(LoginViewModel.UserName), "Invalid username or password");
             }
             return View(model);
         }
@@ -57,11 +56,12 @@ namespace MTRSalesBoard.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> SignUp(CreateUserViewModel model, string returnUrl) {
+        public async Task<IActionResult> SignUp(RegisterUserViewModel model, string returnUrl) {
             if (ModelState.IsValid)
             {
                 AppUser user = new AppUser
                 {
+                    UserName = model.UserName,
                     Name = model.Name,
                     Email = model.Email
                 };

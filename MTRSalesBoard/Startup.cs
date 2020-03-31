@@ -82,6 +82,8 @@ namespace MTRSalesBoard
             context.Database.Migrate();
 
             SeedData.Seed(context);
+
+            ApplicationDBContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
         }
     }
 }
