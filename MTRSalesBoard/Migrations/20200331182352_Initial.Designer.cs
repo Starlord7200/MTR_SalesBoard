@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MTRSalesBoard.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20200331172328_Identity")]
-    partial class Identity
+    [Migration("20200331182352_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

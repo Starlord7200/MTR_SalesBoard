@@ -14,10 +14,10 @@ namespace MTRSalesBoard.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        //TODO: Allow Sign in
         //TODO: Allow Admin to add/delete sales for people
         //TODO: Allow Admin to add people
         //TODO: Allow Admin to edit people and roles
+        ///TODO: Make sales board only list people in the user role
 
         IRepository Repository;
         private UserManager<AppUser> userManager;
@@ -32,6 +32,9 @@ namespace MTRSalesBoard.Controllers
 
         public IActionResult Index() {
             List<AppUser> users = userManager.Users.ToList();
+            List<Sale> sales = Repository.Sales;
+
+            users.OrderBy(user => user.Name);
             return View(users);
         }
 
@@ -61,8 +64,9 @@ namespace MTRSalesBoard.Controllers
         public IActionResult ViewSales() => View();
 
         [HttpPost]
-        public IActionResult ViewSales(string name) {
-            AppUser user = Repository.FindAppUserbyName(name);
+        public async Task<IActionResult> ViewSales(string name) {
+            AppUser user = await CurrentUser;
+            var salesFromDb = Repository.Sales;
             if (user == null)
             {
                 return ViewSales();

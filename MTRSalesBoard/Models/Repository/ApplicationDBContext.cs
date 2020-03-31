@@ -40,6 +40,7 @@ namespace MTRSalesBoard.Models.Repository
                 }
                 AppUser user = new AppUser
                 {
+                    Name = name,
                     UserName = username,
                     Email = email
                 };

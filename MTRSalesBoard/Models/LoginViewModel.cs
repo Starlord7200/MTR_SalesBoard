@@ -13,7 +13,6 @@ namespace MTRSalesBoard.Models
         public string UserName { get; set; }
         [Required]
         [UIHint("password")]
-        [RegularExpression("^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$")]
         public string Password { get; set; }
     }
 }
