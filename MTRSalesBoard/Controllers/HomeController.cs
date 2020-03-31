@@ -34,7 +34,6 @@ namespace MTRSalesBoard.Controllers
             List<AppUser> users = userManager.Users.ToList();
             List<Sale> sales = Repository.Sales;
 
-            users.OrderBy(user => user.Name);
             return View(users);
         }
 
@@ -65,6 +64,7 @@ namespace MTRSalesBoard.Controllers
 
         [HttpPost]
         public async Task<IActionResult> ViewSales(string name) {
+            //TODO: Fix
             AppUser user = await CurrentUser;
             var salesFromDb = Repository.Sales;
             if (user == null)
