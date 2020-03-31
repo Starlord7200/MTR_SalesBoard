@@ -9,10 +9,10 @@ namespace MTRSalesBoard.Controllers
 {
     public class HomeController : Controller
     {
-        //TODO: Allow Users to delete sales
         //TODO: Allow Sign in
         //TODO: Allow Admin to add/delete sales for people
         //TODO: Allow Admin to add people
+        //TODO: Allow Admin to edit people and roles
 
         IRepository Repository;
         public HomeController(IRepository r) {
