@@ -43,7 +43,15 @@ namespace MTRSalesBoard
             services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer(
                 Configuration["ConnectionStrings:MsSqlConnection"]));
 
-            services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDBContext>()
+            services.AddIdentity<AppUser, IdentityRole>(opts =>
+            {
+                opts.User.RequireUniqueEmail = true;
+                opts.Password.RequiredLength = 6;
+                opts.Password.RequireNonAlphanumeric = true;
+                opts.Password.RequireLowercase = true;
+                opts.Password.RequireUppercase = true;
+                opts.Password.RequireDigit = true;
+            }).AddEntityFrameworkStores<ApplicationDBContext>()
                        .AddDefaultTokenProviders();
         }
 
