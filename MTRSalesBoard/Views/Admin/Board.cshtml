@@ -1,0 +1,33 @@
+﻿@model List<AppUser>
+@{
+    ViewData["Title"] = "Sales Board";
+    Layout = "_AdminLayout";
+}
+
+<div class="text-center">
+    <table class="table table-striped" style="width:100%">
+        <tr class="thead-light">
+            <th>Name</th>
+            <th>Today</th>
+            <th>Last Week</th>
+            <th>Last Two Weeks</th>
+            <th>Last Three Weeks</th>
+            <th>Last Four Weeks</th>
+            <th>Month To Date</th>
+            <th>Year To Date</th>
+        </tr>
+        @foreach (AppUser u in Model)
+        {
+            <tr>
+                <td class="font-weight-bold">@u.Name</td>
+                <td>@u.CalcTodaySalesAmt().ToString("c")</td>
+                <td>@u.CalcLastWeekUserSales().ToString("c")</td>
+                <td>@u.CalcLastTwoWeekUserSales().ToString("c")</td>
+                <td>@u.CalcLastThreeWeekUserSales()</td>
+                <td>@u.CalcLastFourWeekUserSales().ToString("c")</td>
+                <td>@u.CalcMonthToDateUserSales().ToString("c")</td>
+                <td>@u.CalcYearToDateUserSales().ToString("c")</td>
+            </tr>
+        }
+    </table>
+</div>

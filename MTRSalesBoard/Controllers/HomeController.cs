@@ -29,11 +29,10 @@ namespace MTRSalesBoard.Controllers
             roleManager = roleMgr;
         }
 
-
         public async Task<IActionResult> Index() {
             List<Sale> sales = Repository.Sales;
-
             List<AppUser> users = new List<AppUser>();
+
             IdentityRole role = await roleManager.FindByNameAsync("User");
             if (role != null)
             {

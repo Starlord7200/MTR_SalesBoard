@@ -3,12 +3,19 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using MTRSalesBoard.Models;
 using Microsoft.AspNetCore.Authorization;
+using System;
+using MTRSalesBoard.Models.Repository;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MTRSalesBoard.Controllers
 {
     [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
+
+        IRepository Repository;
+        private RoleManager<IdentityRole> roleManager;
         private UserManager<AppUser> userManager;
         private IUserValidator<AppUser> userValidator;
         private IPasswordValidator<AppUser> passwordValidator;
@@ -17,11 +24,13 @@ namespace MTRSalesBoard.Controllers
         public AdminController(UserManager<AppUser> usrMgr,
                 IUserValidator<AppUser> userValid,
                 IPasswordValidator<AppUser> passValid,
-                IPasswordHasher<AppUser> passwordHash) {
+                IPasswordHasher<AppUser> passwordHash, IRepository r, RoleManager<IdentityRole> roleMgr) {
             userManager = usrMgr;
             userValidator = userValid;
             passwordValidator = passValid;
             passwordHasher = passwordHash;
+            Repository = r;
+            roleManager = roleMgr;
         }
 
         public ViewResult Index() => View(userManager.Users);
@@ -146,6 +155,46 @@ namespace MTRSalesBoard.Controllers
                 ModelState.AddModelError("", "User Not Found");
             }
             return View(user);
+        }
+
+        [HttpGet]
+        public IActionResult EnterSale() => View();
+
+        [HttpPost]
+        public async Task<IActionResult> EnterSale(string name, decimal salePrice) {
+            AppUser user = await userManager.FindByNameAsync(name);
+
+            if (user == null)
+            {
+                return View("ViewUserSale");
+            }
+            else
+            {
+                Sale s = new Sale() { SaleAmount = salePrice, SaleDate = DateTime.Today };
+                Repository.AddSale(s, user);
+            }
+            List<AppUser> users = userManager.Users.ToList();
+            return View("Index", users);
+        }
+
+        public async Task<IActionResult> Board() {
+            List<Sale> sales = Repository.Sales;
+            List<AppUser> users = new List<AppUser>();
+
+            IdentityRole role = await roleManager.FindByNameAsync("User");
+            if (role != null)
+            {
+                foreach (var user in userManager.Users)
+                {
+                    if (user != null
+                        && await userManager.IsInRoleAsync(user, role.Name))
+                    {
+                        users.Add(user);
+                    }
+                }
+            }
+
+            return View(users);
         }
 
         private void AddErrorsFromResult(IdentityResult result) {
