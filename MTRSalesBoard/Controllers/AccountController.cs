@@ -32,6 +32,7 @@ namespace MTRSalesBoard.Controllers
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl) {
             if (ModelState.IsValid)
             {
+                IdentityRole role = await roleManager.FindByNameAsync("User");
                 AppUser user = await userManager.FindByNameAsync(model.UserName);
                 if (user != null)
                 {
@@ -39,7 +40,10 @@ namespace MTRSalesBoard.Controllers
                     var result = await signInManager.PasswordSignInAsync(user, model.Password, false, false);
                     if (result.Succeeded)
                     {
-                        return Redirect(returnUrl ?? "/");
+                        if (await userManager.IsInRoleAsync(user, role.Name))
+                            return Redirect(returnUrl ?? "/");
+                        else
+                            return RedirectToAction("Board", "Admin");
                     }
                 }
                 ModelState.AddModelError(nameof(LoginViewModel.UserName), "Invalid username or password");
@@ -67,14 +71,8 @@ namespace MTRSalesBoard.Controllers
                 };
                 IdentityResult result
                     = await userManager.CreateAsync(user, model.Password);
-                if (!await roleManager.RoleExistsAsync("User"))
-                {
-                    await roleManager.CreateAsync(new IdentityRole("User"));
-                }
-                else
-                {
-                    await userManager.AddToRoleAsync(user, "User");
-                }
+
+                await userManager.AddToRoleAsync(user, "User");
 
                 if (result.Succeeded)
                 {

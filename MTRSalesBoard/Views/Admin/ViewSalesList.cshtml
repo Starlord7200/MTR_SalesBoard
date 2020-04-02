@@ -1,4 +1,7 @@
 ﻿@model AppUser
+@{
+    Layout = "_AdminLayout";
+}
 
 <h1 class="text-center">Sales for @Model.Name</h1>
 
@@ -15,9 +18,8 @@
             <tr>
                 <th>Sale Amt</th>
                 <th>Sale Date</th>
-                <th></th>
-                <th></th>
             </tr>
+            }
             @foreach (Sale s in Model.Sales)
             {
                 <tr>

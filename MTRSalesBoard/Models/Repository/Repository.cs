@@ -29,12 +29,12 @@ namespace MTRSalesBoard.Models.Repository
         }
 
         public void AddSale(Sale s, AppUser User) {
-            context.Sales.Add(s);
-            context.SaveChanges();
+            this.context.Sales.Add(s);
+            this.context.SaveChanges();
 
             User.Sales.Add(s);
-            context.Update(User);
-            context.SaveChanges();
+            this.context.Update(User);
+            this.context.SaveChanges();
         }
 
         public int EditSale(Sale s) {

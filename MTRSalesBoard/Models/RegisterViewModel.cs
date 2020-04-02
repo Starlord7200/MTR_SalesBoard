@@ -15,7 +15,6 @@ namespace MTRSalesBoard.Models
         [Required]
         public string Email { get; set; }
         [Required]
-        [RegularExpression("^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$")]
         public string Password { get; set; }
     }
 }

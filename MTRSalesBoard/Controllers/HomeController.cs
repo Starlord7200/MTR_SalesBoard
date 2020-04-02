@@ -15,7 +15,7 @@ namespace MTRSalesBoard.Controllers
     public class HomeController : Controller
     {
         //TODO: Allow Admin to add/delete sales for people
-        //TODO: Create Admin Navbar and admin functionality
+        //TODO: Test for SQL Exception
 
         IRepository Repository;
         private UserManager<AppUser> userManager;
@@ -55,38 +55,19 @@ namespace MTRSalesBoard.Controllers
         public IActionResult SalesEntry() => View();
 
         [HttpPost]
-        public async Task<IActionResult> SalesEntry(string name, decimal salePrice) {
-            AppUser user = await userManager.FindByNameAsync(name);
+        public async Task<RedirectToActionResult> SalesEntry(decimal salePrice) {
+            AppUser user = await CurrentUser;
+            Sale s = new Sale() { SaleAmount = salePrice, SaleDate = DateTime.Today };
+            Repository.AddSale(s, user);
 
-            if (user == null)
-            {
-                return View("SalesEntry");
-            }
-            else
-            {
-                Sale s = new Sale() { SaleAmount = salePrice, SaleDate = DateTime.Today };
-                Repository.AddSale(s, user);
-            }
-            List<AppUser> users = userManager.Users.ToList();
-            return View("Index", users);
+            return RedirectToAction("Index");
         }
 
-        [HttpGet]
-        public IActionResult ViewSales() => View();
-
-        [HttpPost]
-        public async Task<IActionResult> ViewSales(string name) {
+        public async Task<IActionResult> ViewSales() {
             //TODO: Fix
             AppUser user = await CurrentUser;
             var salesFromDb = Repository.Sales;
-            if (user == null)
-            {
-                return ViewSales();
-            }
-            else
-            {
-                return View("ViewSalesList", user);
-            }
+            return View("ViewSalesList", user);
         }
 
         [HttpGet]

@@ -197,11 +197,54 @@ namespace MTRSalesBoard.Controllers
             return View(users);
         }
 
+        [HttpGet]
+        public IActionResult ViewUserSale() => View();
+        [HttpPost]
+        public async Task<IActionResult> ViewUserSale(string name) {
+            //TODO: Fix
+            AppUser user = await userManager.FindByNameAsync(name);
+            var salesFromDb = Repository.Sales;
+            if (user == null)
+            {
+                return ViewUserSale();
+            }
+            else
+            {
+                return View("ViewSalesList", user);
+            }
+        }
+
+        public IActionResult ViewSalesList(AppUser u) => View(u);
+
         private void AddErrorsFromResult(IdentityResult result) {
             foreach (IdentityError error in result.Errors)
             {
                 ModelState.AddModelError("", error.Description);
             }
+        }
+
+        [HttpGet]
+        public IActionResult UpdateSale(int id) {
+            Sale sale = Repository.FindSaleById(id);
+            return View(sale);
+        }
+
+        [HttpPost]
+        public RedirectToActionResult UpdateSale(string name, int saleid, DateTime date, decimal saleamount) {
+            Sale s = new Sale
+            {
+                SaleID = saleid,
+                SaleDate = date,
+                SaleAmount = saleamount
+            };
+
+            Repository.EditSale(s);
+            return RedirectToAction("index");
+        }
+
+        public RedirectToActionResult DeleteSale(int id) {
+            Repository.DeleteSale(id);
+            return RedirectToAction("Index");
         }
 
     }
