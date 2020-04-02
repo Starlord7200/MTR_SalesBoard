@@ -3,8 +3,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using MTRSalesBoard.Models;
 
-namespace MTRSalesBoard.Models
+namespace MTRSalesBoard.Infrastructure
 {
     [HtmlTargetElement("td", Attributes = "identity-role")]
     public class RoleUsersTagHelper : TagHelper
@@ -33,7 +34,7 @@ namespace MTRSalesBoard.Models
                     if (user != null
                         && await userManager.IsInRoleAsync(user, role.Name))
                     {
-                        names.Add(user.UserName);
+                        names.Add(user.Name);
                     }
                 }
             }

@@ -15,24 +15,37 @@ namespace MTRSalesBoard.Controllers
     public class HomeController : Controller
     {
         //TODO: Allow Admin to add/delete sales for people
-        //TODO: Allow Admin to add people
-        //TODO: Allow Admin to edit people and roles
-        ///TODO: Make sales board only list people in the user role
+        //TODO: Create Admin Navbar and admin functionality
 
         IRepository Repository;
         private UserManager<AppUser> userManager;
+        private RoleManager<IdentityRole> roleManager;
         private Task<AppUser> CurrentUser =>
             userManager.FindByNameAsync(HttpContext.User.Identity.Name);
 
-        public HomeController(IRepository r, UserManager<AppUser> userMgr) {
+        public HomeController(IRepository r, UserManager<AppUser> userMgr, RoleManager<IdentityRole> roleMgr) {
             Repository = r;
             userManager = userMgr;
+            roleManager = roleMgr;
         }
 
 
-        public IActionResult Index() {
-            List<AppUser> users = userManager.Users.ToList();
+        public async Task<IActionResult> Index() {
             List<Sale> sales = Repository.Sales;
+
+            List<AppUser> users = new List<AppUser>();
+            IdentityRole role = await roleManager.FindByNameAsync("User");
+            if (role != null)
+            {
+                foreach (var user in userManager.Users)
+                {
+                    if (user != null
+                        && await userManager.IsInRoleAsync(user, role.Name))
+                    {
+                        users.Add(user);
+                    }
+                }
+            }
 
             return View(users);
         }
