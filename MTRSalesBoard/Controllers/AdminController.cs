@@ -173,8 +173,7 @@ namespace MTRSalesBoard.Controllers
                 Sale s = new Sale() { SaleAmount = salePrice, SaleDate = DateTime.Today };
                 Repository.AddSale(s, user);
             }
-            List<AppUser> users = userManager.Users.ToList();
-            return View("Index", users);
+            return RedirectToAction("Board");
         }
 
         public async Task<IActionResult> Board() {

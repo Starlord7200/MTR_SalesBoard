@@ -1,0 +1,27 @@
+﻿@model MTRSalesBoard.Models.Sale
+
+@{
+    ViewData["Title"] = "Update Sale";
+}
+
+<div>
+    <form method="post">
+        <div>
+            <label for="SaleAmount">SaleAmount</label><br />
+            <input name="saleamount" value="@Model.SaleAmount" />
+        </div>
+        <div>
+            <label for="date">Sale Date</label><br />
+            <input name="date" value="@Model.SaleDate" />
+        </div>
+        <input name="name" value="@Model.Name" type="hidden" />
+        <input name="saleid" value="@Model.SaleID" type="hidden" />
+        <div>
+            <input type="submit" value="Enter" />
+        </div>
+    </form>
+</div>
+
+<p>
+    <a asp-action="Index">Back to List</a>
+</p>
