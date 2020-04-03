@@ -1,14 +1,21 @@
-﻿@{
-    ViewData["Title"] = "Sales History";
+﻿@model List<AppUser>
+@{
+    ViewData["Title"] = "Sales Board";
     Layout = "_AdminLayout";
 }
 
-<h1>@ViewData["Title"]</h1>
-
-<form method="post">
-    <div class="form-group">
-        <label for="name">Name</label>
-        <input class="form-control col-md-6" name="name" />
-    </div>
-    <button class="btn btn-primary" type="submit">Submit</button>
-</form>
+<div class="text-center">
+    <table class="table table-striped" style="width:100%">
+        <tr class="thead-light">
+            <th>Username</th>
+            <th>Name</th>
+        </tr>
+        @foreach (AppUser u in Model)
+        {
+            <tr>
+                <td><a asp-action="ViewSalesList" asp-route-title="@u.UserName">@u.UserName</a></td>
+                <td>@u.Name</td>
+            </tr>
+        }
+    </table>
+</div>

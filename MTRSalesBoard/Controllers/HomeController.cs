@@ -1,20 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using MTRSalesBoard.Models;
 using MTRSalesBoard.Models.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
-using System.Linq;
 
 namespace MTRSalesBoard.Controllers
 {
     [Authorize]
     public class HomeController : Controller
     {
-        //TODO: Allow Admin to add/delete sales for people
         //TODO: Test for SQL Exception
 
         IRepository Repository;

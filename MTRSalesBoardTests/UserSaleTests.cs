@@ -12,7 +12,7 @@ namespace MTRSalesBoardTests
         public void AddUserTest() {
             //Arrange 
             var repo = new FakeRepository();
-            var controller = new HomeController(repo, null);
+            var controller = new HomeController(repo, null, null);
 
             //Act
             AppUser user = new AppUser() { Name = "James", Email = "example@example.com" };
@@ -31,7 +31,7 @@ namespace MTRSalesBoardTests
         public void CalcTotalUserSalesTest() {
             //Arrange 
             var repo = new FakeRepository();
-            var controller = new HomeController(repo, null);
+            var controller = new HomeController(repo, null, null);
 
             //Act
             AppUser user = new AppUser() { Name = "James", Email = "example@example.com" };
@@ -52,16 +52,17 @@ namespace MTRSalesBoardTests
         }
 
         [Fact]
-        public void AddUserSaleControllerTest() {
+        public async void AddUserSaleControllerTest() {
             //Arrange 
             var repo = new FakeRepository();
-            var controller = new HomeController(repo, null);
+            var controller = new HomeController(repo, null, null);
 
             //Act
             AppUser user = new AppUser() { Name = "James", Email = "example@example.com" };
+            SaleEntryViewModel s = new SaleEntryViewModel() { SaleAmount = 2000 };
             repo.AddUser(user);
 
-            controller.SalesEntry("James", 2000);
+            await controller.SalesEntry(s);
 
             //Assert
             Assert.Equal(1, repo.GetUserCount());

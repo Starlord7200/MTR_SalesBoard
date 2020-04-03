@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using MTRSalesBoard.Models;
-using Microsoft.Extensions.DependencyInjection;
 using MTRSalesBoard.Models.Repository;
 
 namespace MTRSalesBoard.Models

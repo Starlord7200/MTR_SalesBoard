@@ -197,23 +197,30 @@ namespace MTRSalesBoard.Controllers
         }
 
         [HttpGet]
-        public IActionResult ViewUserSale() => View();
-        [HttpPost]
-        public async Task<IActionResult> ViewUserSale(string name) {
-            //TODO: Fix
-            AppUser user = await userManager.FindByNameAsync(name);
-            var salesFromDb = Repository.Sales;
-            if (user == null)
+        public async Task<IActionResult> ViewUserSale() {
+            List<AppUser> users = new List<AppUser>();
+
+            IdentityRole role = await roleManager.FindByNameAsync("User");
+            if (role != null)
             {
-                return ViewUserSale();
+                foreach (var user in userManager.Users)
+                {
+                    if (user != null
+                        && await userManager.IsInRoleAsync(user, role.Name))
+                    {
+                        users.Add(user);
+                    }
+                }
             }
-            else
-            {
-                return View("ViewSalesList", user);
-            }
+
+            return View(users);
         }
 
-        public IActionResult ViewSalesList(AppUser u) => View(u);
+        public async Task<IActionResult> ViewSalesList(string title) {
+            AppUser u = await userManager.FindByNameAsync(title);
+            List<Sale> s = Repository.Sales;
+            return View(u);
+        }
 
         private void AddErrorsFromResult(IdentityResult result) {
             foreach (IdentityError error in result.Errors)
@@ -229,7 +236,7 @@ namespace MTRSalesBoard.Controllers
         }
 
         [HttpPost]
-        public RedirectToActionResult UpdateSale(string name, int saleid, DateTime date, decimal saleamount) {
+        public RedirectToActionResult UpdateSale(int saleid, DateTime date, decimal saleamount) {
             Sale s = new Sale
             {
                 SaleID = saleid,

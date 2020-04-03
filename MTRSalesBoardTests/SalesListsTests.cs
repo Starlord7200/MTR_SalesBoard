@@ -12,7 +12,7 @@ namespace MTRSalesBoardTests
         public void AddSaleTest() {
             //Arrange 
             var repo = new FakeRepository();
-            var controller = new HomeController(repo, null);
+            var controller = new HomeController(repo, null, null);
 
             //Act
             Sale s = new Sale() { SaleAmount = 1000, SaleDate = DateTime.Today };
@@ -27,7 +27,7 @@ namespace MTRSalesBoardTests
         public void CalcTotalSalesTest() {
             //Arrange 
             var repo = new FakeRepository();
-            var controller = new HomeController(repo, null);
+            var controller = new HomeController(repo, null, null);
 
             //Act
             Sale s = new Sale() { SaleAmount = 1000, SaleDate = DateTime.Today };

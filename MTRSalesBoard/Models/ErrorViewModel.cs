@@ -1,5 +1,3 @@
-using System;
-
 namespace MTRSalesBoard.Models
 {
     public class ErrorViewModel

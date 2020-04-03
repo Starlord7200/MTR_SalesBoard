@@ -9,18 +9,17 @@ namespace MTRSalesBoardTests
     public class ViewSalesTests
     {
         [Fact]
-        public void ViewSalesTest() {
+        public async void ViewSalesTest() {
             //Arrange 
             var repo = new FakeRepository();
-            var controller = new HomeController(repo, null);
+            var controller = new HomeController(repo, null, null);
 
             //Act
             AppUser user = new AppUser() { Name = "James", Email = "example@example.com" };
-            Sale s = new Sale() { SaleAmount = 1000 };
+            SaleEntryViewModel s = new SaleEntryViewModel() { SaleAmount = 2000 };
 
-            controller.SalesEntry(user.Name, s.SaleAmount);
+            await controller.SalesEntry(s);
             repo.AddUser(user);
-            user.AddSale(s);
 
             //Assert
 
