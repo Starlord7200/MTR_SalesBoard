@@ -8,14 +8,13 @@ namespace MTRSalesBoard.Models
 {
     public class CreateUserViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Name is required")]
         public string Name { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Username is required")]
         public string UserName { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Email is required")]
         public string Email { get; set; }
-        [Required]
-        [RegularExpression("^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$")]
+        [Required(ErrorMessage = "Passwords must contain one uppercase, one lowercase, one number and one special character")]
         public string Password { get; set; }
     }
 }

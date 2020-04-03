@@ -8,13 +8,13 @@ namespace MTRSalesBoard.Models
 {
     public class RegisterUserViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Username is required")]
         public string UserName { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Name is required")]
         public string Name { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Email is required or already exists")]
         public string Email { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Passwords must contain one uppercase, one lowercase, one number and one special character")]
         public string Password { get; set; }
     }
 }

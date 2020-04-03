@@ -55,16 +55,23 @@ namespace MTRSalesBoard.Controllers
         public IActionResult SalesEntry() => View();
 
         [HttpPost]
-        public async Task<RedirectToActionResult> SalesEntry(decimal salePrice) {
-            AppUser user = await CurrentUser;
-            Sale s = new Sale() { SaleAmount = salePrice, SaleDate = DateTime.Today };
-            Repository.AddSale(s, user);
+        public async Task<IActionResult> SalesEntry(SaleEntryViewModel model) {
+            if (ModelState.IsValid)
+            {
+                AppUser user = await CurrentUser;
+                Sale s = new Sale() { SaleAmount = model.SaleAmount, SaleDate = DateTime.Today };
+                Repository.AddSale(s, user);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Sale Amount Required");
+                return View(model);
+            }
 
-            return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> ViewSales() {
-            //TODO: Fix
             AppUser user = await CurrentUser;
             var salesFromDb = Repository.Sales;
             return View("ViewSalesList", user);
@@ -77,7 +84,7 @@ namespace MTRSalesBoard.Controllers
         }
 
         [HttpPost]
-        public RedirectToActionResult UpdateSale(string name, int saleid, DateTime date, decimal saleamount) {
+        public RedirectToActionResult UpdateSale(int saleid, DateTime date, decimal saleamount) {
             Sale s = new Sale
             {
                 SaleID = saleid,
