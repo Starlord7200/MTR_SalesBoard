@@ -29,7 +29,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="RoleAdmin" asp-action="Index">Edit User Roles</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="EnterSale">Enter User Sale</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="EnterSaleUser">Enter User Sale</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ViewUserSale">View User Sales</a>
@@ -47,7 +47,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2020 - MTRSalesBoard - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; @DateTime.Now.Year - MTRSalesBoard
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

@@ -42,12 +42,12 @@ namespace MTRSalesBoard.Models
             var sundayOfLastWeek = DateTime.Now.AddDays(-7 + offSetAmtSunday);
             var saturdayOfLastWeek = DateTime.Now.AddDays(-7 + offSetAmtFriday);
             decimal amt = 0m;
-            foreach (Sale s in sales.Where(s => s.SaleDate.Day > sundayOfLastWeek.Day &&
-                                                s.SaleDate.Day < saturdayOfLastWeek.Day &&
-                                                s.SaleDate.Month == sundayOfLastWeek.Month &&
-                                                s.SaleDate.Month == saturdayOfLastWeek.Month &&
-                                                s.SaleDate.Year == sundayOfLastWeek.Year &&
-                                                s.SaleDate.Year == saturdayOfLastWeek.Year))
+            foreach (Sale s in sales.Where(s => s.SaleDate.DayOfYear > sundayOfLastWeek.DayOfYear &&
+                                                s.SaleDate.DayOfYear < saturdayOfLastWeek.DayOfYear &&
+                                                s.SaleDate.Year >= sundayOfLastWeek.Year &&
+                                                s.SaleDate.Year <= saturdayOfLastWeek.Year &&
+                                                s.SaleDate.Month >= sundayOfLastWeek.Month &&
+                                                s.SaleDate.Month <= saturdayOfLastWeek.Month))
             {
                 amt += s.SaleAmount;
             }
@@ -63,12 +63,12 @@ namespace MTRSalesBoard.Models
             var sundayOfWeek = DateTime.Now.AddDays(-14 + offSetAmtSunday);
             var saturdayOfWeek = DateTime.Now.AddDays(-14 + offSetAmtFriday);
             decimal amt = 0m;
-            foreach (Sale s in sales.Where(s => s.SaleDate.Day > sundayOfWeek.Day &&
-                                                s.SaleDate.Day < saturdayOfWeek.Day &&
-                                                s.SaleDate.Month == sundayOfWeek.Month &&
-                                                s.SaleDate.Month == saturdayOfWeek.Month &&
-                                                s.SaleDate.Year == sundayOfWeek.Year &&
-                                                s.SaleDate.Year == saturdayOfWeek.Year))
+            foreach (Sale s in sales.Where(s => s.SaleDate.DayOfYear > sundayOfWeek.DayOfYear &&
+                                                s.SaleDate.DayOfYear < saturdayOfWeek.DayOfYear &&
+                                                s.SaleDate.Year >= sundayOfWeek.Year &&
+                                                s.SaleDate.Year <= saturdayOfWeek.Year &&
+                                                s.SaleDate.Month >= sundayOfWeek.Month &&
+                                                s.SaleDate.Month <= saturdayOfWeek.Month))
             {
                 amt += s.SaleAmount;
             }
@@ -84,12 +84,12 @@ namespace MTRSalesBoard.Models
             var sundayOfWeek = DateTime.Now.AddDays(-21 + offSetAmtSunday);
             var saturdayOfWeek = DateTime.Now.AddDays(-21 + offSetAmtFriday);
             decimal amt = 0m;
-            foreach (Sale s in sales.Where(s => s.SaleDate.Day > sundayOfWeek.Day &&
-                                                s.SaleDate.Day < saturdayOfWeek.Day &&
-                                                s.SaleDate.Month == sundayOfWeek.Month &&
-                                                s.SaleDate.Month == saturdayOfWeek.Month &&
-                                                s.SaleDate.Year == sundayOfWeek.Year &&
-                                                s.SaleDate.Year == saturdayOfWeek.Year))
+            foreach (Sale s in sales.Where(s => s.SaleDate.DayOfYear > sundayOfWeek.DayOfYear &&
+                                                s.SaleDate.DayOfYear < saturdayOfWeek.DayOfYear &&
+                                                s.SaleDate.Year >= sundayOfWeek.Year &&
+                                                s.SaleDate.Year <= saturdayOfWeek.Year &&
+                                                s.SaleDate.Month >= sundayOfWeek.Month &&
+                                                s.SaleDate.Month <= saturdayOfWeek.Month))
             {
                 amt += s.SaleAmount;
             }
@@ -105,12 +105,12 @@ namespace MTRSalesBoard.Models
             var sundayOfWeek = DateTime.Now.AddDays(-28 + offSetAmtSunday);
             var saturdayOfWeek = DateTime.Now.AddDays(-28 + offSetAmtFriday);
             decimal amt = 0m;
-            foreach (Sale s in sales.Where(s => s.SaleDate.Day > sundayOfWeek.Day &&
-                                                s.SaleDate.Day < saturdayOfWeek.Day &&
-                                                s.SaleDate.Month == sundayOfWeek.Month &&
-                                                s.SaleDate.Month == saturdayOfWeek.Month &&
-                                                s.SaleDate.Year == sundayOfWeek.Year &&
-                                                s.SaleDate.Year == saturdayOfWeek.Year))
+            foreach (Sale s in sales.Where(s => s.SaleDate.DayOfYear > sundayOfWeek.DayOfYear &&
+                                                s.SaleDate.DayOfYear < saturdayOfWeek.DayOfYear &&
+                                                s.SaleDate.Year >= sundayOfWeek.Year &&
+                                                s.SaleDate.Year <= saturdayOfWeek.Year &&
+                                                s.SaleDate.Month >= sundayOfWeek.Month &&
+                                                s.SaleDate.Month <= saturdayOfWeek.Month))
             {
                 amt += s.SaleAmount;
             }

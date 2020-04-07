@@ -158,19 +158,41 @@ namespace MTRSalesBoard.Controllers
         }
 
         [HttpGet]
-        public IActionResult EnterSale() => View();
+        public async Task<IActionResult> EnterSaleUser() {
+            List<AppUser> users = new List<AppUser>();
+
+            IdentityRole role = await roleManager.FindByNameAsync("User");
+            if (role != null)
+            {
+                foreach (var user in userManager.Users)
+                {
+                    if (user != null
+                        && await userManager.IsInRoleAsync(user, role.Name))
+                    {
+                        users.Add(user);
+                    }
+                }
+            }
+            return View(users);
+        }
+
+        [HttpGet]
+        public IActionResult EnterSale(string title) {
+            ViewBag.user = title;
+            return View();
+        }
 
         [HttpPost]
-        public async Task<IActionResult> EnterSale(string name, decimal salePrice) {
+        public async Task<IActionResult> EnterSale(string name, SaleEntryViewModel model) {
             AppUser user = await userManager.FindByNameAsync(name);
 
             if (user == null)
             {
-                return View("ViewUserSale");
+                return RedirectToAction("EnterSaleUser");
             }
             else
             {
-                Sale s = new Sale() { SaleAmount = salePrice, SaleDate = DateTime.Today };
+                Sale s = new Sale() { SaleAmount = model.SaleAmount, SaleDate = DateTime.Today };
                 Repository.AddSale(s, user);
             }
             return RedirectToAction("Board");
@@ -245,12 +267,12 @@ namespace MTRSalesBoard.Controllers
             };
 
             Repository.EditSale(s);
-            return RedirectToAction("index");
+            return RedirectToAction("Board");
         }
 
         public RedirectToActionResult DeleteSale(int id) {
             Repository.DeleteSale(id);
-            return RedirectToAction("Index");
+            return RedirectToAction("Board");
         }
 
     }
