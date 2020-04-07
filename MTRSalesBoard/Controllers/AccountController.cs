@@ -72,10 +72,10 @@ namespace MTRSalesBoard.Controllers
                 IdentityResult result
                     = await userManager.CreateAsync(user, model.Password);
 
-                await userManager.AddToRoleAsync(user, "User");
 
                 if (result.Succeeded)
                 {
+                    await userManager.AddToRoleAsync(user, "User");
                     return RedirectToAction("index", "Home");
                 }
                 else
