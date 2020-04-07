@@ -12,10 +12,7 @@
         </tr>
         @foreach (AppUser u in Model)
         {
-            <tr>
-                <td><a asp-action="ViewSalesList" asp-route-title="@u.UserName">@u.UserName</a></td>
-                <td>@u.Name</td>
-            </tr>
+            <partial name="_ViewUsersPartial" model=u />
         }
     </table>
 </div>
