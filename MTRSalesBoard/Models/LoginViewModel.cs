@@ -6,7 +6,7 @@ namespace MTRSalesBoard.Models
     {
         [Required]
         [UIHint("username")]
-        public string UserName { get; set; }
+        public string Username { get; set; }
         [Required]
         [UIHint("password")]
         public string Password { get; set; }

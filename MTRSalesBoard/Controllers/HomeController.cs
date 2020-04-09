@@ -6,6 +6,7 @@ using MTRSalesBoard.Models.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace MTRSalesBoard.Controllers
 {
@@ -31,17 +32,23 @@ namespace MTRSalesBoard.Controllers
             List<AppUser> users = new List<AppUser>();
 
             IdentityRole role = await roleManager.FindByNameAsync("User");
-            if (role != null)
-            {
-                foreach (var user in userManager.Users)
-                {
+            if (role != null) {
+                foreach (var user in userManager.Users) {
                     if (user != null
-                        && await userManager.IsInRoleAsync(user, role.Name))
-                    {
+                        && await userManager.IsInRoleAsync(user, role.Name)) {
                         users.Add(user);
                     }
                 }
             }
+
+            System.Diagnostics.Debug.WriteLine("Users before sort");
+            users.ForEach(u => System.Diagnostics.Debug.WriteLine("{0}\t" + u.CalcLastMonthUserSales() + u.Name));
+
+            users.Sort((s1, s2) => decimal.Compare(s1.CalcLastMonthUserSales(), s2.CalcLastMonthUserSales()));
+            users.Reverse();
+
+            System.Diagnostics.Debug.WriteLine("Users After sort");
+            users.ForEach(u => System.Diagnostics.Debug.WriteLine("{0}\t" + u.CalcLastMonthUserSales() + u.Name));
 
             return View(users);
         }
@@ -53,15 +60,13 @@ namespace MTRSalesBoard.Controllers
 
         [HttpPost]
         public async Task<IActionResult> SalesEntry(SaleEntryViewModel model) {
-            if (ModelState.IsValid)
-            {
+            if (ModelState.IsValid) {
                 AppUser user = await CurrentUser;
                 Sale s = new Sale() { SaleAmount = model.SaleAmount, SaleDate = DateTime.Today };
                 Repository.AddSale(s, user);
                 return RedirectToAction("Index");
             }
-            else
-            {
+            else {
                 ModelState.AddModelError("", "Sale Amount Required");
                 return View(model);
             }

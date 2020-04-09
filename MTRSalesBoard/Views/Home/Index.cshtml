@@ -1,6 +1,6 @@
 ﻿@model List<AppUser>
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Sales Board";
 }
 
 <div class="text-center">
@@ -15,8 +15,7 @@
             <th>Month To Date</th>
             <th>Year To Date</th>
         </tr>
-        @foreach (AppUser u in Model)
-        {
+        @foreach (AppUser u in Model) {
             <tr>
                 <td class="font-weight-bold">@u.Name</td>
                 <td>@u.CalcTodaySalesAmt().ToString("c")</td>

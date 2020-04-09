@@ -1,16 +1,17 @@
 ﻿@model AppUser
+@{
+    ViewData["Title"] = "Sales List";
+}
 
 <h1 class="text-center">Sales for @Model.Name</h1>
 
 <div class="text-center">
-    @if (Model.Sales.Count() == 0)
-    {
+    @if (Model.Sales.Count() == 0) {
         <div>
             <p>You haven't made a sale</p>
         </div>
     }
-    else
-    {
+    else {
         <table class="table table-striped" style="width:100%">
             <tr>
                 <th>Sale Amt</th>
@@ -18,8 +19,7 @@
                 <th></th>
                 <th></th>
             </tr>
-            @foreach (Sale s in Model.Sales)
-            {
+            @foreach (Sale s in Model.Sales) {
                 <tr>
                     <td>@s.SaleAmount.ToString("c")</td>
                     <td>@s.SaleDate.ToString("MM/dd/yyyy")</td>

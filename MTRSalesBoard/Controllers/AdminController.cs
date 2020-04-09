@@ -39,8 +39,7 @@ namespace MTRSalesBoard.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Create(CreateUserViewModel model) {
-            if (ModelState.IsValid)
-            {
+            if (ModelState.IsValid) {
                 AppUser user = new AppUser
                 {
                     UserName = model.UserName,
@@ -50,14 +49,11 @@ namespace MTRSalesBoard.Controllers
                 IdentityResult result
                     = await userManager.CreateAsync(user, model.Password);
 
-                if (result.Succeeded)
-                {
+                if (result.Succeeded) {
                     return RedirectToAction("Index");
                 }
-                else
-                {
-                    foreach (IdentityError error in result.Errors)
-                    {
+                else {
+                    foreach (IdentityError error in result.Errors) {
                         ModelState.AddModelError("", error.Description);
                     }
                 }
@@ -68,20 +64,16 @@ namespace MTRSalesBoard.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(string id) {
             AppUser user = await userManager.FindByIdAsync(id);
-            if (user != null)
-            {
+            if (user != null) {
                 IdentityResult result = await userManager.DeleteAsync(user);
-                if (result.Succeeded)
-                {
+                if (result.Succeeded) {
                     return RedirectToAction("Index");
                 }
-                else
-                {
+                else {
                     AddErrorsFromResult(result);
                 }
             }
-            else
-            {
+            else {
                 ModelState.AddModelError("", "User Not Found");
             }
             return View("Index", userManager.Users);
@@ -89,12 +81,10 @@ namespace MTRSalesBoard.Controllers
 
         public async Task<IActionResult> Edit(string id) {
             AppUser user = await userManager.FindByIdAsync(id);
-            if (user != null)
-            {
+            if (user != null) {
                 return View(user);
             }
-            else
-            {
+            else {
                 return RedirectToAction("Index");
             }
         }
@@ -103,55 +93,45 @@ namespace MTRSalesBoard.Controllers
         public async Task<IActionResult> Edit(string id, string email,
                 string password, string name, string username) {
             AppUser user = await userManager.FindByIdAsync(id);
-            if (user != null)
-            {
+            if (user != null) {
                 user.UserName = username;
                 user.Name = name;
                 user.Email = email;
                 IdentityResult validUserName
                     = await userValidator.ValidateAsync(userManager, user);
-                if (!validUserName.Succeeded)
-                {
+                if (!validUserName.Succeeded) {
                     AddErrorsFromResult(validUserName);
                 }
                 IdentityResult validEmail
                     = await userValidator.ValidateAsync(userManager, user);
-                if (!validEmail.Succeeded)
-                {
+                if (!validEmail.Succeeded) {
                     AddErrorsFromResult(validEmail);
                 }
                 IdentityResult validPass = null;
-                if (!string.IsNullOrEmpty(password))
-                {
+                if (!string.IsNullOrEmpty(password)) {
                     validPass = await passwordValidator.ValidateAsync(userManager,
                         user, password);
-                    if (validPass.Succeeded)
-                    {
+                    if (validPass.Succeeded) {
                         user.PasswordHash = passwordHasher.HashPassword(user,
                             password);
                     }
-                    else
-                    {
+                    else {
                         AddErrorsFromResult(validPass);
                     }
                 }
                 if ((validEmail.Succeeded && validPass == null)
                         || (validEmail.Succeeded
-                        && password != string.Empty && validPass.Succeeded))
-                {
+                        && password != string.Empty && validPass.Succeeded)) {
                     IdentityResult result = await userManager.UpdateAsync(user);
-                    if (result.Succeeded)
-                    {
+                    if (result.Succeeded) {
                         return RedirectToAction("Index");
                     }
-                    else
-                    {
+                    else {
                         AddErrorsFromResult(result);
                     }
                 }
             }
-            else
-            {
+            else {
                 ModelState.AddModelError("", "User Not Found");
             }
             return View(user);
@@ -162,13 +142,10 @@ namespace MTRSalesBoard.Controllers
             List<AppUser> users = new List<AppUser>();
 
             IdentityRole role = await roleManager.FindByNameAsync("User");
-            if (role != null)
-            {
-                foreach (var user in userManager.Users)
-                {
+            if (role != null) {
+                foreach (var user in userManager.Users) {
                     if (user != null
-                        && await userManager.IsInRoleAsync(user, role.Name))
-                    {
+                        && await userManager.IsInRoleAsync(user, role.Name)) {
                         users.Add(user);
                     }
                 }
@@ -186,12 +163,10 @@ namespace MTRSalesBoard.Controllers
         public async Task<IActionResult> EnterSale(string name, SaleEntryViewModel model) {
             AppUser user = await userManager.FindByNameAsync(name);
 
-            if (user == null)
-            {
+            if (user == null) {
                 return RedirectToAction("EnterSaleUser");
             }
-            else
-            {
+            else {
                 Sale s = new Sale() { SaleAmount = model.SaleAmount, SaleDate = DateTime.Today };
                 Repository.AddSale(s, user);
             }
@@ -203,17 +178,23 @@ namespace MTRSalesBoard.Controllers
             List<AppUser> users = new List<AppUser>();
 
             IdentityRole role = await roleManager.FindByNameAsync("User");
-            if (role != null)
-            {
-                foreach (var user in userManager.Users)
-                {
+            if (role != null) {
+                foreach (var user in userManager.Users) {
                     if (user != null
-                        && await userManager.IsInRoleAsync(user, role.Name))
-                    {
+                        && await userManager.IsInRoleAsync(user, role.Name)) {
                         users.Add(user);
                     }
                 }
             }
+
+            System.Diagnostics.Debug.WriteLine("Users before sort");
+            users.ForEach(u => System.Diagnostics.Debug.WriteLine("{0}\t" + u.CalcLastMonthUserSales() + u.Name));
+
+            users.Sort((s1, s2) => decimal.Compare(s1.CalcLastMonthUserSales(), s2.CalcLastMonthUserSales()));
+            users.Reverse();
+
+            System.Diagnostics.Debug.WriteLine("Users After sort");
+            users.ForEach(u => System.Diagnostics.Debug.WriteLine("{0}\t" + u.CalcLastMonthUserSales() + u.Name));
 
             return View(users);
         }
@@ -223,13 +204,10 @@ namespace MTRSalesBoard.Controllers
             List<AppUser> users = new List<AppUser>();
 
             IdentityRole role = await roleManager.FindByNameAsync("User");
-            if (role != null)
-            {
-                foreach (var user in userManager.Users)
-                {
+            if (role != null) {
+                foreach (var user in userManager.Users) {
                     if (user != null
-                        && await userManager.IsInRoleAsync(user, role.Name))
-                    {
+                        && await userManager.IsInRoleAsync(user, role.Name)) {
                         users.Add(user);
                     }
                 }
@@ -245,8 +223,7 @@ namespace MTRSalesBoard.Controllers
         }
 
         private void AddErrorsFromResult(IdentityResult result) {
-            foreach (IdentityError error in result.Errors)
-            {
+            foreach (IdentityError error in result.Errors) {
                 ModelState.AddModelError("", error.Description);
             }
         }

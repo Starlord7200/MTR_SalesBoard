@@ -26,8 +26,7 @@ namespace MTRSalesBoard.Models
             decimal amt = 0m;
             foreach (Sale s in sales.Where(s => s.SaleDate.Day == today.Day &&
                                                 s.SaleDate.Month == today.Month &&
-                                                s.SaleDate.Year == today.Year))
-            {
+                                                s.SaleDate.Year == today.Year)) {
                 amt += s.SaleAmount;
             }
 
@@ -47,8 +46,7 @@ namespace MTRSalesBoard.Models
                                                 s.SaleDate.Year >= sundayOfLastWeek.Year &&
                                                 s.SaleDate.Year <= saturdayOfLastWeek.Year &&
                                                 s.SaleDate.Month >= sundayOfLastWeek.Month &&
-                                                s.SaleDate.Month <= saturdayOfLastWeek.Month))
-            {
+                                                s.SaleDate.Month <= saturdayOfLastWeek.Month)) {
                 amt += s.SaleAmount;
             }
 
@@ -68,8 +66,7 @@ namespace MTRSalesBoard.Models
                                                 s.SaleDate.Year >= sundayOfWeek.Year &&
                                                 s.SaleDate.Year <= saturdayOfWeek.Year &&
                                                 s.SaleDate.Month >= sundayOfWeek.Month &&
-                                                s.SaleDate.Month <= saturdayOfWeek.Month))
-            {
+                                                s.SaleDate.Month <= saturdayOfWeek.Month)) {
                 amt += s.SaleAmount;
             }
 
@@ -89,8 +86,7 @@ namespace MTRSalesBoard.Models
                                                 s.SaleDate.Year >= sundayOfWeek.Year &&
                                                 s.SaleDate.Year <= saturdayOfWeek.Year &&
                                                 s.SaleDate.Month >= sundayOfWeek.Month &&
-                                                s.SaleDate.Month <= saturdayOfWeek.Month))
-            {
+                                                s.SaleDate.Month <= saturdayOfWeek.Month)) {
                 amt += s.SaleAmount;
             }
 
@@ -110,8 +106,7 @@ namespace MTRSalesBoard.Models
                                                 s.SaleDate.Year >= sundayOfWeek.Year &&
                                                 s.SaleDate.Year <= saturdayOfWeek.Year &&
                                                 s.SaleDate.Month >= sundayOfWeek.Month &&
-                                                s.SaleDate.Month <= saturdayOfWeek.Month))
-            {
+                                                s.SaleDate.Month <= saturdayOfWeek.Month)) {
                 amt += s.SaleAmount;
             }
 
@@ -123,8 +118,19 @@ namespace MTRSalesBoard.Models
             var month = now.Month;
             decimal amt = 0m;
             foreach (Sale s in sales.Where(s => s.SaleDate.Month == month &&
-                                           s.SaleDate.Year == now.Year))
-            {
+                                           s.SaleDate.Year == now.Year)) {
+                amt += s.SaleAmount;
+            }
+
+            return amt;
+        }
+
+        public decimal CalcLastMonthUserSales() {
+            var lastMonth = DateTime.Now.AddMonths(-1);
+            var lastMonthYear = lastMonth.Year;
+            decimal amt = 0m;
+            foreach (Sale s in sales.Where(s => s.SaleDate.Month == lastMonth.Month &&
+                                           s.SaleDate.Year == lastMonthYear)) {
                 amt += s.SaleAmount;
             }
 
@@ -135,8 +141,7 @@ namespace MTRSalesBoard.Models
             DateTime now = DateTime.Now;
             var currentYear = now.Year;
             decimal amt = 0m;
-            foreach (Sale s in sales.Where(s => s.SaleDate.Year == currentYear))
-            {
+            foreach (Sale s in sales.Where(s => s.SaleDate.Year == currentYear)) {
                 amt += s.SaleAmount;
             }
             return amt;
@@ -144,8 +149,7 @@ namespace MTRSalesBoard.Models
 
         public decimal CalcTotalUserSales() {
             decimal amt = 0m;
-            foreach (Sale s in sales)
-            {
+            foreach (Sale s in sales) {
                 amt += s.SaleAmount;
             }
 
