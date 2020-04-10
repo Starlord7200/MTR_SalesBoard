@@ -13,8 +13,6 @@ namespace MTRSalesBoard.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        //TODO: Test for SQL Exception
-
         IRepository Repository;
         private UserManager<AppUser> userManager;
         private RoleManager<IdentityRole> roleManager;

@@ -6,7 +6,7 @@
 
 <div class="text-center">
     <table class="table table-striped" style="width:100%">
-        <tr class="thead-light">
+        <tr class="thead-dark">
             <th>Name</th>
             <th>Today</th>
             <th>Last Week</th>
@@ -16,8 +16,7 @@
             <th>Month To Date</th>
             <th>Year To Date</th>
         </tr>
-        @foreach (AppUser u in Model)
-        {
+        @foreach (AppUser u in Model) {
             <tr>
                 <td class="font-weight-bold">@u.Name</td>
                 <td>@u.CalcTodaySalesAmt().ToString("c")</td>
