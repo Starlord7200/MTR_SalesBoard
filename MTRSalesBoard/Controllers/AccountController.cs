@@ -57,6 +57,7 @@ namespace MTRSalesBoard.Controllers
 
         [HttpPost]
         [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> SignUp(RegisterUserViewModel model, string returnUrl) {
             if (ModelState.IsValid) {
                 AppUser user = new AppUser
@@ -88,5 +89,8 @@ namespace MTRSalesBoard.Controllers
             await signInManager.SignOutAsync();
             return RedirectToAction("index", "Home");
         }
+
+        [AllowAnonymous]
+        public IActionResult AccessDenied() => View();
     }
 }

@@ -251,6 +251,5 @@ namespace MTRSalesBoard.Controllers
             Repository.DeleteSale(id);
             return RedirectToAction("Board");
         }
-
     }
 }
