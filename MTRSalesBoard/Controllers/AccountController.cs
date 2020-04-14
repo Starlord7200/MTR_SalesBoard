@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MTRSalesBoard.Controllers
 {
+    //TODO: MARK USERS AS INACTIVE IF DELETED INSTEAD OF DELETING THEM
     public class AccountController : Controller
     {
         private RoleManager<IdentityRole> roleManager;

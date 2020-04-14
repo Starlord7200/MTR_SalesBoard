@@ -4,11 +4,12 @@
 }
 
 <h1 class="text-center">Sales for @Model.Name</h1>
+<h1 class="text-center text-muted">Last 30 days</h1>
 
 <div class="text-center">
     @if (Model.Sales.Count() == 0) {
         <div>
-            <p>You haven't made a sale</p>
+            <p>No sales have been made</p>
         </div>
     }
     else {
@@ -19,13 +20,13 @@
                 <th></th>
                 <th></th>
             </tr>
-            @foreach (Sale s in Model.Sales) {
+            @for (int j = 0, i = Model.Sales.Count() - 1; i >= 0 || j == 30; i--, j++) {
                 <tr>
-                    <td>@s.SaleAmount.ToString("c")</td>
-                    <td>@s.SaleDate.ToString("MM/dd/yyyy")</td>
-                    <td><a class="text-decoration-none" asp-action="UpdateSale" asp-route-id="@s.SaleID">Update</a></td>
+                    <td>@Model.Sales[i].SaleAmount.ToString("c")</td>
+                    <td>@Model.Sales[i].SaleDate.ToString("MM/dd/yyyy")</td>
+                    <td><a class="text-decoration-none" asp-action="UpdateSale" asp-route-id="@Model.Sales[i].SaleID">Update</a></td>
                     <td>
-                        <a class="text-decoration-none" asp-action="DeleteSale" asp-route-id="@s.SaleID"
+                        <a class="text-decoration-none" asp-action="DeleteSale" asp-route-id="@Model.Sales[i].SaleID"
                            onclick="return confirm('Are you sure you want to delete this sale?')">
                             Delete
                         </a>
