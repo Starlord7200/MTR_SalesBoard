@@ -29,7 +29,9 @@ namespace MTRSalesBoard.Models.Repository
         public void AddSale(Sale s, AppUser u) { }
 
         public int EditSale(Sale s) { return 0; }
-        public int DeleteSale(int id) { return 0; }
+        public void DeleteSale(int id) { }
+
+        public void DeleteAllUserSales(AppUser u) { }
 
         public int GetUserCount() {
             return Users.Count();
@@ -41,8 +43,7 @@ namespace MTRSalesBoard.Models.Repository
 
         public decimal CalcTotalSales() {
             decimal amt = 0;
-            foreach (Sale s in Sales)
-            {
+            foreach (Sale s in Sales) {
                 amt += s.SaleAmount;
             }
 

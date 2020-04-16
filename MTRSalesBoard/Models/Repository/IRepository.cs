@@ -14,7 +14,8 @@ namespace MTRSalesBoard.Models.Repository
         int GetSalesCount();
         decimal CalcTotalSales();
         Sale FindSaleById(int id);
-        public int EditSale(Sale s);
-        public int DeleteSale(int id);
+        int EditSale(Sale s);
+        void DeleteSale(int id);
+        public void DeleteAllUserSales(AppUser u) { }
     }
 }

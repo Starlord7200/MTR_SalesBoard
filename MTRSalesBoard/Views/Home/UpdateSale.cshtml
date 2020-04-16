@@ -4,24 +4,25 @@
     ViewData["Title"] = "Update Sale";
 }
 
-<div>
+<div style="padding-left: 40%;">
     <form method="post">
-        <div>
+        <div class="form-group">
             <label for="SaleAmount">SaleAmount</label><br />
-            <input name="saleamount" value="@Model.SaleAmount" />
+            <input class="form-control col-4" name="saleamount" value="@Model.SaleAmount" />
         </div>
-        <div>
+        <div class="form-group">
             <label for="date">Sale Date</label><br />
-            <input name="date" value="@Model.SaleDate" />
+            <input class="form-control col-4" name="date" value="@Model.SaleDate" />
         </div>
         <input name="name" value="@Model.Name" type="hidden" />
         <input name="saleid" value="@Model.SaleID" type="hidden" />
         <div>
-            <input type="submit" value="Enter" />
+            <input class="btn btn-primary" type="submit" value="Enter" />
         </div>
     </form>
-</div>
 
-<p>
-    <a asp-action="Index">Back to List</a>
-</p>
+    <br />
+    <p class="text-muted text-decoration-none">
+        <a asp-action="Index">Back to List</a>
+    </p>
+</div>

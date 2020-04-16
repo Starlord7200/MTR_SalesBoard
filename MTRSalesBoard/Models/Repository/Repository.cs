@@ -42,10 +42,23 @@ namespace MTRSalesBoard.Models.Repository
             return context.SaveChanges();
         }
 
-        public int DeleteSale(int id) {
+        public void DeleteAllUserSales(AppUser u) {
+            var salesFromDb = context.Sales;
+            foreach (Sale s in u.Sales) {
+                u.Sales.Remove(s);
+                context.Update(u);
+                context.SaveChanges();
+
+                var saleFromDb = context.Sales.First(s1 => s1.SaleID == s.SaleID);
+                context.Remove(saleFromDb);
+                context.SaveChanges();
+            }
+        }
+
+        public void DeleteSale(int id) {
             var saleFromDb = context.Sales.First(s1 => s1.SaleID == id);
             context.Remove(saleFromDb);
-            return context.SaveChanges();
+            context.SaveChanges();
         }
 
         public int GetUserCount() {
@@ -58,8 +71,7 @@ namespace MTRSalesBoard.Models.Repository
 
         public decimal CalcTotalSales() {
             decimal amt = 0m;
-            foreach (Sale s in Sales)
-            {
+            foreach (Sale s in Sales) {
                 amt += s.SaleAmount;
             }
 

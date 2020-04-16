@@ -60,7 +60,7 @@ namespace MTRSalesBoard.Controllers
         public async Task<IActionResult> SalesEntry(SaleEntryViewModel model) {
             if (ModelState.IsValid) {
                 AppUser user = await CurrentUser;
-                Sale s = new Sale() { SaleAmount = model.SaleAmount, SaleDate = DateTime.Today };
+                Sale s = new Sale() { SaleAmount = model.SaleAmount, SaleDate = DateTime.Today, Name = user };
                 Repository.AddSale(s, user);
                 return RedirectToAction("Index");
             }

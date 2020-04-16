@@ -4,12 +4,12 @@
 }
 
 <h1 class="text-center">Sales for @Model.Name</h1>
-<h1 class="text-center text-muted">Last 30 days</h1>
+<h4 class="text-center text-muted">(last 30 sales)</h4>
 
 <div class="text-center">
     @if (Model.Sales.Count() == 0) {
         <div>
-            <p>They haven't made a sale yet</p>
+            <p>No sales have been made</p>
         </div>
     }
     else {

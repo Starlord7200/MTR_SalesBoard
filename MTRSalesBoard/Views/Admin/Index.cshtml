@@ -14,14 +14,11 @@
         <th>Name</th>
         <th>Email</th>
     </tr>
-    @if (Model.Count() == 0)
-    {
+    @if (Model.Count() == 0) {
         <tr><td colspan="3" class="text-center">No User Accounts</td></tr>
     }
-    else
-    {
-        foreach (AppUser user in Model)
-        {
+    else {
+        foreach (AppUser user in Model) {
             <tr>
                 <td>@user.Id</td>
                 <td>@user.UserName</td>
@@ -33,7 +30,7 @@
                            asp-route-id="@user.Id">Edit</a>
                         <button type="submit"
                                 class="btn btn-sm btn-danger"
-                                onclick="return confirm('Are you sure you want to delete this person?')">
+                                onclick="return confirm('Are you sure you want to delete this person? This will also delete all of the sales this person has made.')">
                             Delete
                         </button>
                     </form>

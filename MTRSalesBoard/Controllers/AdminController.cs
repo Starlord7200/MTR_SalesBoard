@@ -63,8 +63,16 @@ namespace MTRSalesBoard.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Delete(string id) {
+            var salesFromDb = Repository.Sales;
             AppUser user = await userManager.FindByIdAsync(id);
             if (user != null) {
+                try {
+                    Repository.DeleteAllUserSales(user);
+                }
+                catch {
+                    ModelState.AddModelError("", "Unable to delete user");
+                }
+
                 IdentityResult result = await userManager.DeleteAsync(user);
                 if (result.Succeeded) {
                     return RedirectToAction("Index");
