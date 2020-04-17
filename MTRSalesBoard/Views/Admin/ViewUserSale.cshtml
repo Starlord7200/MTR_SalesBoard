@@ -6,12 +6,11 @@
 
 <div class="text-center">
     <table class="table table-striped" style="width:100%">
-        <tr class="thead-light">
+        <tr class="thead-dark">
             <th>Username</th>
             <th>Name</th>
         </tr>
-        @foreach (AppUser u in Model)
-        {
+        @foreach (AppUser u in Model) {
             <partial name="_ViewUsersPartial" model=u />
         }
     </table>

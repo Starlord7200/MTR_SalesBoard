@@ -39,15 +39,10 @@ namespace MTRSalesBoard.Controllers
                 }
             }
 
-            System.Diagnostics.Debug.WriteLine("Users before sort");
-            users.ForEach(u => System.Diagnostics.Debug.WriteLine("{0}\t" + u.CalcLastMonthUserSales() + u.Name));
-
             users.Sort((s1, s2) => decimal.Compare(s1.CalcLastMonthUserSales(), s2.CalcLastMonthUserSales()));
             users.Reverse();
 
-            System.Diagnostics.Debug.WriteLine("Users After sort");
-            users.ForEach(u => System.Diagnostics.Debug.WriteLine("{0}\t" + u.CalcLastMonthUserSales() + u.Name));
-
+            ViewBag.CurrentMonthAll = Repository.CalcMonthYearSales(DateTime.Now.Month, DateTime.Now.Year).ToString("c");
             return View(users);
         }
 

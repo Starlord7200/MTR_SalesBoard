@@ -4,7 +4,7 @@
     ViewData["Title"] = "Update Sale";
 }
 
-<div class="text-center">
+<div style="padding-left: 40%;">
     <form method="post">
         <div class="form-group">
             <label for="SaleAmount">SaleAmount</label><br />
@@ -17,7 +17,7 @@
         <input name="name" value="@Model.Name" type="hidden" />
         <input class="form-control" name="saleid" value="@Model.SaleID" type="hidden" />
         <div>
-            <input type="submit" value="Enter" class="btn btn-primary" />
+            <input type="submit" value="Enter" class="btn btn-danger" onclick="return confirm('Are you sure you want to update this sale?')" />
         </div>
     </form>
 </div>

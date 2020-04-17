@@ -31,7 +31,7 @@ namespace MTRSalesBoard.Models.Repository
         public int EditSale(Sale s) { return 0; }
         public void DeleteSale(int id) { }
 
-        public void DeleteAllUserSales(AppUser u) { }
+        public void DeleteUser(AppUser u) { }
 
         public int GetUserCount() {
             return Users.Count();
@@ -54,5 +54,8 @@ namespace MTRSalesBoard.Models.Repository
             Sale s = Sales.First(s1 => s1.SaleID == id);
             return s;
         }
+
+        public decimal CalcMonthYearSales(decimal month, decimal year) { return 0; }
+        public decimal CalcMonthLastYearSales() { return 0; }
     }
 }

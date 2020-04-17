@@ -17,15 +17,9 @@
         </tr>
         @foreach (AppUser u in Model) {
             <tr>
-                <td class="font-weight-bold">@u.Name</td>
-                <td>@u.CalcTodaySalesAmt().ToString("c")</td>
-                <td>@u.CalcLastWeekUserSales().ToString("c")</td>
-                <td>@u.CalcLastTwoWeekUserSales().ToString("c")</td>
-                <td>@u.CalcLastThreeWeekUserSales().ToString("c")</td>
-                <td>@u.CalcLastFourWeekUserSales().ToString("c")</td>
-                <td>@u.CalcMonthToDateUserSales().ToString("c")</td>
-                <td>@u.CalcYearToDateUserSales().ToString("c")</td>
+                <partial name="_UserCalcsPartial" model=u />
             </tr>
         }
     </table>
+    @ViewBag.CurrentMonthAll
 </div>

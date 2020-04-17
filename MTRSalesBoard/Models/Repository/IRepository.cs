@@ -7,7 +7,6 @@ namespace MTRSalesBoard.Models.Repository
 {
     public interface IRepository
     {
-        //List<AppUser> Users { get; }
         List<Sale> Sales { get; }
         void AddUser(AppUser u);
         void AddSale(Sale s, AppUser u);
@@ -16,6 +15,8 @@ namespace MTRSalesBoard.Models.Repository
         Sale FindSaleById(int id);
         int EditSale(Sale s);
         void DeleteSale(int id);
-        public void DeleteAllUserSales(AppUser u) { }
+        void DeleteUser(AppUser u);
+        decimal CalcMonthYearSales(decimal month, decimal year);
+        decimal CalcMonthLastYearSales();
     }
 }

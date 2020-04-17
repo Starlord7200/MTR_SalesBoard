@@ -42,7 +42,7 @@ namespace MTRSalesBoard.Models.Repository
             return context.SaveChanges();
         }
 
-        public void DeleteAllUserSales(AppUser u) {
+        public void DeleteUser(AppUser u) {
             var salesFromDb = context.Sales;
             foreach (Sale s in u.Sales) {
                 u.Sales.Remove(s);
@@ -50,7 +50,8 @@ namespace MTRSalesBoard.Models.Repository
                 context.SaveChanges();
 
                 var saleFromDb = context.Sales.First(s1 => s1.SaleID == s.SaleID);
-                context.Remove(saleFromDb);
+                saleFromDb.Name = null;
+                context.Update(saleFromDb);
                 context.SaveChanges();
             }
         }
@@ -72,6 +73,28 @@ namespace MTRSalesBoard.Models.Repository
         public decimal CalcTotalSales() {
             decimal amt = 0m;
             foreach (Sale s in Sales) {
+                amt += s.SaleAmount;
+            }
+
+            return amt;
+        }
+
+        public decimal CalcMonthYearSales(decimal month, decimal year) {
+            decimal amt = 0m;
+            foreach (Sale s in Sales.Where(s => s.SaleDate.Month == month &&
+                                            s.SaleDate.Year == year)) {
+                amt += s.SaleAmount;
+            }
+
+            return amt;
+        }
+
+        public decimal CalcMonthLastYearSales() {
+            decimal amt = 0m;
+            var month = DateTime.Now.Month;
+            var lastYear = DateTime.Now.AddYears(-1);
+            foreach (Sale s in Sales.Where(s => s.SaleDate.Month == month &&
+                                            s.SaleDate.Year == lastYear.Year)) {
                 amt += s.SaleAmount;
             }
 
