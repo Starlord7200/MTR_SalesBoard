@@ -13,8 +13,8 @@
     <link rel="stylesheet" href="~/css/signin.css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
-<body class="text-center">
-    <form class="form-signin" asp-action="Login" method="post">
+<body class="text-center bg-dark">
+    <form class="form-signin bg-light" style="border-radius: 15px;" asp-action="Login" method="post">
         <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
         <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
 
@@ -29,7 +29,7 @@
             Don't Have An Account?<a class="text-muted" asp-action="SignUp"> Sign Up</a>
         </div>
         <div class="text-danger" asp-validation-summary="All"></div>
-        <p class="mt-5 mb-3 text-muted">&copy; @DateTime.Now.Year</p>
+        <p class="mt-1 mb-1 text-muted">&copy; @DateTime.Now.Year</p>
     </form>
 </body>
 </html>
