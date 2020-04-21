@@ -10,12 +10,15 @@
             <label for="SaleAmount">SaleAmount</label><br />
             <input class="form-control" name="saleamount" value="@Model.SaleAmount" />
         </div>
+
         <div class="form-group">
             <label for="date">Sale Date</label><br />
             <input class="form-control" name="date" value="@Model.SaleDate" />
         </div>
+
         <input name="name" value="@Model.Name" type="hidden" />
         <input class="form-control" name="saleid" value="@Model.SaleID" type="hidden" />
+
         <div>
             <input type="submit" value="Enter" class="btn btn-danger" onclick="return confirm('Are you sure you want to update this sale?')" />
         </div>

@@ -209,9 +209,8 @@ namespace MTRSalesBoard.Controllers
 
             IdentityRole role = await roleManager.FindByNameAsync("User");
             if (role != null) {
-                foreach (var user in userManager.Users) {
-                    if (user != null
-                        && await userManager.IsInRoleAsync(user, role.Name)) {
+                foreach (var user in userManager.Users.Where(u => u.Sales.Count != 0)) {
+                    if (user != null) {
                         users.Add(user);
                     }
                 }
