@@ -3,7 +3,7 @@
     ViewData["Title"] = "Sales List";
 }
 
-<h1 class="text-center">Here are you sales</h1>
+<h1 class="text-center">Your sales</h1>
 <h4 class="text-center text-muted">(last 30 sales)</h4>
 
 <div class="text-center">
@@ -17,8 +17,7 @@
             <tr class="thead-dark">
                 <th>Sale Amt</th>
                 <th>Sale Date</th>
-                <th></th>
-                <th></th>
+                <th colspan="2">Edit Options</th>
             </tr>
             @for (int j = 0, i = Model.Sales.Count() - 1; i >= 0 || j == 30; i--, j++) {
                 <tr>

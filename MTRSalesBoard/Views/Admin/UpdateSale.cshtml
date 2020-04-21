@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Update Sale";
+    Layout = "_AdminLayout";
 }
 
 <div style="padding-left: 40%;">
@@ -23,6 +24,6 @@
 
     <br />
     <p class="text-muted text-decoration-none" style="padding-left: 10%;">
-        <a asp-action="Index">Back to List</a>
+        <a asp-controller="Admin" asp-action="ViewUserSale">Back to List</a>
     </p>
 </div>
