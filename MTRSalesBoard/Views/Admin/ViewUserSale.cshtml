@@ -1,6 +1,6 @@
 ﻿@model List<AppUser>
 @{
-    ViewData["Title"] = "Sales Board";
+    ViewData["Title"] = "User List";
     Layout = "_AdminLayout";
 }
 
@@ -12,7 +12,7 @@
             <th>Name</th>
         </tr>
         @foreach (AppUser u in Model) {
-            <partial name="_ViewUsersPartial" model=u />
+            <partial name="_ViewUsersAdminPartial" model=u />
         }
     </table>
 </div>

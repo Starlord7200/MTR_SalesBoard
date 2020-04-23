@@ -51,6 +51,7 @@ namespace MTRSalesBoard
                 opts.Password.RequireLowercase = true;
                 opts.Password.RequireUppercase = true;
                 opts.Password.RequireDigit = true;
+
             }).AddEntityFrameworkStores<ApplicationDBContext>()
                        .AddDefaultTokenProviders();
         }

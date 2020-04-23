@@ -174,9 +174,13 @@ namespace MTRSalesBoard.Controllers
             if (user == null) {
                 return RedirectToAction("EnterSaleUser");
             }
-            else {
+            else if (ModelState.IsValid) {
                 Sale s = new Sale() { SaleAmount = model.SaleAmount, SaleDate = DateTime.Today };
                 Repository.AddSale(s, user);
+            }
+            else {
+                ModelState.AddModelError("", "Sale Amount must be a number greater than 1");
+                return View(model);
             }
             return RedirectToAction("Board");
         }
@@ -225,12 +229,6 @@ namespace MTRSalesBoard.Controllers
             return View(u);
         }
 
-        private void AddErrorsFromResult(IdentityResult result) {
-            foreach (IdentityError error in result.Errors) {
-                ModelState.AddModelError("", error.Description);
-            }
-        }
-
         [HttpGet]
         public IActionResult UpdateSale(int id) {
             Sale sale = Repository.FindSaleById(id);
@@ -253,6 +251,12 @@ namespace MTRSalesBoard.Controllers
         public RedirectToActionResult DeleteSale(int id) {
             Repository.DeleteSale(id);
             return RedirectToAction("Board");
+        }
+
+        private void AddErrorsFromResult(IdentityResult result) {
+            foreach (IdentityError error in result.Errors) {
+                ModelState.AddModelError("", error.Description);
+            }
         }
     }
 }

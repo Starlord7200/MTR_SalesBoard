@@ -6,14 +6,7 @@
 <div class="text-center">
     <table class="table table-striped thead-dark" style="width:100%">
         <tr class="thead-dark">
-            <th>Name</th>
-            <th>Today</th>
-            <th>Last Week</th>
-            <th>Last Two Weeks</th>
-            <th>Last Three Weeks</th>
-            <th>Last Four Weeks</th>
-            <th>Month To Date</th>
-            <th>Year To Date</th>
+            <partial name="_BoardHeaderPartial" />
         </tr>
         @foreach (AppUser u in Model) {
             <tr>
