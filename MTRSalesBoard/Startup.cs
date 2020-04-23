@@ -31,6 +31,7 @@ namespace MTRSalesBoard
 
             services.AddAntiforgery(options =>
             {
+                // Added options for security measures
                 options.FormFieldName = "AntiforgeryFieldname";
                 options.HeaderName = "X-CSRF-TOKEN-HEADERNAME";
                 options.SuppressXFrameOptionsHeader = false;
@@ -40,9 +41,11 @@ namespace MTRSalesBoard
 
             services.AddTransient<IRepository, Repository>();
 
+            // Required to use MsSqlConnection string in the AppSettings.json file
             services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer(
                 Configuration["ConnectionStrings:MsSqlConnection"]));
 
+            // Password and user required options
             services.AddIdentity<AppUser, IdentityRole>(opts =>
             {
                 opts.User.RequireUniqueEmail = true;
@@ -67,6 +70,7 @@ namespace MTRSalesBoard
             }
             app.Use(async (context, next) =>
             {
+                // Added header options for security measures
                 context.Response.Headers.Add("X-Xss-Protection", "1");
                 context.Response.Headers.Add("X-Frame-Options", "SAMEORIGIN");
                 context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
@@ -86,10 +90,13 @@ namespace MTRSalesBoard
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
+            // Makes sure the database migrates
             context.Database.Migrate();
 
+            // Fills the database with seeded test models to make sure the application works
             SeedData.Seed(context);
 
+            // Creates the admin account based in Appsettings.Json
             ApplicationDBContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
         }
     }

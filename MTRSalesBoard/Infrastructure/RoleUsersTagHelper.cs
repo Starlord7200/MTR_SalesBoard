@@ -7,6 +7,9 @@ using MTRSalesBoard.Models;
 
 namespace MTRSalesBoard.Infrastructure
 {
+    // Model only used in helping the index view for RoleAdmin
+    // Returns the Users in a role and not in a role. If edit is clicked, it displays the users in the role and not in the role
+
     [HtmlTargetElement("td", Attributes = "identity-role")]
     public class RoleUsersTagHelper : TagHelper
     {
@@ -27,13 +30,10 @@ namespace MTRSalesBoard.Infrastructure
 
             List<string> names = new List<string>();
             IdentityRole role = await roleManager.FindByIdAsync(Role);
-            if (role != null)
-            {
-                foreach (var user in userManager.Users)
-                {
+            if (role != null) {
+                foreach (var user in userManager.Users) {
                     if (user != null
-                        && await userManager.IsInRoleAsync(user, role.Name))
-                    {
+                        && await userManager.IsInRoleAsync(user, role.Name)) {
                         names.Add(user.Name);
                     }
                 }

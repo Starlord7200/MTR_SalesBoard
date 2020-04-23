@@ -12,12 +12,13 @@ namespace MTRSalesBoard.Models.Repository
 {
     public class ApplicationDBContext : IdentityDbContext
     {
+        // Constructor
         public ApplicationDBContext(
             DbContextOptions<ApplicationDBContext> options) : base(options) { }
 
-        //public DbSet<AppUser> Users { get; set; }
         public DbSet<Sale> Sales { get; set; }
 
+        // Creates the admin account from Appsettings.json
         public static async Task CreateAdminAccount(IServiceProvider serviceProvider, IConfiguration configuration) {
             UserManager<AppUser> userManager =
                 serviceProvider.GetRequiredService<UserManager<AppUser>>();
@@ -25,17 +26,15 @@ namespace MTRSalesBoard.Models.Repository
             RoleManager<IdentityRole> roleManager =
                 serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-            // Getting user info out of appsettings.json   
+            // Getting user info out of Appsettings.json   
             string username = configuration["Data:AdminUser:UserName"];
             string name = configuration["Data:AdminUser:Name"];
             string email = configuration["Data:AdminUser:Email"];
             string password = configuration["Data:AdminUser:Password"];
             string role = configuration["Data:AdminUser:Role"];
 
-            if (await userManager.FindByNameAsync(username) == null)
-            {
-                if (await roleManager.FindByNameAsync(role) == null)
-                {
+            if (await userManager.FindByNameAsync(username) == null) {
+                if (await roleManager.FindByNameAsync(role) == null) {
                     await roleManager.CreateAsync(new IdentityRole(role));
                 }
                 AppUser user = new AppUser
@@ -46,8 +45,7 @@ namespace MTRSalesBoard.Models.Repository
                 };
                 IdentityResult result = await userManager
                 .CreateAsync(user, password);
-                if (result.Succeeded)
-                {
+                if (result.Succeeded) {
                     await userManager.AddToRoleAsync(user, role);
                 }
             }

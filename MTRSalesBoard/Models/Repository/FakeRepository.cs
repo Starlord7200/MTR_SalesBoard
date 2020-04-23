@@ -8,11 +8,15 @@ namespace MTRSalesBoard.Models.Repository
 {
     public class FakeRepository : IRepository
     {
+        // Fake repsository used for XUnit tests
+        #region Properties
         private List<AppUser> usersList = new List<AppUser>();
         private List<Sale> salesList = new List<Sale>();
         public List<AppUser> Users { get { return usersList; } }
         public List<Sale> Sales { get { return salesList; } }
+        #endregion
 
+        #region Methods
         public void AddUser(AppUser u) {
             Users.Add(u);
         }
@@ -57,5 +61,7 @@ namespace MTRSalesBoard.Models.Repository
 
         public decimal CalcMonthYearSales(decimal month, decimal year) { return 0; }
         public decimal CalcMonthLastYearSales() { return 0; }
+        public decimal CalcLastYearSales() { return 0; }
+        #endregion
     }
 }
