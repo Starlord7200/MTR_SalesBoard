@@ -1,0 +1,18 @@
+﻿@model List<AppUser>
+@{
+    ViewData["Title"] = "User List";
+    Layout = "_AdminLayout";
+}
+
+<div class="text-center">
+    <h2>Who do you want to view the sales for?</h2>
+    <table class="table table-striped" style="width:100%">
+        <tr class="thead-dark">
+            <th>Username</th>
+            <th>Name</th>
+        </tr>
+        @foreach (AppUser u in Model) {
+            <partial name="_ViewUsersAdminPartial" model=u />
+        }
+    </table>
+</div>

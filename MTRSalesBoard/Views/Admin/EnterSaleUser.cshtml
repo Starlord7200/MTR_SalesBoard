@@ -1,0 +1,21 @@
+﻿@model List<AppUser>
+@{
+    ViewData["Title"] = "Sale Entry";
+    Layout = "_AdminLayout";
+}
+
+<div class="text-center">
+    <h2>Who are you entering a sale for?</h2>
+    <table class="table table-striped" style="width:100%">
+        <tr class="thead-dark">
+            <th>Username</th>
+            <th>Name</th>
+        </tr>
+        @foreach (AppUser u in Model) {
+            <tr>
+                <td><a asp-controller="Admin" asp-action="EnterSale" asp-route-title="@u.UserName">@u.UserName</a></td>
+                <td>@u.Name</td>
+            </tr>
+        }
+    </table>
+</div>

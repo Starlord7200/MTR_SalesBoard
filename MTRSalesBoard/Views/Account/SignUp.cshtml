@@ -1,0 +1,56 @@
+﻿@model RegisterUserViewModel
+@{
+    Layout = null;
+    ViewData["Title"] = "SignUp";
+}
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="~/favicon/favicon-16x16.png" type="image/gif" sizes="16x16">
+    <title>@ViewData["Title"]</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body style="height: 100%;">
+    <div class="container-fluid d-flex h-100 flex-column">
+        <div class="row flex-grow-1">
+            <div class="col-6 bg-dark">
+                <div>
+                    <img class="" style="position: fixed;
+                                         top: 50%;
+                                         left: 25%;
+                                         transform: translate(-50%, -50%);"
+                         src="~/images/MTR_LOGO_ON_DARK.png" />
+                </div>
+            </div>
+
+            <div class="col-6" style="margin: auto;">
+                <h1 class="text-center">Create an Account</h1>
+                <form class="sr" method="post">
+                    <div class="form-group">
+                        <label class="text-center" asp-for="UserName">Username:</label>
+                        <input class="form-control" asp-for="UserName" placeholder="Enter username" />
+                    </div>
+                    <div class="form-group">
+                        <label class="" asp-for="Name">Name:</label>
+                        <input class="form-control" asp-for="Name" placeholder="Enter Name" />
+                    </div>
+                    <div class="form-group">
+                        <label class="" asp-for="Email">Email:</label>
+                        <input class="form-control" asp-for="Email" placeholder="Enter email" />
+                    </div>
+                    <div class="form-group">
+                        <label class="" asp-for="Password">Password:</label>
+                        <input class="form-control" asp-for="Password" type="password" placeholder="Enter password" />
+                    </div>
+                    <input type="submit" class="btn btn-danger" value="Submit" />
+                </form>
+                <div asp-validation-summary=" All" class="text-danger"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

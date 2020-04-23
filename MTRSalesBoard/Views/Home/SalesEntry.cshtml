@@ -1,0 +1,19 @@
+﻿@model SaleEntryViewModel
+@{
+    ViewData["Title"] = "Sales Entry";
+}
+
+<h1 class="text-center">Enter Your Sale</h1>
+
+<div style="padding-left: 40%;">
+    <div asp-validation-summary=" All" class="text-danger"></div>
+    <form method="post">
+        <div class="form-group">
+            <div class="form-group">
+                <label asp-for="SaleAmount">Sale Amount</label>
+                <input class="form-control col-md-4" placeholder="Amount" asp-for="SaleAmount" />
+            </div>
+            <button class="btn btn-danger" type="submit">Submit</button>
+        </div>
+    </form>
+</div>

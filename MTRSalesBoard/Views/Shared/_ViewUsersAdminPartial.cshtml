@@ -1,0 +1,5 @@
+﻿@model AppUser
+<tr>
+    <td><a asp-controller="Admin" asp-action="ViewSalesList" asp-route-title="@Model.UserName">@Model.UserName</a></td>
+    <td>@Model.Name</td>
+</tr>

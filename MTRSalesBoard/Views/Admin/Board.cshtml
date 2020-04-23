@@ -1,0 +1,28 @@
+﻿@model List<AppUser>
+@{
+    ViewData["Title"] = "Sales Board";
+    Layout = "_AdminLayout";
+}
+
+<div class="text-center row">
+    <table class="table table-striped col-lg-12" style="width:100%">
+        <tr class="thead-dark">
+            <partial name="_BoardHeaderPartial" />
+        </tr>
+        @foreach (AppUser u in Model) {
+            <tr>
+                <partial name="_UserCalcsPartial" model=u />
+            </tr>
+        }
+    </table>
+</div>
+<div class="row text-center">
+    <div class="col-lg-4">
+    </div>
+    <div class="col-lg-4">
+        <div class="font-weight-bold">Current Month Total: @ViewBag.CurrentMonthAll</div>
+    </div>
+    <div class="col-lg-4">
+    </div>
+</div>
+

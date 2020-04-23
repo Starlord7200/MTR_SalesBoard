@@ -1,0 +1,35 @@
+﻿@model LoginViewModel
+@{
+    Layout = null;
+    ViewData["Title"] = "Sign In";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="~/favicon/favicon-16x16.png" type="image/gif" sizes="16x16">
+    <title>@ViewData["Title"] - MTR</title>
+    <link rel="stylesheet" href="~/css/signin.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body class="text-center bg-dark">
+    <form class="form-signin bg-light" style="border-radius: 15px;" asp-action="Login" method="post">
+        <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+
+        <label class="sr-only" asp-for="Username"></label>
+        <input class="form-control" placeholder="Username" asp-for="Username" />
+
+        <label class="sr-only" asp-for="Password"></label>
+        <input class="form-control" placeholder="Password" asp-for="Password" />
+
+        <button class="btn btn-lg btn-danger btn-block" type="submit">Log In</button>
+        <div class="mb-1 text-muted">
+            Don't Have An Account?<a class="text-muted" asp-action="SignUp"> Sign Up</a>
+        </div>
+        <div class="text-danger" asp-validation-summary="All"></div>
+        <p class="mt-1 mb-1 text-muted">&copy; @DateTime.Now.Year</p>
+    </form>
+</body>
+</html>
