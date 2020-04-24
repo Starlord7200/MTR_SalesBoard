@@ -76,7 +76,6 @@ namespace MTRSalesBoard.Controllers
                 return RedirectToAction("Index");
             }
             else {
-                ModelState.AddModelError("", "Sale Amount Required");
                 return View(model);
             }
 
