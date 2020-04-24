@@ -90,6 +90,9 @@ namespace MTRSalesBoard
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
+            // Ensures the database is created
+            context.Database.EnsureCreated();
+
             // Makes sure the database migrates
             context.Database.Migrate();
 

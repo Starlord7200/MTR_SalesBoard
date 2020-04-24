@@ -13,7 +13,7 @@ namespace MTRSalesBoard.Controllers
     [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
-
+        // Variables
         IRepository Repository;
         private RoleManager<IdentityRole> roleManager;
         private UserManager<AppUser> userManager;
@@ -21,6 +21,7 @@ namespace MTRSalesBoard.Controllers
         private IPasswordValidator<AppUser> passwordValidator;
         private IPasswordHasher<AppUser> passwordHasher;
 
+        // Constructor
         public AdminController(UserManager<AppUser> usrMgr,
                 IUserValidator<AppUser> userValid,
                 IPasswordValidator<AppUser> passValid,
@@ -33,10 +34,13 @@ namespace MTRSalesBoard.Controllers
             roleManager = roleMgr;
         }
 
+        // Returns view page for Admin Index
         public ViewResult Index() => View(userManager.Users);
 
+        // Returns view page for Create Page
         public ViewResult Create() => View();
 
+        // Post request that creates a user. If it succeeds, it returns the associated view
         [HttpPost]
         public async Task<IActionResult> Create(CreateUserViewModel model) {
             if (ModelState.IsValid) {
@@ -61,6 +65,9 @@ namespace MTRSalesBoard.Controllers
             return View(model);
         }
 
+        // Deletes a user from the db. 
+        // Removes the association to all sales
+        // If it succeeds, user is deleted
         [HttpPost]
         public async Task<IActionResult> Delete(string id) {
             var salesFromDb = Repository.Sales;
@@ -87,6 +94,7 @@ namespace MTRSalesBoard.Controllers
             return View("Index", userManager.Users);
         }
 
+        // Returns view page for editing a user
         public async Task<IActionResult> Edit(string id) {
             AppUser user = await userManager.FindByIdAsync(id);
             if (user != null) {
@@ -97,54 +105,63 @@ namespace MTRSalesBoard.Controllers
             }
         }
 
+        // Handles the edit request of a user, If the user isn't null, validation is checked. If succeeded, user is updated in the database
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, string email,
                 string password, string name, string username) {
             AppUser user = await userManager.FindByIdAsync(id);
-            if (user != null) {
-                user.UserName = username;
-                user.Name = name;
-                user.Email = email;
-                IdentityResult validUserName
-                    = await userValidator.ValidateAsync(userManager, user);
-                if (!validUserName.Succeeded) {
-                    AddErrorsFromResult(validUserName);
-                }
-                IdentityResult validEmail
-                    = await userValidator.ValidateAsync(userManager, user);
-                if (!validEmail.Succeeded) {
-                    AddErrorsFromResult(validEmail);
-                }
-                IdentityResult validPass = null;
-                if (!string.IsNullOrEmpty(password)) {
-                    validPass = await passwordValidator.ValidateAsync(userManager,
-                        user, password);
-                    if (validPass.Succeeded) {
-                        user.PasswordHash = passwordHasher.HashPassword(user,
-                            password);
+            try {
+                if (user != null) {
+                    user.UserName = username;
+                    user.Name = name;
+                    user.Email = email;
+                    IdentityResult validUserName
+                        = await userValidator.ValidateAsync(userManager, user);
+                    if (!validUserName.Succeeded) {
+                        AddErrorsFromResult(validUserName);
                     }
-                    else {
-                        AddErrorsFromResult(validPass);
+                    IdentityResult validEmail
+                        = await userValidator.ValidateAsync(userManager, user);
+                    if (!validEmail.Succeeded) {
+                        AddErrorsFromResult(validEmail);
+                    }
+                    IdentityResult validPass = null;
+                    if (!string.IsNullOrEmpty(password)) {
+                        validPass = await passwordValidator.ValidateAsync(userManager,
+                            user, password);
+                        if (validPass.Succeeded) {
+                            user.PasswordHash = passwordHasher.HashPassword(user,
+                                password);
+                        }
+                        else {
+                            AddErrorsFromResult(validPass);
+                        }
+                    }
+                    if ((validEmail.Succeeded && validPass == null)
+                            || (validEmail.Succeeded
+                            && password != string.Empty && validPass.Succeeded)) {
+                        IdentityResult result = await userManager.UpdateAsync(user);
+                        if (result.Succeeded) {
+                            return RedirectToAction("Index");
+                        }
+                        else {
+                            AddErrorsFromResult(result);
+                        }
                     }
                 }
-                if ((validEmail.Succeeded && validPass == null)
-                        || (validEmail.Succeeded
-                        && password != string.Empty && validPass.Succeeded)) {
-                    IdentityResult result = await userManager.UpdateAsync(user);
-                    if (result.Succeeded) {
-                        return RedirectToAction("Index");
-                    }
-                    else {
-                        AddErrorsFromResult(result);
-                    }
+                else {
+                    ModelState.AddModelError("", "User Not Found");
                 }
+                return View(user);
             }
-            else {
-                ModelState.AddModelError("", "User Not Found");
+            catch {
+                ModelState.AddModelError("", "unable to edit the user at this time");
+                return View(user);
             }
-            return View(user);
         }
 
+        // Returns a table of users currently in the user role
         [HttpGet]
         public async Task<IActionResult> EnterSaleUser() {
             List<AppUser> users = new List<AppUser>();
@@ -161,13 +178,19 @@ namespace MTRSalesBoard.Controllers
             return View(users);
         }
 
+        // When user is clicked from "EnterSaleUser", the name of user is passed into this 
+        // Returns a view with a form
         [HttpGet]
         public IActionResult EnterSale(string title) {
             ViewBag.user = title;
             return View();
         }
 
+        // Handles the form post request. Checks validation to make sure that the form has a number
+        // If validation passes, The sale is created and added to the user
+        // Redirects to the sales board if succeeded
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EnterSale(string name, SaleEntryViewModel model) {
             AppUser user = await userManager.FindByNameAsync(name);
 
@@ -185,6 +208,10 @@ namespace MTRSalesBoard.Controllers
             return RedirectToAction("Board");
         }
 
+        // Obtains all sales and users from the DB
+        // Finds all users in the User role
+        // Sorts users based on the sales total from last months
+        // Returns the Adminboard view
         public async Task<IActionResult> Board() {
             List<Sale> sales = Repository.Sales;
             List<AppUser> users = new List<AppUser>();
@@ -207,6 +234,7 @@ namespace MTRSalesBoard.Controllers
             return View(users);
         }
 
+        // Retruns a table full of people that have made a sale in the user role
         [HttpGet]
         public async Task<IActionResult> ViewUserSale() {
             List<AppUser> users = new List<AppUser>();
@@ -223,19 +251,26 @@ namespace MTRSalesBoard.Controllers
             return View(users);
         }
 
+        // Obtains the sales for a specific user
+        // Returns View with sales details for the user
         public async Task<IActionResult> ViewSalesList(string title) {
             AppUser u = await userManager.FindByNameAsync(title);
             List<Sale> s = Repository.Sales;
             return View(u);
         }
 
+        // Takes in a sale ID
+        // Find sale and returns a form view
         [HttpGet]
         public IActionResult UpdateSale(int id) {
             Sale sale = Repository.FindSaleById(id);
             return View(sale);
         }
 
+        // Handles update of a sale
+        // Returns the Sales board page when completed 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public RedirectToActionResult UpdateSale(int saleid, DateTime date, decimal saleamount) {
             Sale s = new Sale
             {
@@ -248,11 +283,14 @@ namespace MTRSalesBoard.Controllers
             return RedirectToAction("Board");
         }
 
+        // Deletes sale from the database
+        // Returns the sales board when it completes
         public RedirectToActionResult DeleteSale(int id) {
             Repository.DeleteSale(id);
             return RedirectToAction("Board");
         }
 
+        // Used for adding error results to page. Private 
         private void AddErrorsFromResult(IdentityResult result) {
             foreach (IdentityError error in result.Errors) {
                 ModelState.AddModelError("", error.Description);

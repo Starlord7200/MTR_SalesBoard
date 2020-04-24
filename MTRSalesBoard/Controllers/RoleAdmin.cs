@@ -8,70 +8,69 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace MTRSalesBoard.Controllers
 {
-
     [Authorize(Roles = "Admin")]
     public class RoleAdminController : Controller
     {
+        // Variables
         private RoleManager<IdentityRole> roleManager;
         private UserManager<AppUser> userManager;
 
+        // Constructor
         public RoleAdminController(RoleManager<IdentityRole> roleMgr,
                                    UserManager<AppUser> userMrg) {
             roleManager = roleMgr;
             userManager = userMrg;
         }
 
+        // Returns role view
         public ViewResult Index() => View(roleManager.Roles);
 
+        // Returns role creation view
         public IActionResult Create() => View();
 
+        // Creates a role
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Required]string name) {
-            if (ModelState.IsValid)
-            {
+            if (ModelState.IsValid) {
                 IdentityResult result
                     = await roleManager.CreateAsync(new IdentityRole(name));
-                if (result.Succeeded)
-                {
+                if (result.Succeeded) {
                     return RedirectToAction("Index");
                 }
-                else
-                {
+                else {
                     AddErrorsFromResult(result);
                 }
             }
             return View(name);
         }
 
+        // Deletes the role from the DB
         [HttpPost]
         public async Task<IActionResult> Delete(string id) {
             IdentityRole role = await roleManager.FindByIdAsync(id);
-            if (role != null)
-            {
+            if (role != null) {
                 IdentityResult result = await roleManager.DeleteAsync(role);
-                if (result.Succeeded)
-                {
+                if (result.Succeeded) {
                     return RedirectToAction("Index");
                 }
-                else
-                {
+                else {
                     AddErrorsFromResult(result);
                 }
             }
-            else
-            {
+            else {
                 ModelState.AddModelError("", "No role found");
             }
             return View("Index", roleManager.Roles);
         }
 
+        // Returns View of current roles and who is in them
         public async Task<IActionResult> Edit(string id) {
 
             IdentityRole role = await roleManager.FindByIdAsync(id);
             List<AppUser> members = new List<AppUser>();
             List<AppUser> nonMembers = new List<AppUser>();
-            foreach (AppUser user in userManager.Users)
-            {
+            foreach (AppUser user in userManager.Users) {
                 var list = await userManager.IsInRoleAsync(user, role.Name)
                     ? members : nonMembers;
                 list.Add(user);
@@ -84,52 +83,44 @@ namespace MTRSalesBoard.Controllers
             });
         }
 
+        // Edits who is in a role
         [HttpPost]
         public async Task<IActionResult> Edit(RoleModificationModel model) {
             IdentityResult result;
-            if (ModelState.IsValid)
-            {
-                foreach (string userId in model.IdsToAdd ?? new string[] { })
-                {
+            if (ModelState.IsValid) {
+                foreach (string userId in model.IdsToAdd ?? new string[] { }) {
                     AppUser user = await userManager.FindByIdAsync(userId);
-                    if (user != null)
-                    {
+                    if (user != null) {
                         result = await userManager.AddToRoleAsync(user,
                             model.RoleName);
-                        if (!result.Succeeded)
-                        {
+                        if (!result.Succeeded) {
                             AddErrorsFromResult(result);
                         }
                     }
                 }
-                foreach (string userId in model.IdsToDelete ?? new string[] { })
-                {
+                foreach (string userId in model.IdsToDelete ?? new string[] { }) {
                     AppUser user = await userManager.FindByIdAsync(userId);
-                    if (user != null)
-                    {
+                    if (user != null) {
                         result = await userManager.RemoveFromRoleAsync(user,
                             model.RoleName);
-                        if (!result.Succeeded)
-                        {
+                        if (!result.Succeeded) {
                             AddErrorsFromResult(result);
                         }
                     }
                 }
             }
 
-            if (ModelState.IsValid)
-            {
+            if (ModelState.IsValid) {
                 return RedirectToAction(nameof(Index));
             }
-            else
-            {
+            else {
                 return await Edit(model.RoleId);
             }
         }
 
+        // Used to add errors when the model state isn't valid
         private void AddErrorsFromResult(IdentityResult result) {
-            foreach (IdentityError error in result.Errors)
-            {
+            foreach (IdentityError error in result.Errors) {
                 ModelState.AddModelError("", error.Description);
             }
         }
