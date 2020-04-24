@@ -32,21 +32,25 @@ namespace MTRSalesBoard.Models.Repository
             string email = configuration["Data:AdminUser:Email"];
             string password = configuration["Data:AdminUser:Password"];
             string role = configuration["Data:AdminUser:Role"];
+            string uRole = configuration["Date:AdminUser:Role2"];
 
             if (await userManager.FindByNameAsync(username) == null) {
                 if (await roleManager.FindByNameAsync(role) == null) {
                     await roleManager.CreateAsync(new IdentityRole(role));
-                }
-                AppUser user = new AppUser
-                {
-                    Name = name,
-                    UserName = username,
-                    Email = email
-                };
-                IdentityResult result = await userManager
-                .CreateAsync(user, password);
-                if (result.Succeeded) {
-                    await userManager.AddToRoleAsync(user, role);
+                    if (await roleManager.FindByNameAsync(uRole) == null) {
+                        await roleManager.CreateAsync(new IdentityRole(uRole));
+                    }
+                    AppUser user = new AppUser
+                    {
+                        Name = name,
+                        UserName = username,
+                        Email = email
+                    };
+                    IdentityResult result = await userManager
+                    .CreateAsync(user, password);
+                    if (result.Succeeded) {
+                        await userManager.AddToRoleAsync(user, role);
+                    }
                 }
             }
         }
