@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using System.Linq;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.VisualStudio.Web.CodeGeneration;
 
 namespace MTRSalesBoard.Controllers
 {
@@ -91,23 +93,34 @@ namespace MTRSalesBoard.Controllers
         [HttpGet]
         public IActionResult UpdateSale(int id) {
             Sale sale = Repository.FindSaleById(id);
-            return View(sale);
+            UpdateSaleViewModel model = new UpdateSaleViewModel
+            {
+                Id = sale.SaleID,
+                SaleAmount = sale.SaleAmount,
+                Date = sale.SaleDate
+            };
+            return View(model);
         }
 
         // Handles update post request
         // Updates the sale and add it to the DB
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public RedirectToActionResult UpdateSale(int saleid, DateTime date, decimal saleamount) {
-            Sale s = new Sale
-            {
-                SaleID = saleid,
-                SaleDate = date,
-                SaleAmount = saleamount
-            };
+        public IActionResult UpdateSale(UpdateSaleViewModel model) {
+            if (ModelState.IsValid) {
+                Sale s = new Sale
+                {
+                    SaleID = model.Id,
+                    SaleDate = model.Date,
+                    SaleAmount = model.SaleAmount
+                };
 
-            Repository.EditSale(s);
-            return RedirectToAction("index");
+                Repository.EditSale(s);
+                return RedirectToAction("index");
+            }
+            else {
+                return View(model);
+            }
         }
 
         // Deletes sale from the DB
