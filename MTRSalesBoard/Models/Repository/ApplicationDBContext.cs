@@ -37,21 +37,22 @@ namespace MTRSalesBoard.Models.Repository
             if (await userManager.FindByNameAsync(username) == null) {
                 if (await roleManager.FindByNameAsync(role) == null) {
                     await roleManager.CreateAsync(new IdentityRole(role));
-                    if (await roleManager.FindByNameAsync(uRole) == null) {
-                        await roleManager.CreateAsync(new IdentityRole(uRole));
-                    }
-                    AppUser user = new AppUser
-                    {
-                        Name = name,
-                        UserName = username,
-                        Email = email
-                    };
-                    IdentityResult result = await userManager
-                    .CreateAsync(user, password);
-                    if (result.Succeeded) {
-                        await userManager.AddToRoleAsync(user, role);
-                    }
                 }
+                AppUser user = new AppUser
+                {
+                    Name = name,
+                    UserName = username,
+                    Email = email
+                };
+                IdentityResult result = await userManager
+                .CreateAsync(user, password);
+                if (result.Succeeded) {
+                    await userManager.AddToRoleAsync(user, role);
+                }
+            }
+
+            if (await roleManager.FindByNameAsync(uRole) == null) {
+                await roleManager.CreateAsync(new IdentityRole(uRole));
             }
         }
     }

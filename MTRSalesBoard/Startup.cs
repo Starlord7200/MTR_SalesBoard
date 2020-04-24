@@ -43,7 +43,7 @@ namespace MTRSalesBoard
 
             // Required to use MsSqlConnection string in the AppSettings.json file
             services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer(
-                Configuration["ConnectionStrings:MsSqlConnection"]));
+                Configuration["ConnectionStrings:DefaultConnection"]));
 
             // Password and user required options
             services.AddIdentity<AppUser, IdentityRole>(opts =>
@@ -92,9 +92,6 @@ namespace MTRSalesBoard
 
             // Makes sure the database migrates
             context.Database.Migrate();
-
-            // Fills the database with seeded test models to make sure the application works
-            SeedData.Seed(context);
 
             // Creates the admin account based in Appsettings.Json
             ApplicationDBContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
