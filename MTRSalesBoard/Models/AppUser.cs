@@ -7,20 +7,27 @@ namespace MTRSalesBoard.Models
 {
     public class AppUser : IdentityUser
     {
+        #region Properties
         private List<Sale> sales = new List<Sale>();
 
         public string Name { get; set; }
 
         public List<Sale> Sales { get { return sales; } }
 
+        #endregion
+
+        #region Methods
+        // Adds a sale to the Sales list for this particular user
         public void AddSale(Sale s) {
             Sales.Add(s);
         }
 
+        // Returns the cound of sales in the Sales List fpr the user
         public int GetSalesCount() {
             return Sales.Count();
         }
 
+        // Returns the totals for all sales pertaining to the user for Today's date
         public decimal CalcTodaySalesAmt() {
             DateTime today = DateTime.Now;
             decimal amt = 0m;
@@ -33,6 +40,7 @@ namespace MTRSalesBoard.Models
             return amt;
         }
 
+        // Returns the total for all sales pertaining to the user for the Current Week
         public decimal CalcCurrentWeekSalesAmt() {
             DayOfWeek desiredSaturDay = DayOfWeek.Saturday;
             DayOfWeek desiredSunDay = DayOfWeek.Sunday;
@@ -53,6 +61,7 @@ namespace MTRSalesBoard.Models
             return amt;
         }
 
+        // Returns the total for all sales pertaining to the user last Week
         public decimal CalcLastWeekUserSales() {
             DayOfWeek desiredSaturDay = DayOfWeek.Saturday;
             DayOfWeek desiredSunDay = DayOfWeek.Sunday;
@@ -73,6 +82,7 @@ namespace MTRSalesBoard.Models
             return amt;
         }
 
+        // Returns the total for all sales pertaining to the user Two Weeks ago
         public decimal CalcLastTwoWeekUserSales() {
             DayOfWeek desiredSaturDay = DayOfWeek.Saturday;
             DayOfWeek desiredSunDay = DayOfWeek.Sunday;
@@ -93,6 +103,7 @@ namespace MTRSalesBoard.Models
             return amt;
         }
 
+        // Returns the total for all sales pertaining to the user Three Weeks Ago
         public decimal CalcLastThreeWeekUserSales() {
             DayOfWeek desiredSaturDay = DayOfWeek.Saturday;
             DayOfWeek desiredSunDay = DayOfWeek.Sunday;
@@ -113,6 +124,7 @@ namespace MTRSalesBoard.Models
             return amt;
         }
 
+        // Returns the total for all sales pertaining to the user Four Weeks Ago
         public decimal CalcLastFourWeekUserSales() {
             DayOfWeek desiredSaturDay = DayOfWeek.Saturday;
             DayOfWeek desiredSunDay = DayOfWeek.Sunday;
@@ -133,6 +145,7 @@ namespace MTRSalesBoard.Models
             return amt;
         }
 
+        // Returns the total for all sales pertaining to the user during the current month
         public decimal CalcMonthToDateUserSales() {
             DateTime now = DateTime.Now;
             var month = now.Month;
@@ -145,6 +158,7 @@ namespace MTRSalesBoard.Models
             return amt;
         }
 
+        // Returns the total for all sales pertaining to the user during the last month
         public decimal CalcLastMonthUserSales() {
             var lastMonth = DateTime.Now.AddMonths(-1);
             var lastMonthYear = lastMonth.Year;
@@ -157,6 +171,7 @@ namespace MTRSalesBoard.Models
             return amt;
         }
 
+        // Returns the total for all sales pertaining to the user during the current year
         public decimal CalcYearToDateUserSales() {
             DateTime now = DateTime.Now;
             var currentYear = now.Year;
@@ -167,6 +182,7 @@ namespace MTRSalesBoard.Models
             return amt;
         }
 
+        // Returns the total for all sales pertaining to the user
         public decimal CalcTotalUserSales() {
             decimal amt = 0m;
             foreach (Sale s in sales) {
@@ -175,5 +191,6 @@ namespace MTRSalesBoard.Models
 
             return amt;
         }
+        #endregion
     }
 }

@@ -8,10 +8,12 @@ namespace MTRSalesBoard.Controllers
 {
     public class AccountController : Controller
     {
+        // Private variables
         private RoleManager<IdentityRole> roleManager;
         private UserManager<AppUser> userManager;
         private SignInManager<AppUser> signInManager;
 
+        // Constructor
         public AccountController(UserManager<AppUser> userMgr,
         SignInManager<AppUser> signinMgr, RoleManager<IdentityRole> roleMgr) {
             userManager = userMgr;
@@ -19,6 +21,7 @@ namespace MTRSalesBoard.Controllers
             roleManager = roleMgr;
         }
 
+        // Returns the Login View
         [AllowAnonymous]
         [HttpGet]
         public IActionResult Login(string returnUrl) {
@@ -26,6 +29,8 @@ namespace MTRSalesBoard.Controllers
             return View();
         }
 
+        // Handles the login request from the login page. 
+        // If it succeeds, it shows the board page depending on which role
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -48,6 +53,7 @@ namespace MTRSalesBoard.Controllers
             return View(model);
         }
 
+        // Returns the view page for signup
         [HttpGet]
         [AllowAnonymous]
         public IActionResult SignUp(string returnUrl) {
@@ -55,6 +61,9 @@ namespace MTRSalesBoard.Controllers
             return View();
         }
 
+        // Post Request that handles signing up a user
+        // Viewmodel has required traits that check validation amd return errors if the model state isn't valid
+        // Redirects to url they were trying to access 
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -72,7 +81,7 @@ namespace MTRSalesBoard.Controllers
 
                 if (result.Succeeded) {
                     await userManager.AddToRoleAsync(user, "User");
-                    return RedirectToAction("index", "Home");
+                    return Redirect(returnUrl ?? "/");
                 }
                 else {
                     foreach (IdentityError error in result.Errors) {
@@ -83,6 +92,7 @@ namespace MTRSalesBoard.Controllers
             return View(model);
         }
 
+        // Handles Logout action when logout is clicked. Redirects to the login page if succeeded
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> Logout() {
@@ -90,6 +100,7 @@ namespace MTRSalesBoard.Controllers
             return RedirectToAction("index", "Home");
         }
 
+        // Used for when someone tries to access a controller but doesn't have the role access to get past authorization
         [AllowAnonymous]
         public IActionResult AccessDenied() => View();
     }
