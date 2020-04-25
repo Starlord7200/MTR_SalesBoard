@@ -32,7 +32,7 @@ namespace MTRSalesBoard.Models.Repository
             string email = configuration["Data:AdminUser:Email"];
             string password = configuration["Data:AdminUser:Password"];
             string role = configuration["Data:AdminUser:Role"];
-            string uRole = configuration["Date:AdminUser:Role2"];
+            string uRole = configuration["Data:AdminUser:UserRole"];
 
             if (await userManager.FindByNameAsync(username) == null) {
                 if (await roleManager.FindByNameAsync(role) == null) {
