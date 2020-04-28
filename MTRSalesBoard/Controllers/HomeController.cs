@@ -59,15 +59,14 @@ namespace MTRSalesBoard.Controllers
         public IActionResult ViewSalesList(AppUser u) => View(u);
 
         // Returns view
-        [HttpGet]
-        public IActionResult SalesEntry() => View();
+        //[HttpGet]
+        //public IActionResult SalesEntry() => View();
 
         // Handles Post request
         // Validates sale amount
         // Retruns error if not a number
         // Creates sale and inserts it into the database. Add's reference to current signed user aswell
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> SalesEntry(SaleEntryViewModel model) {
             if (ModelState.IsValid) {
                 AppUser user = await CurrentUser;
@@ -104,7 +103,6 @@ namespace MTRSalesBoard.Controllers
         // Handles update post request
         // Updates the sale and add it to the DB
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult UpdateSale(UpdateSaleViewModel model) {
             if (ModelState.IsValid) {
                 Sale s = new Sale
@@ -125,7 +123,7 @@ namespace MTRSalesBoard.Controllers
         // Deletes sale from the DB
         public RedirectToActionResult DeleteSale(int id) {
             Repository.DeleteSale(id);
-            return RedirectToAction("Index");
+            return RedirectToAction("ViewSales");
         }
     }
 }

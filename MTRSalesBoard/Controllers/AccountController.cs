@@ -66,7 +66,6 @@ namespace MTRSalesBoard.Controllers
         // Redirects to url they were trying to access 
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> SignUp(RegisterUserViewModel model, string returnUrl) {
             if (ModelState.IsValid) {
                 AppUser user = new AppUser

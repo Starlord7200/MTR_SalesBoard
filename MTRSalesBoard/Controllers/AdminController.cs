@@ -107,7 +107,6 @@ namespace MTRSalesBoard.Controllers
 
         // Handles the edit request of a user, If the user isn't null, validation is checked. If succeeded, user is updated in the database
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, string email,
                 string password, string name, string username) {
             AppUser user = await userManager.FindByIdAsync(id);
@@ -190,7 +189,6 @@ namespace MTRSalesBoard.Controllers
         // If validation passes, The sale is created and added to the user
         // Redirects to the sales board if succeeded
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EnterSale(string name, SaleEntryViewModel model) {
             AppUser user = await userManager.FindByNameAsync(name);
 
@@ -279,7 +277,6 @@ namespace MTRSalesBoard.Controllers
         // Handles update post request
         // Updates the sale and add it to the DB
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult UpdateSale(UpdateSaleViewModel model) {
             if (ModelState.IsValid) {
                 Sale s = new Sale

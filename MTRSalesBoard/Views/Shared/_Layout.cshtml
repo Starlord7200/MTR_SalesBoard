@@ -26,7 +26,8 @@
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="SalesEntry">SalesEntry</a>
+                            @*<a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="SalesEntry">SalesEntry</a>*@
+                            <a class="nav-link text-light" href="" data-toggle="modal" data-target="#SalesEntryModal">Sales Entry</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="ViewSales">ViewSales</a>
@@ -41,6 +42,10 @@
             @RenderBody()
         </main>
     </div>
+
+
+    <!-- Modal -->
+    <partial name="_UserSaleEntryModalPartial" />
 
     <footer class="border-top footer bg-dark  text-muted">
         <div class="container text-white">
