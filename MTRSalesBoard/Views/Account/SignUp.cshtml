@@ -11,8 +11,13 @@
     <link rel="icon" href="~/favicon/favicon-16x16.png" type="image/gif" sizes="16x16">
     <title>@ViewData["Title"]</title>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.2.0.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
 </head>
 <body style="height: 100%;">
     <div class="container-fluid d-flex h-100 flex-column">
@@ -33,24 +38,33 @@
                     <div class="form-group">
                         <label class="text-center" asp-for="UserName">Username:</label>
                         <input class="form-control" asp-for="UserName" placeholder="Enter username" />
+                        <span asp-validation-for="UserName" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label class="" asp-for="Name">Name:</label>
                         <input class="form-control" asp-for="Name" placeholder="Enter Name" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label class="" asp-for="Email">Email:</label>
                         <input class="form-control" asp-for="Email" placeholder="Enter email" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label class="" asp-for="Password">Password:</label>
                         <input class="form-control" asp-for="Password" type="password" placeholder="Enter password" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
                     <input type="submit" class="btn btn-danger" value="Submit" />
                 </form>
-                <div asp-validation-summary=" All" class="text-danger"></div>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             </div>
         </div>
     </div>
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

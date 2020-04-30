@@ -75,7 +75,8 @@ namespace MTRSalesBoard.Controllers
                 return RedirectToAction("Index");
             }
             else {
-                return View(model);
+                ModelState.AddModelError("", "Something went wrong");
+                return RedirectToAction("Index");
             }
 
         }

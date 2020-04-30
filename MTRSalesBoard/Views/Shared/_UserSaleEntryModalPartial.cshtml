@@ -1,4 +1,4 @@
-﻿
+﻿@model SaleEntryViewModel
 <div class="modal fade" id="SalesEntryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -8,16 +8,18 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form class="text-center border border-dark p-5" method="post">
-                    <div asp-validation-summary=" All" class="text-danger"></div>
-                    <input type="text" id="defaultLoginFormEmail" name="SaleAmount" value="" class="form-control mb-4" placeholder="Amount">
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" asp-controller="Home" asp-action="SalesEntry" class="btn btn-primary">Submit</button>
-            </div>
+            <form class="text-center border border-dark p-5" asp-controller="Home" asp-action="SalesEntry" enctype="multipart/form-data" method="post">
+                <div class="modal-body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <label asp-for="SaleAmount">Sale Amount</label>
+                    <input type="text" id="defaultLoginFormEmail" asp-for="SaleAmount" value="" class="form-control mb-4" placeholder="Amount">
+                    <span asp-validation-for="SaleAmount" class="text-danger"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
