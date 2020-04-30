@@ -58,10 +58,6 @@ namespace MTRSalesBoard.Controllers
         // Returns View 
         public IActionResult ViewSalesList(AppUser u) => View(u);
 
-        // Returns view
-        //[HttpGet]
-        //public IActionResult SalesEntry() => View();
-
         // Handles Post request
         // Validates sale amount
         // Retruns error if not a number
