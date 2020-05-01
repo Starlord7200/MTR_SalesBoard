@@ -10,7 +10,7 @@ namespace MTRSalesBoard.Models
         #region Properties
         [Required(ErrorMessage = "Amount Required")]
         [Range(1, 10000, ErrorMessage = "Amount must be greater than 1")]
-        [RegularExpression("^[0-9]", ErrorMessage = "Amount must be a number")]
+        [RegularExpression("^[0-9]{1,10}", ErrorMessage = "Amount must be a number")]
         public decimal SaleAmount { get; set; }
         #endregion
     }

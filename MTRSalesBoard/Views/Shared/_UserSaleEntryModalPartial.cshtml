@@ -1,5 +1,5 @@
 ﻿@model SaleEntryViewModel
-<div class="modal fade" id="SalesEntryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="UserSalesEntryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header bg-dark text-white bg">
@@ -12,7 +12,7 @@
                 <div class="modal-body">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <label asp-for="SaleAmount">Sale Amount</label>
-                    <input type="text" id="defaultLoginFormEmail" asp-for="SaleAmount" value="" class="form-control mb-4" placeholder="Amount">
+                    <input type="text" asp-for="SaleAmount" value="" class="form-control mb-4" placeholder="Amount">
                     <span asp-validation-for="SaleAmount" class="text-danger"></span>
                 </div>
                 <div class="modal-footer">
