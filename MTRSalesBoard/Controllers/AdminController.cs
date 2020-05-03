@@ -177,14 +177,6 @@ namespace MTRSalesBoard.Controllers
             return View(users);
         }
 
-        // When user is clicked from "EnterSaleUser", the name of user is passed into this 
-        // Returns a view with a form
-        //[HttpGet]
-        //public IActionResult EnterSale(string title) {
-        //    ViewBag.user = title;
-        //    return View();
-        //}
-
         // Handles the form post request. Checks validation to make sure that the form has a number
         // If validation passes, The sale is created and added to the user
         // Redirects to the sales board if succeeded

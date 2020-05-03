@@ -17,11 +17,16 @@
             </tr>
             @foreach (AppUser u in Model) {
                 <tr>
-                    <td><a href="" data-toggle="modal" data-target="#AdminSaleEntryModal" data-person="@u.UserName">@u.UserName</td>
+                    <td><a href="" data-toggle="modal" data-target="#@u.UserName">@u.UserName</a></td>
                     <td>@u.Name</td>
                 </tr>
             }
         </table>
     }
 </div>
+
+@foreach (AppUser u in Model) {
+    <partial name="_AdminSaleEntryModalPartial" model="@new SaleEntryViewModel() { Name = u.UserName}" {u.UserName} />
+}
+
 
