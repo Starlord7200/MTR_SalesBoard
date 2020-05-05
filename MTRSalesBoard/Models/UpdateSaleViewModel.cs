@@ -17,6 +17,8 @@ namespace MTRSalesBoard.Models
         [Required]
         [Range(1, 10000)]
         public decimal SaleAmount { get; set; }
+
+        public string ModalID { get; set; }
         #endregion
     }
 }
