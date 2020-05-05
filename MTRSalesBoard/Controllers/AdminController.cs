@@ -251,21 +251,6 @@ namespace MTRSalesBoard.Controllers
             return View(u);
         }
 
-        // Takes in a sale ID
-        // Find sale and returns a form view
-        // Returns the view to update a sale
-        //[HttpGet]
-        //public IActionResult UpdateSale(int id) {
-        //    Sale sale = Repository.FindSaleById(id);
-        //    UpdateSaleViewModel model = new UpdateSaleViewModel
-        //    {
-        //        Id = sale.SaleID,
-        //        SaleAmount = sale.SaleAmount,
-        //        Date = sale.SaleDate
-        //    };
-        //    return View(model);
-        //}
-
         // Handles update post request
         // Updates the sale and add it to the DB
         [HttpPost]
@@ -279,7 +264,7 @@ namespace MTRSalesBoard.Controllers
                 };
 
                 Repository.EditSale(s);
-                return RedirectToAction("index");
+                return RedirectToAction("ViewUserSale");
             }
             else {
                 return View(model);
