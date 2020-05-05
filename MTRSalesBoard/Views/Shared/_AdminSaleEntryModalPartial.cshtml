@@ -15,7 +15,10 @@
                 <input type="text" asp-for="SaleAmount" value="" class="form-control mb-4" placeholder="Amount">
                 <span asp-validation-for="SaleAmount" class="text-danger"></span>
 
-                <button class="btn btn-danger btn-block my-4" type="submit">Save</button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger">Save</button>
+                </div>
             </form>
         </div>
     </div>

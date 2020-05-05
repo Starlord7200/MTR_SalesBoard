@@ -26,7 +26,7 @@
 </div>
 
 @foreach (AppUser u in Model) {
-    <partial name="_AdminSaleEntryModalPartial" model="@new SaleEntryViewModel() { Name = u.UserName}" {u.UserName} />
+    <partial name="_AdminSaleEntryModalPartial" model="@new SaleEntryViewModel() { Name = u.UserName}" />
 }
 
 

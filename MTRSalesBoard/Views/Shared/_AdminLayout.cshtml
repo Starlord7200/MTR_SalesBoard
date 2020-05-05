@@ -14,7 +14,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm bg-dark navbar-dark border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark border-bottom box-shadow mb-3 fixed-top">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Admin" asp-action="Board">
                     <img src="~/images/MTR_LOGO_ON_DARK.png" alt="MTR LOGO" width="70" height="25" />
@@ -27,32 +27,32 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Admin" asp-action="Board">Home</a>
+                            <a class="nav-link text-light" asp-controller="Admin" asp-action="Board">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Admin" asp-action="Index">Edit Users</a>
+                            <a class="nav-link text-light" asp-controller="Admin" asp-action="Index">Edit Users</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="RoleAdmin" asp-action="Index">Edit User Roles</a>
+                            <a class="nav-link text-light" asp-controller="RoleAdmin" asp-action="Index">Edit User Roles</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Admin" asp-action="EnterSaleUser">Enter User Sale</a>
+                            <a class="nav-link text-light" asp-controller="Admin" asp-action="EnterSaleUser">Enter User Sale</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Admin" asp-action="ViewUserSale">View User Sales</a>
+                            <a class="nav-link text-light" asp-controller="Admin" asp-action="ViewUserSale">View User Sales</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container" style="margin-top:80px">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer bg-dark  text-muted">
+    <footer class="border-top footer bg-dark text-muted" style="position:fixed">
         <div class="container text-white">
             &copy; @DateTime.Now.Year - MTRSalesBoard - Admin
         </div>
