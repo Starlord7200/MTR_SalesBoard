@@ -7,11 +7,11 @@ namespace MTRSalesBoard.Models
         // This viewmodel maintains the validation for the inputs from the register page
         #region Properties
         [Required(ErrorMessage = "Username is required")]
-
         public string UserName { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
         [RegularExpression("[a-zA-Z]+", ErrorMessage = "Name must contain character letters. No digits allowed")]
+        [UIHint("Full Name")]
         public string Name { get; set; }
 
 

@@ -7,7 +7,6 @@ namespace MTRSalesBoard.Models
     public class SeedData
     {
         // Test data for development
-
         #region SeedMethod
         public static void Seed(ApplicationDBContext context) {
             if (!context.Users.Any()) {

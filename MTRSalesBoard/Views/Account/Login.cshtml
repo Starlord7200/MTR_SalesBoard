@@ -16,19 +16,21 @@
 <body class="text-center bg-dark">
     <form class="form-signin bg-light" style="border-radius: 15px;" asp-action="Login" method="post">
         <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
 
         <label class="sr-only" asp-for="Username"></label>
         <input class="form-control" placeholder="Username" asp-for="Username" />
+        <span asp-validation-for="Username" class="text-danger"></span>
 
         <label class="sr-only" asp-for="Password"></label>
         <input class="form-control" placeholder="Password" asp-for="Password" />
+        <span asp-validation-for="Password" class="text-danger"></span>
 
         <button class="btn btn-lg btn-danger btn-block" type="submit">Log In</button>
         <div class="mb-1 text-muted">
             Don't Have An Account?<a class="text-muted" asp-action="SignUp"> Sign Up</a>
         </div>
-        <div class="text-danger" asp-validation-summary="All"></div>
         <p class="mt-1 mb-1 text-muted">&copy; @DateTime.Now.Year</p>
     </form>
     <partial name="_ValidationScriptsPartial" />

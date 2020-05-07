@@ -7,10 +7,10 @@ namespace MTRSalesBoard.Models
         // View model maintaining the validation for the inputs from the login page
         #region Properties
         [Required]
-        [UIHint("username")]
+        [UIHint("Username")]
         public string Username { get; set; }
         [Required]
-        [UIHint("password")]
+        [UIHint("Password")]
         public string Password { get; set; }
         #endregion
     }

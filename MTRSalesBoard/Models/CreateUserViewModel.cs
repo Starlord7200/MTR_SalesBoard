@@ -7,6 +7,7 @@ namespace MTRSalesBoard.Models
         /* This viewmodel is used to maintain validation from the form when the user is created */
         #region Properties
         [Required(ErrorMessage = "Name is required")]
+        [UIHint("Full Name")]
         public string Name { get; set; }
         [Required(ErrorMessage = "Username is required")]
         public string UserName { get; set; }
