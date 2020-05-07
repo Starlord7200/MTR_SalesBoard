@@ -30,7 +30,6 @@ namespace MTRSalesBoard.Controllers
 
         // Creates a role
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Required]string name) {
             if (ModelState.IsValid) {
                 IdentityResult result
