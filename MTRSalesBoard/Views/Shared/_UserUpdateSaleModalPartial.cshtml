@@ -9,8 +9,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form class="text-center border border-dark p-5" asp-controller="Admin" asp-action="UpdateSale" method="post">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <form class="text-center border border-dark p-5" asp-controller="Home" asp-action="UpdateSale" method="post">
                 <div class="form-group">
                     <label asp-for="SaleAmount">SaleAmount</label><br />
                     <input class="form-control mb-4" asp-for="SaleAmount" value="@Model.SaleAmount" />

@@ -84,18 +84,6 @@ namespace MTRSalesBoard.Controllers
             return View("ViewSalesList", user);
         }
 
-        // Returns the view to update a sale
-        [HttpGet]
-        public IActionResult UpdateSale(int id) {
-            Sale sale = Repository.FindSaleById(id);
-            UpdateSaleViewModel model = new UpdateSaleViewModel
-            {
-                Id = sale.SaleID,
-                SaleAmount = sale.SaleAmount,
-                Date = sale.SaleDate
-            };
-            return View(model);
-        }
 
         // Handles update post request
         // Updates the sale and add it to the DB
