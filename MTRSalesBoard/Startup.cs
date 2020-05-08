@@ -90,8 +90,6 @@ namespace MTRSalesBoard
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            context.Database.EnsureCreated();
-
             // Makes sure the database migrates
             context.Database.Migrate();
 
@@ -99,7 +97,6 @@ namespace MTRSalesBoard
 
             // Creates the admin account based in Appsettings.Json
             ApplicationDBContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
-
         }
     }
 }
