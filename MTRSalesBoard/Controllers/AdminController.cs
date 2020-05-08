@@ -207,23 +207,25 @@ namespace MTRSalesBoard.Controllers
             List<AppUser> users = new List<AppUser>();
 
             IdentityRole role = await roleManager.FindByNameAsync("User");
-            if (role != null) {
+            if (role != null && users.Count > 0) {
                 foreach (var user in userManager.Users) {
                     if (user != null
                         && await userManager.IsInRoleAsync(user, role.Name)) {
                         users.Add(user);
                     }
                 }
+                users.Sort((s1, s2) => decimal.Compare(s1.CalcLastMonthUserSales(), s2.CalcLastMonthUserSales()));
+                users.Reverse();
+
+                ViewBag.CurrentMonthAll = Repository.CalcMonthYearSales(DateTime.Now.Month, DateTime.Now.Year).ToString("c");
+                ViewBag.LastMonthAll = Repository.CalcMonthYearSales(DateTime.Now.AddMonths(-1).Month, DateTime.Now.AddMonths(-1).Year).ToString("c");
+                ViewBag.LastYearMonthAll = Repository.CalcMonthLastYearSales().ToString("c");
+
+                return View(users);
             }
-
-            users.Sort((s1, s2) => decimal.Compare(s1.CalcLastMonthUserSales(), s2.CalcLastMonthUserSales()));
-            users.Reverse();
-
-            ViewBag.CurrentMonthAll = Repository.CalcMonthYearSales(DateTime.Now.Month, DateTime.Now.Year).ToString("c");
-            ViewBag.LastMonthAll = Repository.CalcMonthYearSales(DateTime.Now.AddMonths(-1).Month, DateTime.Now.AddMonths(-1).Year).ToString("c");
-            ViewBag.LastYearMonthAll = Repository.CalcMonthLastYearSales().ToString("c");
-
-            return View(users);
+            else {
+                return View(users);
+            }
         }
 
         // Retruns a table full of people that have made a sale in the user role
