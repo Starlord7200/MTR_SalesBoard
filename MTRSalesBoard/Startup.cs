@@ -37,7 +37,7 @@ namespace MTRSalesBoard
                 options.SuppressXFrameOptionsHeader = false;
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            services.AddMvc();
 
             services.AddTransient<IRepository, Repository>();
 
