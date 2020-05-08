@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MTRSalesBoard.Models;
 using MTRSalesBoard.Models.Repository;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Linq;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.VisualStudio.Web.CodeGeneration;
 
 namespace MTRSalesBoard.Controllers
 {

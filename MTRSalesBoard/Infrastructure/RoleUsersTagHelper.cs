@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using MTRSalesBoard.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MTRSalesBoard.Infrastructure
 {

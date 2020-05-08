@@ -1,6 +1,6 @@
-﻿using System;
+﻿using MTRSalesBoard.Models.Repository;
+using System;
 using System.Linq;
-using MTRSalesBoard.Models.Repository;
 
 namespace MTRSalesBoard.Models
 {

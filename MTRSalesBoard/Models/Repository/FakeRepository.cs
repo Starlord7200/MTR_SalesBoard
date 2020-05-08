@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using MTRSalesBoard.Models;
 
 namespace MTRSalesBoard.Models.Repository
 {
