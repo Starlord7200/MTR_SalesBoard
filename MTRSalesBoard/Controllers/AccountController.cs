@@ -22,8 +22,8 @@ namespace MTRSalesBoard.Controllers
         }
 
         // Returns the Login View
-        [AllowAnonymous]
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Login(string returnUrl) {
             ViewBag.returnUrl = returnUrl;
             return View();
@@ -33,6 +33,7 @@ namespace MTRSalesBoard.Controllers
         // If it succeeds, it shows the board page depending on which role
         [HttpPost]
         [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl) {
             if (ModelState.IsValid) {
                 IdentityRole role = await roleManager.FindByNameAsync("User");
