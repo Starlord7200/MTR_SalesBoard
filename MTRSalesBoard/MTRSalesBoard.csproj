@@ -18,7 +18,4 @@
   <ItemGroup>
     <None Include="wwwroot\images\MTR_LOGO_ON_DARK.png" />
   </ItemGroup>
-
-
-
 </Project>
