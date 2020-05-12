@@ -63,18 +63,20 @@ namespace MTRSalesBoard.Models.Repository
         // Deletes a user from the DB
         // Removes reference to all sales pertaining to them before deletion
         public void DeleteUser(AppUser u) {
-            var salesFromDb = context.Sales;
-            foreach (Sale s in u.Sales) {
-                u.Sales.Remove(s);
-                context.Update(u);
-                context.SaveChanges();
+            if (u.Sales.Count > 0) {
+                var salesFromDb = context.Sales;
+                foreach (Sale s in u.Sales) {
+                    u.Sales.Remove(s);
+                    context.Update(u);
+                    context.SaveChanges();
 
-                var saleFromDb = context.Sales.First(s1 => s1.SaleID == s.SaleID);
-                saleFromDb.Name = null;
-                context.Update(saleFromDb);
-                context.SaveChanges();
+                    var saleFromDb = context.Sales.First(s1 => s1.SaleID == s.SaleID);
+                    saleFromDb.Name = null;
+                    context.Update(saleFromDb);
+                    context.SaveChanges();
+                }
             }
-            context.Dispose();
+            context.SaveChanges();
         }
 
         // Deletes a sale from the DB

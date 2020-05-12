@@ -103,7 +103,7 @@ namespace MTRSalesBoard.Controllers
                 Sale s = new Sale
                 {
                     SaleID = model.Id,
-                    SaleDate = model.Date,
+                    SaleDate = model.Date.Date,
                     SaleAmount = model.SaleAmount
                 };
 

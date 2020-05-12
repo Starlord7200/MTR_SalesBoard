@@ -188,7 +188,7 @@ namespace MTRSalesBoard.Controllers
                 return RedirectToAction("EnterSaleUser");
             }
             else if (ModelState.IsValid) {
-                Sale s = new Sale() { SaleAmount = model.SaleAmount, SaleDate = DateTime.Today };
+                Sale s = new Sale() { SaleAmount = model.SaleAmount, SaleDate = DateTime.Today.Date };
                 Repository.AddSale(s, user);
             }
             else {
