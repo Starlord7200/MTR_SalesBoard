@@ -32,6 +32,7 @@ namespace MTRSalesBoard.Controllers
         // Finds all users in the User role
         // Sorts users based on the sales total from last months
         // Returns the user board view
+        [HttpGet]
         public async Task<IActionResult> Index() {
             List<Sale> sales = Repository.Sales;
             List<AppUser> users = new List<AppUser>();
@@ -62,6 +63,7 @@ namespace MTRSalesBoard.Controllers
         }
 
         // Returns View 
+        [HttpGet]
         public IActionResult ViewSalesList(AppUser u) => View(u);
 
         // Handles Post request
@@ -84,6 +86,7 @@ namespace MTRSalesBoard.Controllers
         }
 
         // Returns the sales for a user
+        [HttpGet]
         public async Task<IActionResult> ViewSales() {
             AppUser user = await CurrentUser;
             var salesFromDb = Repository.Sales;

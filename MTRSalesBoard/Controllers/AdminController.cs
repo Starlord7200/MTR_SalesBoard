@@ -35,7 +35,7 @@ namespace MTRSalesBoard.Controllers
         }
 
         // Returns view page for Admin Index
-        public ViewResult Index() => View(userManager.Users);
+        public ViewResult Index() => View(userManager.Users.ToList());
 
         // Returns view page for Create Page
         public ViewResult Create() => View();
@@ -70,7 +70,7 @@ namespace MTRSalesBoard.Controllers
         // If it succeeds, user is deleted
         [HttpPost]
         public async Task<IActionResult> Delete(string id) {
-            var salesFromDb = Repository.Sales;
+            var salesFromDb = Repository.Sales.ToList();
             AppUser user = await userManager.FindByIdAsync(id);
             if (user != null) {
                 try {
@@ -91,7 +91,7 @@ namespace MTRSalesBoard.Controllers
             else {
                 ModelState.AddModelError("", "User Not Found");
             }
-            return View("Index", userManager.Users);
+            return View("Index", userManager.Users.ToList());
         }
 
         // Returns view page for editing a user
@@ -167,7 +167,7 @@ namespace MTRSalesBoard.Controllers
 
             IdentityRole role = await roleManager.FindByNameAsync("User");
             if (role != null) {
-                foreach (var user in userManager.Users) {
+                foreach (var user in userManager.Users.ToList()) {
                     if (user != null
                         && await userManager.IsInRoleAsync(user, role.Name)) {
                         users.Add(user);
@@ -202,13 +202,14 @@ namespace MTRSalesBoard.Controllers
         // Finds all users in the User role
         // Sorts users based on the sales total from last months
         // Returns the Adminboard view
+        [HttpGet]
         public async Task<IActionResult> Board() {
-            List<Sale> sales = Repository.Sales;
+            List<Sale> sales = Repository.Sales.ToList();
             List<AppUser> users = new List<AppUser>();
 
             IdentityRole role = await roleManager.FindByNameAsync("User");
             if (role != null) {
-                foreach (var user in userManager.Users) {
+                foreach (var user in userManager.Users.ToList()) {
                     if (user != null
                         && await userManager.IsInRoleAsync(user, role.Name)) {
                         users.Add(user);
@@ -235,7 +236,7 @@ namespace MTRSalesBoard.Controllers
             }
         }
 
-        // Retruns a table full of people that have made a sale in the user role
+        // Returns a table full of people that have made a sale in the user role
         [HttpGet]
         public async Task<IActionResult> ViewUserSale() {
             List<AppUser> users = new List<AppUser>();
@@ -256,7 +257,7 @@ namespace MTRSalesBoard.Controllers
         // Returns View with sales details for the user
         public async Task<IActionResult> ViewSalesList(string title) {
             AppUser u = await userManager.FindByNameAsync(title);
-            List<Sale> s = Repository.Sales;
+            List<Sale> s = Repository.Sales.ToList();
             return View(u);
         }
 
