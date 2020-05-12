@@ -39,6 +39,7 @@ namespace MTRSalesBoard.Models.Repository
         public void AddUser(AppUser u) {
             context.Users.Add(u);
             context.SaveChanges();
+            context.Dispose();
         }
 
         // Adds a sale to the DB
@@ -50,6 +51,7 @@ namespace MTRSalesBoard.Models.Repository
             User.Sales.Add(s);
             this.context.Update(User);
             this.context.SaveChanges();
+            this.context.Dispose();
         }
 
         // Updates the sale in the DB
@@ -72,6 +74,7 @@ namespace MTRSalesBoard.Models.Repository
                 context.Update(saleFromDb);
                 context.SaveChanges();
             }
+            context.Dispose();
         }
 
         // Deletes a sale from the DB
@@ -79,6 +82,7 @@ namespace MTRSalesBoard.Models.Repository
             var saleFromDb = context.Sales.First(s1 => s1.SaleID == id);
             context.Remove(saleFromDb);
             context.SaveChanges();
+            context.Dispose();
         }
         #endregion
 
@@ -91,12 +95,13 @@ namespace MTRSalesBoard.Models.Repository
         // Returns the count of all sales in the DB
         public int GetSalesCount() {
             return context.Sales.Count();
+
         }
 
         // Returns the total amount of all sales made
         public decimal CalcTotalSales() {
             decimal amt = 0m;
-            foreach (Sale s in Sales) {
+            foreach (Sale s in Sales.ToList()) {
                 amt += s.SaleAmount;
             }
 
