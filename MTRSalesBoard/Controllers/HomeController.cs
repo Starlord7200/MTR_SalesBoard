@@ -5,6 +5,7 @@ using MTRSalesBoard.Models;
 using MTRSalesBoard.Models.Repository;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MTRSalesBoard.Controllers
@@ -34,13 +35,13 @@ namespace MTRSalesBoard.Controllers
         // Returns the user board view
         [HttpGet]
         public async Task<IActionResult> Index() {
-            List<Sale> sales = Repository.Sales;
+            List<Sale> sales = Repository.Sales.ToList();
             List<AppUser> users = new List<AppUser>();
 
             IdentityRole role = await roleManager.FindByNameAsync("User");
 
             if (role != null) {
-                foreach (var user in userManager.Users) {
+                foreach (var user in userManager.Users.ToList()) {
                     if (user != null
                         && await userManager.IsInRoleAsync(user, role.Name)) {
                         users.Add(user);
@@ -89,7 +90,7 @@ namespace MTRSalesBoard.Controllers
         [HttpGet]
         public async Task<IActionResult> ViewSales() {
             AppUser user = await CurrentUser;
-            var salesFromDb = Repository.Sales;
+            var salesFromDb = Repository.Sales.ToList();
             return View("ViewSalesList", user);
         }
 
