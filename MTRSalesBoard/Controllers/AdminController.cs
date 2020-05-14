@@ -97,6 +97,7 @@ namespace MTRSalesBoard.Controllers
         // Returns view page for editing a user
         public async Task<IActionResult> Edit(string id) {
             AppUser user = await userManager.FindByIdAsync(id);
+
             if (user != null) {
                 return View(user);
             }

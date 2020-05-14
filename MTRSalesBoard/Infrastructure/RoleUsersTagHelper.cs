@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using MTRSalesBoard.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MTRSalesBoard.Infrastructure
@@ -30,7 +31,7 @@ namespace MTRSalesBoard.Infrastructure
             List<string> names = new List<string>();
             IdentityRole role = await roleManager.FindByIdAsync(Role);
             if (role != null) {
-                foreach (var user in userManager.Users) {
+                foreach (var user in userManager.Users.ToList()) {
                     if (user != null
                         && await userManager.IsInRoleAsync(user, role.Name)) {
                         names.Add(user.Name);

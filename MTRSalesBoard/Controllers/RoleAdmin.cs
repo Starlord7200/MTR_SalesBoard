@@ -110,12 +110,7 @@ namespace MTRSalesBoard.Controllers
                 }
             }
 
-            if (ModelState.IsValid) {
-                return RedirectToAction(nameof(Index));
-            }
-            else {
-                return await Edit(model.RoleId);
-            }
+            return (ModelState.IsValid) ? RedirectToAction(nameof(Index)) : await Edit(model.RoleId);
         }
 
         // Used to add errors when the model state isn't valid
