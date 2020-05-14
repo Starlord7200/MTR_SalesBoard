@@ -10,7 +10,7 @@ namespace MTRSalesBoard.Models
         public string UserName { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
-        [RegularExpression("[a-zA-Z]+", ErrorMessage = "Name must contain character letters. No digits allowed")]
+        [RegularExpression(@"^[A-Z][a-z]*(\s[A-Z][a-z]*)+$", ErrorMessage = "Name must contain character letters. No digits allowed")]
         [UIHint("Full Name")]
         public string Name { get; set; }
 
@@ -20,7 +20,7 @@ namespace MTRSalesBoard.Models
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Passwords must contain one uppercase, one lowercase, one number and one special character")]
-        [StringLength(10, MinimumLength = 6)]
+        [StringLength(12, MinimumLength = 6)]
         public string Password { get; set; }
         #endregion
     }
