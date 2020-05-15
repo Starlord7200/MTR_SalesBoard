@@ -11,16 +11,21 @@
     else {
         <h2>Who are you entering a sale for?</h2>
         <table class="table table-striped" style="width:100%">
-            <tr class="thead-dark">
-                <th>Username</th>
-                <th>Name</th>
-            </tr>
-            @foreach (AppUser u in Model) {
-                <tr>
-                    <td><a href="#" data-toggle="modal" data-target="#@u.UserName">@u.UserName</a></td>
-                    <td>@u.Name</td>
+            <thead>
+                <tr class="thead-dark">
+                    <th>Username</th>
+                    <th>Name</th>
                 </tr>
-            }
+
+            </thead>
+            <tbody>
+                @foreach (AppUser u in Model) {
+                    <tr>
+                        <td><a href="#" data-toggle="modal" data-target="#@u.UserName">@u.UserName</a></td>
+                        <td>@u.Name</td>
+                    </tr>
+                }
+            </tbody>
         </table>
     }
 </div>
