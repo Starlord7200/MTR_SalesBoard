@@ -47,12 +47,10 @@ namespace MTRSalesBoard
                     options => options.UseSqlServer(
                     Configuration["ConnectionStrings:DefaultConnection"]));
             }
-            else {
-                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) {
-                    services.AddDbContext<ApplicationDBContext>(
-                        options => options.UseMySql(
-                            Configuration.GetConnectionString("ConnectionStrings:MySqlConnection")));
-                }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) {
+                services.AddDbContext<ApplicationDBContext>(
+                    options => options.UseMySql(
+                        Configuration.GetConnectionString("ConnectionStrings:MySqlConnection")));
             }
 
 
