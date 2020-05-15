@@ -7,6 +7,7 @@
     <title>@ViewData["Title"] - MTRSalesBoard</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/icons/fa513/css/all.css" />
 
     <partial name="_ValidationScriptsPartial" />
 </head>
@@ -25,19 +26,19 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-controller="Admin" asp-action="Board">Home</a>
+                            <a class="nav-link text-light" asp-controller="Admin" asp-action="Board"><span class="fa fa-home mr-1"></span>Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-controller="Admin" asp-action="Index">Edit Users</a>
+                            <a class="nav-link text-light" asp-controller="Admin" asp-action="Index"><span class="fa fa-users mr-1"></span>Users</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-controller="RoleAdmin" asp-action="Index">Edit User Roles</a>
+                            <a class="nav-link text-light" asp-controller="RoleAdmin" asp-action="Index"><span class="fa fa-user-edit mr-1"></span>Roles</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-controller="Admin" asp-action="EnterSaleUser">Enter User Sale</a>
+                            <a class="nav-link text-light" asp-controller="Admin" asp-action="EnterSaleUser"><span class="fa fa-file-invoice-dollar mr-1"></span>Enter Sale</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-controller="Admin" asp-action="ViewUserSale">View User Sales</a>
+                            <a class="nav-link text-light" asp-controller="Admin" asp-action="ViewUserSale"><span class="fa fa-search-dollar mr-1"></span>View User Sales</a>
                         </li>
                     </ul>
                 </div>

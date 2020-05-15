@@ -7,6 +7,7 @@
     <title>@ViewData["Title"] - MTRSalesBoard</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/icons/fa513/css/all.css" />
 
     <partial name="_ValidationScriptsPartial" />
 </head>
@@ -25,13 +26,13 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1 nav-pills">
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-light" asp-controller="Home" asp-action="Index"><span class="fa fa-home mr-1"></span>Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" href="#" data-toggle="modal" data-target="#UserSalesEntryModal">Sales Entry</a>
+                            <a class="nav-link text-light" href="#" data-toggle="modal" data-target="#UserSalesEntryModal"><span class="fa fa-file-invoice-dollar mr-1"></span>Enter Sale</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-controller="Home" asp-action="ViewSales">ViewSales</a>
+                            <a class="nav-link text-light" asp-controller="Home" asp-action="ViewSales"><span class="fa fa-search-dollar mr-1"></span>Recent Sales</a>
                         </li>
                     </ul>
                 </div>
