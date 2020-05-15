@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MTRSalesBoard.Models;
 using MTRSalesBoard.Models.Repository;
+using System.Runtime.InteropServices;
 
 namespace MTRSalesBoard
 {
@@ -40,9 +41,20 @@ namespace MTRSalesBoard
 
             services.AddTransient<IRepository, Repository>();
 
-            // Required to use MsSqlConnection string in the AppSettings.json file
-            services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer(
-                Configuration["ConnectionStrings:DefaultConnection"]));
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
+                // Required to use MsSqlConnection string in the AppSettings.json file
+                services.AddDbContext<ApplicationDBContext>(
+                    options => options.UseSqlServer(
+                    Configuration["ConnectionStrings:DefaultConnection"]));
+            }
+            else {
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) {
+                    services.AddDbContext<ApplicationDBContext>(
+                        options => options.UseMySql(
+                            Configuration.GetConnectionString("ConnectionStrings:MySqlConnection")));
+                }
+            }
+
 
             // Password and user required options
             services.AddIdentity<AppUser, IdentityRole>(opts =>
