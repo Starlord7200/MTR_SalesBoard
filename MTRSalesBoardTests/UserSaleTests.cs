@@ -1,9 +1,9 @@
-using System;
-using Xunit;
-using MTRSalesBoard.Models;
 using MTRSalesBoard.Controllers;
+using MTRSalesBoard.Models;
 using MTRSalesBoard.Models.Repository;
+using System;
 using System.Collections.Generic;
+using Xunit;
 
 namespace MTRSalesBoardTests
 {

@@ -7,10 +7,13 @@
     <title>@ViewData["Title"] - MTRSalesBoard</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/icons/fa513/css/all.css" />
+
+    <partial name="_ValidationScriptsPartial" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm bg-dark navbar-dark border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark border-bottom box-shadow mb-3 fixed-top">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                     <img src="~/images/MTR_LOGO_ON_DARK.png" alt="MTR LOGO" width="70" height="25" />
@@ -23,26 +26,30 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1 nav-pills">
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-light" asp-controller="Home" asp-action="Index"><span class="fa fa-home mr-1"></span>Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="SalesEntry">SalesEntry</a>
+                            <a class="nav-link text-light" href="#" data-toggle="modal" data-target="#UserSalesEntryModal"><span class="fa fa-file-invoice-dollar mr-1"></span>Enter Sale</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="ViewSales">ViewSales</a>
+                            <a class="nav-link text-light" asp-controller="Home" asp-action="ViewSales"><span class="fa fa-search-dollar mr-1"></span>Recent Sales</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container" style="margin-top:80px">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer bg-dark  text-muted">
+
+    <!-- Modal -->
+    <partial name="_UserSaleEntryModalPartial" model="@new SaleEntryViewModel()" />
+
+    <footer class="border-top footer bg-dark text-muted" style="position:fixed">
         <div class="container text-white">
             &copy; @DateTime.Now.Year - MTRSalesBoard
         </div>

@@ -1,6 +1,6 @@
 ﻿@model AppUser
 
-<td class="font-weight-bold">@Model.Name</td>
+<td class="font-weight-bold" scope="row">@Model.Name</td>
 <td>@Model.CalcTodaySalesAmt().ToString("c")</td>
 <td>@Model.CalcCurrentWeekSalesAmt().ToString("c")</td>
 <td>@Model.CalcLastWeekUserSales().ToString("c")</td>

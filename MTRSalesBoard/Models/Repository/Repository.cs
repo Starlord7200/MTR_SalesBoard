@@ -1,8 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace MTRSalesBoard.Models.Repository
 {
@@ -41,6 +39,7 @@ namespace MTRSalesBoard.Models.Repository
         public void AddUser(AppUser u) {
             context.Users.Add(u);
             context.SaveChanges();
+            context.Dispose();
         }
 
         // Adds a sale to the DB
@@ -52,6 +51,7 @@ namespace MTRSalesBoard.Models.Repository
             User.Sales.Add(s);
             this.context.Update(User);
             this.context.SaveChanges();
+            this.context.Dispose();
         }
 
         // Updates the sale in the DB
@@ -63,17 +63,20 @@ namespace MTRSalesBoard.Models.Repository
         // Deletes a user from the DB
         // Removes reference to all sales pertaining to them before deletion
         public void DeleteUser(AppUser u) {
-            var salesFromDb = context.Sales;
-            foreach (Sale s in u.Sales) {
-                u.Sales.Remove(s);
-                context.Update(u);
-                context.SaveChanges();
+            if (u.Sales.Count > 0) {
+                var salesFromDb = context.Sales;
+                foreach (Sale s in u.Sales) {
+                    u.Sales.Remove(s);
+                    context.Update(u);
+                    context.SaveChanges();
 
-                var saleFromDb = context.Sales.First(s1 => s1.SaleID == s.SaleID);
-                saleFromDb.Name = null;
-                context.Update(saleFromDb);
-                context.SaveChanges();
+                    var saleFromDb = context.Sales.First(s1 => s1.SaleID == s.SaleID);
+                    saleFromDb.Name = null;
+                    context.Update(saleFromDb);
+                    context.SaveChanges();
+                }
             }
+            context.SaveChanges();
         }
 
         // Deletes a sale from the DB
@@ -81,6 +84,7 @@ namespace MTRSalesBoard.Models.Repository
             var saleFromDb = context.Sales.First(s1 => s1.SaleID == id);
             context.Remove(saleFromDb);
             context.SaveChanges();
+            context.Dispose();
         }
         #endregion
 
@@ -93,12 +97,13 @@ namespace MTRSalesBoard.Models.Repository
         // Returns the count of all sales in the DB
         public int GetSalesCount() {
             return context.Sales.Count();
+
         }
 
         // Returns the total amount of all sales made
         public decimal CalcTotalSales() {
             decimal amt = 0m;
-            foreach (Sale s in Sales) {
+            foreach (Sale s in Sales.ToList()) {
                 amt += s.SaleAmount;
             }
 

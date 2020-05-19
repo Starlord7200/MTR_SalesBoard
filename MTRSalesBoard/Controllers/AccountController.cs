@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
-using MTRSalesBoard.Models;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using MTRSalesBoard.Models;
+using System.Threading.Tasks;
 
 namespace MTRSalesBoard.Controllers
 {
@@ -22,8 +22,8 @@ namespace MTRSalesBoard.Controllers
         }
 
         // Returns the Login View
-        [AllowAnonymous]
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Login(string returnUrl) {
             ViewBag.returnUrl = returnUrl;
             return View();
@@ -66,7 +66,6 @@ namespace MTRSalesBoard.Controllers
         // Redirects to url they were trying to access 
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> SignUp(RegisterUserViewModel model, string returnUrl) {
             if (ModelState.IsValid) {
                 AppUser user = new AppUser

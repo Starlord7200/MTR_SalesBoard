@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 using MTRSalesBoard.Models;
-using Microsoft.AspNetCore.Authorization;
-using System;
 using MTRSalesBoard.Models.Repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MTRSalesBoard.Controllers
 {
@@ -35,7 +35,7 @@ namespace MTRSalesBoard.Controllers
         }
 
         // Returns view page for Admin Index
-        public ViewResult Index() => View(userManager.Users);
+        public ViewResult Index() => View(userManager.Users.ToList());
 
         // Returns view page for Create Page
         public ViewResult Create() => View();
@@ -70,7 +70,7 @@ namespace MTRSalesBoard.Controllers
         // If it succeeds, user is deleted
         [HttpPost]
         public async Task<IActionResult> Delete(string id) {
-            var salesFromDb = Repository.Sales;
+            var salesFromDb = Repository.Sales.ToList();
             AppUser user = await userManager.FindByIdAsync(id);
             if (user != null) {
                 try {
@@ -91,12 +91,13 @@ namespace MTRSalesBoard.Controllers
             else {
                 ModelState.AddModelError("", "User Not Found");
             }
-            return View("Index", userManager.Users);
+            return View("Index", userManager.Users.ToList());
         }
 
         // Returns view page for editing a user
         public async Task<IActionResult> Edit(string id) {
             AppUser user = await userManager.FindByIdAsync(id);
+
             if (user != null) {
                 return View(user);
             }
@@ -107,7 +108,6 @@ namespace MTRSalesBoard.Controllers
 
         // Handles the edit request of a user, If the user isn't null, validation is checked. If succeeded, user is updated in the database
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, string email,
                 string password, string name, string username) {
             AppUser user = await userManager.FindByIdAsync(id);
@@ -168,7 +168,7 @@ namespace MTRSalesBoard.Controllers
 
             IdentityRole role = await roleManager.FindByNameAsync("User");
             if (role != null) {
-                foreach (var user in userManager.Users) {
+                foreach (var user in userManager.Users.ToList()) {
                     if (user != null
                         && await userManager.IsInRoleAsync(user, role.Name)) {
                         users.Add(user);
@@ -178,19 +178,10 @@ namespace MTRSalesBoard.Controllers
             return View(users);
         }
 
-        // When user is clicked from "EnterSaleUser", the name of user is passed into this 
-        // Returns a view with a form
-        [HttpGet]
-        public IActionResult EnterSale(string title) {
-            ViewBag.user = title;
-            return View();
-        }
-
         // Handles the form post request. Checks validation to make sure that the form has a number
         // If validation passes, The sale is created and added to the user
         // Redirects to the sales board if succeeded
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EnterSale(string name, SaleEntryViewModel model) {
             AppUser user = await userManager.FindByNameAsync(name);
 
@@ -198,11 +189,11 @@ namespace MTRSalesBoard.Controllers
                 return RedirectToAction("EnterSaleUser");
             }
             else if (ModelState.IsValid) {
-                Sale s = new Sale() { SaleAmount = model.SaleAmount, SaleDate = DateTime.Today };
+                Sale s = new Sale() { SaleAmount = model.SaleAmount, SaleDate = DateTime.Today.Date };
                 Repository.AddSale(s, user);
             }
             else {
-                ModelState.AddModelError("", "Sale Amount must be a number greater than 1");
+                ViewBag.user = user.UserName;
                 return View(model);
             }
             return RedirectToAction("Board");
@@ -212,29 +203,41 @@ namespace MTRSalesBoard.Controllers
         // Finds all users in the User role
         // Sorts users based on the sales total from last months
         // Returns the Adminboard view
+        [HttpGet]
         public async Task<IActionResult> Board() {
-            List<Sale> sales = Repository.Sales;
+            List<Sale> sales = Repository.Sales.ToList();
             List<AppUser> users = new List<AppUser>();
 
             IdentityRole role = await roleManager.FindByNameAsync("User");
             if (role != null) {
-                foreach (var user in userManager.Users) {
+                foreach (var user in userManager.Users.ToList()) {
                     if (user != null
                         && await userManager.IsInRoleAsync(user, role.Name)) {
                         users.Add(user);
                     }
                 }
+
+                if (users.Count > 0) {
+                    users.Sort((s1, s2) => decimal.Compare(s1.CalcLastMonthUserSales(), s2.CalcLastMonthUserSales()));
+                    users.Reverse();
+
+                    ViewBag.CurrentMonthAll = Repository.CalcMonthYearSales(DateTime.Now.Month, DateTime.Now.Year).ToString("c");
+                    ViewBag.LastMonthAll = Repository.CalcMonthYearSales(DateTime.Now.AddMonths(-1).Month, DateTime.Now.AddMonths(-1).Year).ToString("c");
+                    ViewBag.LastYearMonthAll = Repository.CalcMonthLastYearSales().ToString("c");
+
+                    return View(users);
+                }
+                else {
+                    return View(users);
+                }
+
             }
-
-            users.Sort((s1, s2) => decimal.Compare(s1.CalcLastMonthUserSales(), s2.CalcLastMonthUserSales()));
-            users.Reverse();
-
-            ViewBag.CurrentMonthAll = Repository.CalcMonthYearSales(DateTime.Now.Month, DateTime.Now.Year).ToString("c");
-
-            return View(users);
+            else {
+                return View(users);
+            }
         }
 
-        // Retruns a table full of people that have made a sale in the user role
+        // Returns a table full of people that have made a sale in the user role
         [HttpGet]
         public async Task<IActionResult> ViewUserSale() {
             List<AppUser> users = new List<AppUser>();
@@ -255,32 +258,28 @@ namespace MTRSalesBoard.Controllers
         // Returns View with sales details for the user
         public async Task<IActionResult> ViewSalesList(string title) {
             AppUser u = await userManager.FindByNameAsync(title);
-            List<Sale> s = Repository.Sales;
+            List<Sale> s = Repository.Sales.ToList();
             return View(u);
         }
 
-        // Takes in a sale ID
-        // Find sale and returns a form view
-        [HttpGet]
-        public IActionResult UpdateSale(int id) {
-            Sale sale = Repository.FindSaleById(id);
-            return View(sale);
-        }
-
-        // Handles update of a sale
-        // Returns the Sales board page when completed 
+        // Handles update post request
+        // Updates the sale and add it to the DB
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public RedirectToActionResult UpdateSale(int saleid, DateTime date, decimal saleamount) {
-            Sale s = new Sale
-            {
-                SaleID = saleid,
-                SaleDate = date,
-                SaleAmount = saleamount
-            };
+        public IActionResult UpdateSale(UpdateSaleViewModel model) {
+            if (ModelState.IsValid) {
+                Sale s = new Sale
+                {
+                    SaleID = model.Id,
+                    SaleDate = model.Date,
+                    SaleAmount = model.SaleAmount
+                };
 
-            Repository.EditSale(s);
-            return RedirectToAction("Board");
+                Repository.EditSale(s);
+                return RedirectToAction("ViewUserSale");
+            }
+            else {
+                return View(model);
+            }
         }
 
         // Deletes sale from the database

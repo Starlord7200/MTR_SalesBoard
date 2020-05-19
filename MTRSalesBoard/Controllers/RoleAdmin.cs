@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MTRSalesBoard.Models;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Authorization;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MTRSalesBoard.Controllers
 {
@@ -23,14 +24,13 @@ namespace MTRSalesBoard.Controllers
         }
 
         // Returns role view
-        public ViewResult Index() => View(roleManager.Roles);
+        public ViewResult Index() => View(roleManager.Roles.ToList());
 
         // Returns role creation view
         public IActionResult Create() => View();
 
         // Creates a role
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Required]string name) {
             if (ModelState.IsValid) {
                 IdentityResult result
@@ -61,7 +61,7 @@ namespace MTRSalesBoard.Controllers
             else {
                 ModelState.AddModelError("", "No role found");
             }
-            return View("Index", roleManager.Roles);
+            return View("Index", roleManager.Roles.ToList());
         }
 
         // Returns View of current roles and who is in them
@@ -70,7 +70,7 @@ namespace MTRSalesBoard.Controllers
             IdentityRole role = await roleManager.FindByIdAsync(id);
             List<AppUser> members = new List<AppUser>();
             List<AppUser> nonMembers = new List<AppUser>();
-            foreach (AppUser user in userManager.Users) {
+            foreach (AppUser user in userManager.Users.ToList()) {
                 var list = await userManager.IsInRoleAsync(user, role.Name)
                     ? members : nonMembers;
                 list.Add(user);
@@ -110,12 +110,7 @@ namespace MTRSalesBoard.Controllers
                 }
             }
 
-            if (ModelState.IsValid) {
-                return RedirectToAction(nameof(Index));
-            }
-            else {
-                return await Edit(model.RoleId);
-            }
+            return (ModelState.IsValid) ? RedirectToAction(nameof(Index)) : await Edit(model.RoleId);
         }
 
         // Used to add errors when the model state isn't valid

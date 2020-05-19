@@ -7,7 +7,6 @@ namespace MTRSalesBoard.Models
     {
         // This model is the model for sales
         // Requires an application user to be attached
-
         #region Properties
         [Key]
         public int SaleID { get; set; }

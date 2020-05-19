@@ -1,0 +1,25 @@
+﻿@model SaleEntryViewModel
+<div class="modal fade" id="UserSalesEntryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white bg">
+                <h5 class="modal-title" id="SalesEntryModal">Enter Your Sale</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="text-center border" asp-controller="Home" asp-action="SalesEntry" enctype="multipart/form-data" method="post">
+                <div class="modal-body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <label asp-for="SaleAmount">Sale Amount</label>
+                    <input type="text" asp-for="SaleAmount" value="" class="form-control mb-4" placeholder="Amount">
+                    <span asp-validation-for="SaleAmount" class="text-danger"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

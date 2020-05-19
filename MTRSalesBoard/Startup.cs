@@ -1,14 +1,14 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MTRSalesBoard.Models;
 using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+using MTRSalesBoard.Models;
 using MTRSalesBoard.Models.Repository;
+using System.Runtime.InteropServices;
 
 namespace MTRSalesBoard
 {
@@ -37,13 +37,27 @@ namespace MTRSalesBoard
                 options.SuppressXFrameOptionsHeader = false;
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            services.AddMvc();
 
             services.AddTransient<IRepository, Repository>();
 
             // Required to use MsSqlConnection string in the AppSettings.json file
-            services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer(
-                Configuration["ConnectionStrings:MsSqlConnection"]));
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
+                services.AddDbContext<ApplicationDBContext>(
+                    options => options.UseSqlServer(
+                        Configuration["ConnectionStrings:DefaultConnection"]));
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) {
+                // For MariaDB
+                services.AddDbContext<ApplicationDBContext>(
+                    options => options.UseMySql(
+                        Configuration["ConnectionStrings:MySqlConnection"]));
+            }
+            else {
+                services.AddDbContext<ApplicationDBContext>(
+                    options => options.UseSqlServer(
+                        Configuration["ConnectionStrings:DefaultConnection"]));
+            }
 
             // Password and user required options
             services.AddIdentity<AppUser, IdentityRole>(opts =>
@@ -90,14 +104,10 @@ namespace MTRSalesBoard
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            // Ensures the database is created
-            context.Database.EnsureCreated();
-
             // Makes sure the database migrates
             context.Database.Migrate();
 
-            // Fills the database with seeded test models to make sure the application works
-            SeedData.Seed(context);
+            //SeedData.Seed(context);
 
             // Creates the admin account based in Appsettings.Json
             ApplicationDBContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();

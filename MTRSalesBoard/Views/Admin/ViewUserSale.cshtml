@@ -5,14 +5,23 @@
 }
 
 <div class="text-center">
-    <h2>Who do you want to view the sales for?</h2>
-    <table class="table table-striped" style="width:100%">
-        <tr class="thead-dark">
-            <th>Username</th>
-            <th>Name</th>
-        </tr>
-        @foreach (AppUser u in Model) {
-            <partial name="_ViewUsersAdminPartial" model=u />
-        }
-    </table>
+    @if (Model.Count() == 0) {
+        <div>There are no users available</div>
+    }
+    else {
+        <h2>Who do you want to view the sales for?</h2>
+        <table class="table table-striped" style="width:100%">
+            <thead>
+                <tr class="thead-dark">
+                    <th>Username</th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (AppUser u in Model) {
+                    <partial name="_ViewUsersAdminPartial" model=u />
+                }
+            </tbody>
+        </table>
+    }
 </div>

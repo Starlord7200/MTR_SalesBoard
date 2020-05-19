@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MTRSalesBoard.Models;
 using MTRSalesBoard.Models.Repository;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using System.Threading.Tasks;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MTRSalesBoard.Controllers
 {
@@ -33,39 +33,45 @@ namespace MTRSalesBoard.Controllers
         // Finds all users in the User role
         // Sorts users based on the sales total from last months
         // Returns the user board view
+        [HttpGet]
         public async Task<IActionResult> Index() {
-            List<Sale> sales = Repository.Sales;
+            List<Sale> sales = Repository.Sales.ToList();
             List<AppUser> users = new List<AppUser>();
 
             IdentityRole role = await roleManager.FindByNameAsync("User");
+
             if (role != null) {
-                foreach (var user in userManager.Users) {
+                foreach (var user in userManager.Users.ToList()) {
                     if (user != null
                         && await userManager.IsInRoleAsync(user, role.Name)) {
                         users.Add(user);
                     }
                 }
+
+                if (users.Count > 0) {
+                    users.Sort((s1, s2) => decimal.Compare(s1.CalcLastMonthUserSales(), s2.CalcLastMonthUserSales()));
+                    users.Reverse();
+
+                    return View(users);
+                }
+                else {
+                    return View(users);
+                }
             }
-
-            users.Sort((s1, s2) => decimal.Compare(s1.CalcLastMonthUserSales(), s2.CalcLastMonthUserSales()));
-            users.Reverse();
-
-            return View(users);
+            else {
+                return View(users);
+            }
         }
 
         // Returns View 
-        public IActionResult ViewSalesList(AppUser u) => View(u);
-
-        // Returns view
         [HttpGet]
-        public IActionResult SalesEntry() => View();
+        public IActionResult ViewSalesList(AppUser u) => View(u);
 
         // Handles Post request
         // Validates sale amount
         // Retruns error if not a number
         // Creates sale and inserts it into the database. Add's reference to current signed user aswell
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> SalesEntry(SaleEntryViewModel model) {
             if (ModelState.IsValid) {
                 AppUser user = await CurrentUser;
@@ -74,46 +80,45 @@ namespace MTRSalesBoard.Controllers
                 return RedirectToAction("Index");
             }
             else {
-                ModelState.AddModelError("", "Sale Amount Required");
-                return View(model);
+                ModelState.AddModelError("", "Something went wrong");
+                return RedirectToAction("Index");
             }
 
         }
 
         // Returns the sales for a user
+        [HttpGet]
         public async Task<IActionResult> ViewSales() {
             AppUser user = await CurrentUser;
-            var salesFromDb = Repository.Sales;
+            var salesFromDb = Repository.Sales.ToList();
             return View("ViewSalesList", user);
         }
 
-        // Returns the view to update a sale
-        [HttpGet]
-        public IActionResult UpdateSale(int id) {
-            Sale sale = Repository.FindSaleById(id);
-            return View(sale);
-        }
 
         // Handles update post request
         // Updates the sale and add it to the DB
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public RedirectToActionResult UpdateSale(int saleid, DateTime date, decimal saleamount) {
-            Sale s = new Sale
-            {
-                SaleID = saleid,
-                SaleDate = date,
-                SaleAmount = saleamount
-            };
+        public IActionResult UpdateSale(UpdateSaleViewModel model) {
+            if (ModelState.IsValid) {
+                Sale s = new Sale
+                {
+                    SaleID = model.Id,
+                    SaleDate = model.Date.Date,
+                    SaleAmount = model.SaleAmount
+                };
 
-            Repository.EditSale(s);
-            return RedirectToAction("index");
+                Repository.EditSale(s);
+                return RedirectToAction("index");
+            }
+            else {
+                return View(model);
+            }
         }
 
         // Deletes sale from the DB
         public RedirectToActionResult DeleteSale(int id) {
             Repository.DeleteSale(id);
-            return RedirectToAction("Index");
+            return RedirectToAction("ViewSales");
         }
     }
 }

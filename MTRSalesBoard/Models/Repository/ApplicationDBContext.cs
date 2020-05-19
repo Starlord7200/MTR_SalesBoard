@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Threading.Tasks;
 
 namespace MTRSalesBoard.Models.Repository
 {
@@ -32,26 +30,27 @@ namespace MTRSalesBoard.Models.Repository
             string email = configuration["Data:AdminUser:Email"];
             string password = configuration["Data:AdminUser:Password"];
             string role = configuration["Data:AdminUser:Role"];
-            string uRole = configuration["Date:AdminUser:Role2"];
+            string uRole = configuration["Data:AdminUser:UserRole"];
 
             if (await userManager.FindByNameAsync(username) == null) {
                 if (await roleManager.FindByNameAsync(role) == null) {
                     await roleManager.CreateAsync(new IdentityRole(role));
-                    if (await roleManager.FindByNameAsync(uRole) == null) {
-                        await roleManager.CreateAsync(new IdentityRole(uRole));
-                    }
-                    AppUser user = new AppUser
-                    {
-                        Name = name,
-                        UserName = username,
-                        Email = email
-                    };
-                    IdentityResult result = await userManager
-                    .CreateAsync(user, password);
-                    if (result.Succeeded) {
-                        await userManager.AddToRoleAsync(user, role);
-                    }
                 }
+                AppUser user = new AppUser
+                {
+                    Name = name,
+                    UserName = username,
+                    Email = email
+                };
+                IdentityResult result = await userManager
+                .CreateAsync(user, password);
+                if (result.Succeeded) {
+                    await userManager.AddToRoleAsync(user, role);
+                }
+            }
+
+            if (await roleManager.FindByNameAsync(uRole) == null) {
+                await roleManager.CreateAsync(new IdentityRole(uRole));
             }
         }
     }
