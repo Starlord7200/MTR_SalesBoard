@@ -45,13 +45,18 @@ namespace MTRSalesBoard
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
                 services.AddDbContext<ApplicationDBContext>(
                     options => options.UseSqlServer(
-                        Configuration["ConnectionStrings:MsSqlConnection"]));
+                        Configuration["ConnectionStrings:DefaultConnection"]));
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) {
                 // For MariaDB
                 services.AddDbContext<ApplicationDBContext>(
                     options => options.UseMySql(
                         Configuration["ConnectionStrings:MySqlConnection"]));
+            }
+            else {
+                services.AddDbContext<ApplicationDBContext>(
+                    options => options.UseSqlServer(
+                        Configuration["ConnectionStrings:DefaultConnection"]));
             }
 
             // Password and user required options
