@@ -42,9 +42,17 @@ namespace MTRSalesBoard
             services.AddTransient<IRepository, Repository>();
 
             // Required to use MsSqlConnection string in the AppSettings.json file
-            services.AddDbContext<ApplicationDBContext>(
-                options => options.UseSqlServer(
-                Configuration["ConnectionStrings:DefaultConnection"]));
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
+                services.AddDbContext<ApplicationDBContext>(
+                    options => options.UseSqlServer(
+                        Configuration["ConnectionStrings:MsSqlConnection"]));
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) {
+                // For MariaDB
+                services.AddDbContext<ApplicationDBContext>(
+                    options => options.UseMySql(
+                        Configuration["ConnectionStrings:MySqlConnection"]));
+            }
 
             // Password and user required options
             services.AddIdentity<AppUser, IdentityRole>(opts =>
