@@ -21,6 +21,8 @@ namespace MTRSalesBoard.Models.Repository
         decimal CalcMonthLastYearSales();
 
         public decimal CalcLastYearSales();
+
+        public decimal CalcTodaySales();
         #endregion
     }
 }

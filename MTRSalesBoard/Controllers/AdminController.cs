@@ -224,6 +224,7 @@ namespace MTRSalesBoard.Controllers
                     ViewBag.CurrentMonthAll = Repository.CalcMonthYearSales(DateTime.Now.Month, DateTime.Now.Year).ToString("c");
                     ViewBag.LastMonthAll = Repository.CalcMonthYearSales(DateTime.Now.AddMonths(-1).Month, DateTime.Now.AddMonths(-1).Year).ToString("c");
                     ViewBag.LastYearMonthAll = Repository.CalcMonthLastYearSales().ToString("c");
+                    ViewBag.TodaySalesCount = Repository.CalcTodaySales().ToString("c");
 
                     return View(users);
                 }

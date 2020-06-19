@@ -143,6 +143,16 @@ namespace MTRSalesBoard.Models.Repository
 
             return amt;
         }
+
+        public decimal CalcTodaySales() {
+            decimal amt = 0m;
+            var dayOfYear = DateTime.Now.DayOfYear;
+            foreach (Sale s in Sales.Where(s => s.SaleDate.DayOfYear == dayOfYear)) {
+                amt += s.SaleAmount;
+            }
+
+            return amt;
+        }
         #endregion
     }
 }

@@ -59,6 +59,7 @@ namespace MTRSalesBoard.Models.Repository
         public decimal CalcMonthYearSales(decimal month, decimal year) { return 0; }
         public decimal CalcMonthLastYearSales() { return 0; }
         public decimal CalcLastYearSales() { return 0; }
+        public decimal CalcTodaySales() { return 0; }
         #endregion
     }
 }
