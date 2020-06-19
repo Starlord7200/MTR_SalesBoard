@@ -19,7 +19,7 @@
                 <th>Sale Date</th>
                 <th colspan="2">Edit Options</th>
             </tr>
-            @for (int j = 0, i = Model.Sales.Count() - 1; i >= 0 || j == 30; i--, j++) {
+            @for (int j = 0, i = Model.Sales.Count() - 1; i >= 0 && j <= 30; i--, j++) {
                 <tr>
                     <td>@Model.Sales[i].SaleAmount.ToString("c")</td>
                     <td>@Model.Sales[i].SaleDate.ToString("MM/dd/yyyy")</td>
@@ -36,7 +36,7 @@
     }
 </div>
 
-@for (int j = 0, i = Model.Sales.Count() - 1; i >= 0 || j == 30; i--, j++) {
+@for (int j = 0, i = Model.Sales.Count() - 1; i >= 0 && j <= 30; i--, j++) {
     string lowerCase = "UpdateModal" + i.ToString();
     <partial name="_UserUpdateSaleModalPartial" model="@new UpdateSaleViewModel { ModalID = lowerCase,
                                                                                    Id = Model.Sales[i].SaleID,

@@ -23,7 +23,7 @@
                 </tr>
             </thead>
             <tbody>
-                @for (int j = 0, i = Model.Sales.Count() - 1; i >= 0 || j == 30; i--, j++) {
+                @for (int j = 0, i = Model.Sales.Count() - 1; i >= 0 && j <= 30; i--, j++) {
 
                     <tr>
                         <td>@Model.Sales[i].SaleAmount.ToString("c")</td>
@@ -42,7 +42,7 @@
     }
 </div>
 
-@for (int j = 0, i = Model.Sales.Count() - 1; i >= 0 || j == 30; i--, j++) {
+@for (int j = 0, i = Model.Sales.Count() - 1; i >= 0 && j <= 30; i--, j++) {
     string lowerCase = "UpdateModal" + i.ToString();
     <partial name="_AdminUpdateSaleModalPartial" model="@new UpdateSaleViewModel { ModalID = lowerCase,
                                                                                    Id = Model.Sales[i].SaleID,
