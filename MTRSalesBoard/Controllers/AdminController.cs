@@ -218,7 +218,7 @@ namespace MTRSalesBoard.Controllers
                 }
 
                 if (users.Count > 0) {
-                    users.Sort((s1, s2) => decimal.Compare(s1.CalcLastMonthUserSales(), s2.CalcLastMonthUserSales()));
+                    users.Sort((s1, s2) => decimal.Compare(s1.CalcMonthToDateUserSales(), s2.CalcMonthToDateUserSales()));
                     users.Reverse();
 
                     ViewBag.CurrentMonthAll = Repository.CalcMonthYearSales(DateTime.Now.Month, DateTime.Now.Year).ToString("c");
