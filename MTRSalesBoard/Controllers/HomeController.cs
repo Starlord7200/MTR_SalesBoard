@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MTRSalesBoard.Infrastructure;
 
 namespace MTRSalesBoard.Controllers
 {
@@ -17,10 +18,6 @@ namespace MTRSalesBoard.Controllers
         IRepository Repository;
         private UserManager<AppUser> userManager;
         private RoleManager<IdentityRole> roleManager;
-
-        // This method gets the current user signed in
-        private Task<AppUser> CurrentUser =>
-            userManager.FindByNameAsync(HttpContext.User.Identity.Name);
 
         // Constructor
         public HomeController(IRepository r, UserManager<AppUser> userMgr, RoleManager<IdentityRole> roleMgr) {
@@ -49,9 +46,7 @@ namespace MTRSalesBoard.Controllers
                 }
 
                 if (users.Count > 0) {
-                    users.Sort((s1, s2) => decimal.Compare(s1.CalcMonthToDateUserSales(), s2.CalcMonthToDateUserSales()));
-                    users.Reverse();
-
+                    SortingClass.SortByMonthToDate(users);
                     return View(users);
                 }
                 else {
@@ -120,5 +115,9 @@ namespace MTRSalesBoard.Controllers
             Repository.DeleteSale(id);
             return RedirectToAction("ViewSales");
         }
+
+        // This method gets the current user signed in
+        private Task<AppUser> CurrentUser =>
+            userManager.FindByNameAsync(HttpContext.User.Identity.Name);
     }
 }

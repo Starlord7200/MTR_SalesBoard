@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MTRSalesBoard.Infrastructure;
 
 namespace MTRSalesBoard.Controllers
 {
@@ -218,8 +219,7 @@ namespace MTRSalesBoard.Controllers
                 }
 
                 if (users.Count > 0) {
-                    users.Sort((s1, s2) => decimal.Compare(s1.CalcMonthToDateUserSales(), s2.CalcMonthToDateUserSales()));
-                    users.Reverse();
+                    SortingClass.SortByMonthToDate(users);
 
                     ViewBag.CurrentMonthAll = Repository.CalcMonthYearSales(DateTime.Now.Month, DateTime.Now.Year).ToString("c");
                     ViewBag.LastMonthAll = Repository.CalcMonthYearSales(DateTime.Now.AddMonths(-1).Month, DateTime.Now.AddMonths(-1).Year).ToString("c");
