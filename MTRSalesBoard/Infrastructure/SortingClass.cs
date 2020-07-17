@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace MTRSalesBoard.Infrastructure
 {
+    /// <summary>
+    /// This class is used to sort lists of AppUsers
+    /// </summary>
     public class SortingClass
     {
         //Sorts list by who has the highest sales for the current day
