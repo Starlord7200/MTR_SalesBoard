@@ -1,5 +1,5 @@
-﻿<th scope="col">Name <span class="fa fa-arrow-alt-circle-up"></span></th>
-<th scope="col">Today <span class="fa fa-arrow-alt-circle-up"></span></th>
+﻿<th scope="col">Name</th>
+<th scope="col">Today <a asp-controller="@ViewBag.Controller" asp-action="@ViewBag.Action" asp-route-title="Today"><span class="@((ViewBag.SortedBy == "Today") ? "fa fa-arrow-alt-circle-down" : "fa fa-arrow-alt-circle-up")"></span></a></th>
 <th scope="col">Current Week <span class="fa fa-arrow-alt-circle-up"></span></th>
 <th scope="col">Last Week <span class="fa fa-arrow-alt-circle-up"></span></th>
 <th scope="col">Two Weeks Ago <span class="fa fa-arrow-alt-circle-up"></span></th>
