@@ -1,9 +1,9 @@
 ﻿<th scope="col">Name</th>
-<th scope="col">Today</th>
-<th scope="col">Current Week</th>
-<th scope="col">Last Week</th>
-<th scope="col">Two Weeks Ago</th>
-<th scope="col">Three Weeks Ago</th>
-<th scope="col">Four Weeks Ago</th>
-<th scope="col">Current Month</th>
-<th scope="col">Year To Date</th>
+<th scope="col"><a class="text-decoration-none text-white @((ViewBag.SortedBy == "Today") ? "text-primary" : "")" asp-controller="@ViewBag.Controller" asp-action="@ViewBag.Action" asp-route-title="Today">Today</a></th>
+<th scope="col"><a class="text-decoration-none text-white @((ViewBag.SortedBy == "cWeek") ? "text-primary" : "")" asp-controller="@ViewBag.Controller" asp-action="@ViewBag.Action" asp-route-title="cWeek">Current Week</a></th>
+<th scope="col"><a class="text-decoration-none text-white @((ViewBag.SortedBy == "lWeek") ? "text-primary" : "")" asp-controller="@ViewBag.Controller" asp-action="@ViewBag.Action" asp-route-title="lWeek">Last Week</a></th>
+<th scope="col"><a class="text-decoration-none text-white @((ViewBag.SortedBy == "2Week") ? "text-primary" : "")" asp-controller="@ViewBag.Controller" asp-action="@ViewBag.Action" asp-route-title="2Week">Two Weeks Ago</a></th>
+<th scope="col"><a class="text-decoration-none text-white @((ViewBag.SortedBy == "3Week") ? "text-primary" : "")" asp-controller="@ViewBag.Controller" asp-action="@ViewBag.Action" asp-route-title="3Week">Three Weeks Ago</a></th>
+<th scope="col"><a class="text-decoration-none text-white @((ViewBag.SortedBy == "4Week") ? "text-primary" : "")" asp-controller="@ViewBag.Controller" asp-action="@ViewBag.Action" asp-route-title="4Week">Four Weeks Ago</a></th>
+<th scope="col"><a class="text-decoration-none text-white @((ViewBag.SortedBy == "Month") ? "text-primary" : "")" asp-controller="@ViewBag.Controller" asp-action="@ViewBag.Action" asp-route-title="Month">Current Month</a></th>
+<th scope="col"><a class="text-decoration-none text-white @((ViewBag.SortedBy == "YTD") ? "text-primary" : "")" asp-controller="@ViewBag.Controller" asp-action="@ViewBag.Action" asp-route-title="YTD">Year To Date</a></th>

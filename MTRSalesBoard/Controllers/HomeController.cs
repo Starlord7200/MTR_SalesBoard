@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MTRSalesBoard.Infrastructure;
 
 namespace MTRSalesBoard.Controllers
 {
@@ -17,10 +18,6 @@ namespace MTRSalesBoard.Controllers
         IRepository Repository;
         private UserManager<AppUser> userManager;
         private RoleManager<IdentityRole> roleManager;
-
-        // This method gets the current user signed in
-        private Task<AppUser> CurrentUser =>
-            userManager.FindByNameAsync(HttpContext.User.Identity.Name);
 
         // Constructor
         public HomeController(IRepository r, UserManager<AppUser> userMgr, RoleManager<IdentityRole> roleMgr) {
@@ -49,9 +46,10 @@ namespace MTRSalesBoard.Controllers
                 }
 
                 if (users.Count > 0) {
-                    users.Sort((s1, s2) => decimal.Compare(s1.CalcMonthToDateUserSales(), s2.CalcMonthToDateUserSales()));
-                    users.Reverse();
+                    SortingClass.SortByMonthToDate(users);
 
+                    ViewBag.Controller = "Home";
+                    ViewBag.Action = "IndexSort";
                     return View(users);
                 }
                 else {
@@ -60,6 +58,71 @@ namespace MTRSalesBoard.Controllers
             }
             else {
                 return View(users);
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> IndexSort(string title) {
+            List<Sale> sales = Repository.Sales.ToList();
+            List<AppUser> users = new List<AppUser>();
+
+            IdentityRole role = await roleManager.FindByNameAsync("User");
+
+            if (role != null) {
+                foreach (var user in userManager.Users.ToList()) {
+                    if (user != null
+                        && await userManager.IsInRoleAsync(user, role.Name)) {
+                        users.Add(user);
+                    }
+                }
+
+                if (users.Count > 0) {
+                    if (title == "Today") {
+                        ViewBag.SortedBy = title;
+                        SortingClass.SortByToday(users);
+                    }
+                    else if (title == "cWeek") {
+                        ViewBag.SortedBy = title;
+                        SortingClass.SortByCurrentWeek(users);
+                    }
+                    else if (title == "lWeek") {
+                        ViewBag.SortedBy = title;
+                        SortingClass.SortByLastWeek(users);
+                    }
+                    else if (title == "2Week") {
+                        ViewBag.SortedBy = title;
+                        SortingClass.SortByLastTwoWeeks(users);
+                    }
+                    else if (title == "3Week") {
+                        ViewBag.SortedBy = title;
+                        SortingClass.SortByLastThreeWeeks(users);
+                    }
+                    else if (title == "4Week") {
+                        ViewBag.SortedBy = title;
+                        SortingClass.SortByLastFourWeeks(users);
+                    }
+                    else if (title == "Month") {
+                        ViewBag.SortedBy = title;
+                        SortingClass.SortByMonthToDate(users);
+                    }
+                    else if (title == "YTD") {
+                        ViewBag.SortedBy = title;
+                        SortingClass.SortByYearToDate(users);
+                    }
+                    else
+                        SortingClass.SortByMonthToDate(users);
+
+
+                    ViewBag.Controller = "Home";
+                    ViewBag.Action = "IndexSort";
+                    return View("index", users);
+                }
+                else {
+                    return View("index", users);
+                }
+            }
+            else {
+                return View("index", users);
             }
         }
 
@@ -120,5 +183,9 @@ namespace MTRSalesBoard.Controllers
             Repository.DeleteSale(id);
             return RedirectToAction("ViewSales");
         }
+
+        // This method gets the current user signed in
+        private Task<AppUser> CurrentUser =>
+            userManager.FindByNameAsync(HttpContext.User.Identity.Name);
     }
 }
