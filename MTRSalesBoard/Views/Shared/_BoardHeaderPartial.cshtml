@@ -1,9 +1,9 @@
 ﻿<th scope="col">Name</th>
 <th scope="col">Today <a asp-controller="@ViewBag.Controller" asp-action="@ViewBag.Action" asp-route-title="Today"><span class="@((ViewBag.SortedBy == "Today") ? "fa fa-arrow-alt-circle-down" : "fa fa-arrow-alt-circle-up")"></span></a></th>
-<th scope="col">Current Week <span class="fa fa-arrow-alt-circle-up"></span></th>
-<th scope="col">Last Week <span class="fa fa-arrow-alt-circle-up"></span></th>
-<th scope="col">Two Weeks Ago <span class="fa fa-arrow-alt-circle-up"></span></th>
-<th scope="col">Three Weeks Ago <span class="fa fa-arrow-alt-circle-up"></span></th>
-<th scope="col">Four Weeks Ago <span class="fa fa-arrow-alt-circle-up"></span></th>
-<th scope="col">Current Month <span class="fa fa-arrow-alt-circle-down"></span></th>
-<th scope="col">Year To Date <span class="fa fa-arrow-alt-circle-up"></span></th>
+<th scope="col">Current Week <a asp-controller="@ViewBag.Controller" asp-action="@ViewBag.Action" asp-route-title="cWeek"><span class="@((ViewBag.SortedBy == "cWeek") ? "fa fa-arrow-alt-circle-down" : "fa fa-arrow-alt-circle-up")"></span></a></th>
+<th scope="col">Last Week <a asp-controller="@ViewBag.Controller" asp-action="@ViewBag.Action" asp-route-title="lWeek"><span class="@((ViewBag.SortedBy == "lWeek") ? "fa fa-arrow-alt-circle-down" : "fa fa-arrow-alt-circle-up")"></span></a></th>
+<th scope="col">Two Weeks Ago <a asp-controller="@ViewBag.Controller" asp-action="@ViewBag.Action" asp-route-title="2Week"><span class="@((ViewBag.SortedBy == "2Week") ? "fa fa-arrow-alt-circle-down" : "fa fa-arrow-alt-circle-up")"></span></a></th>
+<th scope="col">Three Weeks Ago <a asp-controller="@ViewBag.Controller" asp-action="@ViewBag.Action" asp-route-title="3Week"><span class="@((ViewBag.SortedBy == "3Week") ? "fa fa-arrow-alt-circle-down" : "fa fa-arrow-alt-circle-up")"></span></a></th>
+<th scope="col">Four Weeks Ago <a asp-controller="@ViewBag.Controller" asp-action="@ViewBag.Action" asp-route-title="4Week"><span class="@((ViewBag.SortedBy == "4Week") ? "fa fa-arrow-alt-circle-down" : "fa fa-arrow-alt-circle-up")"></span></a></th>
+<th scope="col">Current Month <a asp-controller="@ViewBag.Controller" asp-action="@ViewBag.Action" asp-route-title="Month"><span class="@((ViewBag.SortedBy == "Month") ? "fa fa-arrow-alt-circle-down" : "fa fa-arrow-alt-circle-up")"></span></a></th>
+<th scope="col">Year To Date <a asp-controller="@ViewBag.Controller" asp-action="@ViewBag.Action" asp-route-title="YTD"><span class="@((ViewBag.SortedBy == "YTD") ? "fa fa-arrow-alt-circle-down" : "fa fa-arrow-alt-circle-up")"></span></a></th>
