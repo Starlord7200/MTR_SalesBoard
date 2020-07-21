@@ -112,7 +112,6 @@ namespace MTRSalesBoard.Controllers
                     else
                         SortingClass.SortByMonthToDate(users);
 
-
                     ViewBag.Controller = "Home";
                     ViewBag.Action = "IndexSort";
                     return View("index", users);
