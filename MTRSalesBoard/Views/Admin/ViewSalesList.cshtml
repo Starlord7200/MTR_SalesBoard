@@ -5,7 +5,7 @@
 }
 
 <h1 class="text-center">Sales for @Model.Name</h1>
-<h4 class="text-center text-muted">(last 30 sales)</h4>
+<h4 class="text-center text-muted">(Most Recent to Oldest)</h4>
 
 <div class="text-center">
     @if (Model.Sales.Count() == 0) {
@@ -23,7 +23,7 @@
                 </tr>
             </thead>
             <tbody>
-                @for (int j = 0, i = Model.Sales.Count() - 1; i >= 0 && j <= 30; i--, j++) {
+                @for (int j = 0, i = Model.Sales.Count() - 1; i >= 0; i--) {
 
                     <tr>
                         <td>@Model.Sales[i].SaleAmount.ToString("c")</td>
@@ -42,7 +42,7 @@
     }
 </div>
 
-@for (int j = 0, i = Model.Sales.Count() - 1; i >= 0 && j <= 30; i--, j++) {
+@for (int j = 0, i = Model.Sales.Count() - 1; i >= 0; i--) {
     string lowerCase = "UpdateModal" + i.ToString();
     <partial name="_AdminUpdateSaleModalPartial" model="@new UpdateSaleViewModel { ModalID = lowerCase,
                                                                                    Id = Model.Sales[i].SaleID,
