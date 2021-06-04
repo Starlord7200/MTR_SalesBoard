@@ -147,7 +147,8 @@ namespace MTRSalesBoard.Models.Repository
         public decimal CalcTodaySales() {
             decimal amt = 0m;
             var dayOfYear = DateTime.Now.DayOfYear;
-            foreach (Sale s in Sales.Where(s => s.SaleDate.DayOfYear == dayOfYear)) {
+            var currentYear = DateTime.Now.Year;
+            foreach (Sale s in Sales.Where(s => s.SaleDate.DayOfYear == dayOfYear && s.SaleDate.Year == currentYear)) {
                 amt += s.SaleAmount;
             }
 
