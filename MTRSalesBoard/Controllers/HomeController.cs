@@ -118,7 +118,7 @@ namespace MTRSalesBoard.Controllers
         [HttpPost]
         public async Task<IActionResult> SalesEntry(SaleEntryViewModel model) {
             if (ModelState.IsValid) {
-                AppUser user = await CurrentUser;
+                AppUser user = await userManager.FindByNameAsync(HttpContext.User.Identity.Name);
                 Sale s = new Sale() { SaleAmount = model.SaleAmount, SaleDate = DateTime.Today, Name = user };
                 Repository.AddSale(s, user);
                 return RedirectToAction("Index");
@@ -133,7 +133,7 @@ namespace MTRSalesBoard.Controllers
         // Returns the sales for a user
         [HttpGet]
         public async Task<IActionResult> ViewSales() {
-            AppUser user = await CurrentUser;
+            AppUser user = await userManager.FindByNameAsync(HttpContext.User.Identity.Name);
             var salesFromDb = Repository.Sales.ToList();
             return View("ViewSalesList", user);
         }
@@ -164,9 +164,5 @@ namespace MTRSalesBoard.Controllers
             Repository.DeleteSale(id);
             return RedirectToAction("ViewSales");
         }
-
-        // This method gets the current user signed in
-        private Task<AppUser> CurrentUser =>
-            userManager.FindByNameAsync(HttpContext.User.Identity.Name);
     }
 }
