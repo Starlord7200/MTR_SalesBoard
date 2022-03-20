@@ -165,17 +165,7 @@ namespace MTRSalesBoard.Controllers
         // Returns a table of users currently in the user role
         [HttpGet]
         public async Task<IActionResult> EnterSaleUser() {
-            List<AppUser> users = new List<AppUser>();
-
-            IdentityRole role = await roleManager.FindByNameAsync("User");
-            if (role != null) {
-                foreach (var user in userManager.Users.ToList()) {
-                    if (user != null
-                        && await userManager.IsInRoleAsync(user, role.Name)) {
-                        users.Add(user);
-                    }
-                }
-            }
+            List<AppUser> users = await new UserListGeneration().GenerateAppUserList(roleManager, userManager);
             return View(users);
         }
 
@@ -207,35 +197,23 @@ namespace MTRSalesBoard.Controllers
         [HttpGet]
         public async Task<IActionResult> Board() {
             List<Sale> sales = Repository.Sales.ToList();
-            List<AppUser> users = new List<AppUser>();
+            List<AppUser> users = await new UserListGeneration().GenerateAppUserList(roleManager, userManager);
 
-            IdentityRole role = await roleManager.FindByNameAsync("User");
-            if (role != null) {
-                foreach (var user in userManager.Users.ToList()) {
-                    if (user != null
-                        && await userManager.IsInRoleAsync(user, role.Name)) {
-                        users.Add(user);
-                    }
-                }
+            if (users.Count > 0)
+            {
+                SortingClass.SortByMonthToDate(users);
 
-                if (users.Count > 0) {
-                    SortingClass.SortByMonthToDate(users);
+                ViewBag.Controller = "Admin";
+                ViewBag.Action = "BoardSort";
+                ViewBag.CurrentMonthAll = Repository.CalcMonthYearSales(DateTime.Now.Month, DateTime.Now.Year).ToString("c");
+                ViewBag.LastMonthAll = Repository.CalcMonthYearSales(DateTime.Now.AddMonths(-1).Month, DateTime.Now.AddMonths(-1).Year).ToString("c");
+                ViewBag.LastYearMonthAll = Repository.CalcMonthLastYearSales().ToString("c");
+                ViewBag.TodaySalesCount = Repository.CalcTodaySales().ToString("c");
 
-                    ViewBag.Controller = "Admin";
-                    ViewBag.Action = "BoardSort";
-                    ViewBag.CurrentMonthAll = Repository.CalcMonthYearSales(DateTime.Now.Month, DateTime.Now.Year).ToString("c");
-                    ViewBag.LastMonthAll = Repository.CalcMonthYearSales(DateTime.Now.AddMonths(-1).Month, DateTime.Now.AddMonths(-1).Year).ToString("c");
-                    ViewBag.LastYearMonthAll = Repository.CalcMonthLastYearSales().ToString("c");
-                    ViewBag.TodaySalesCount = Repository.CalcTodaySales().ToString("c");
-
-                    return View(users);
-                }
-                else {
-                    return View(users);
-                }
-
+                return View(users);
             }
-            else {
+            else
+            {
                 return View(users);
             }
         }
@@ -244,72 +222,65 @@ namespace MTRSalesBoard.Controllers
         // Sorts users based on the sales total from last months
         // Returns the Adminboard view
         [HttpGet]
-        public async Task<IActionResult> BoardSort(string title) {
+        public async Task<IActionResult> BoardSort(string title)
+        {
             List<Sale> sales = Repository.Sales.ToList();
-            List<AppUser> users = new List<AppUser>();
+            List<AppUser> users = await new UserListGeneration().GenerateAppUserList(roleManager, userManager);
 
-            IdentityRole role = await roleManager.FindByNameAsync("User");
-            if (role != null) {
-                foreach (var user in userManager.Users.ToList()) {
-                    if (user != null
-                        && await userManager.IsInRoleAsync(user, role.Name)) {
-                        users.Add(user);
-                    }
+            if (users.Count > 0)
+            {
+                if (title == "Today")
+                {
+                    ViewBag.SortedBy = title;
+                    SortingClass.SortByToday(users);
                 }
-
-                if (users.Count > 0) {
-                    if (title == "Today") {
-                        ViewBag.SortedBy = title;
-                        SortingClass.SortByToday(users);
-                    }
-                    else if (title == "cWeek") {
-                        ViewBag.SortedBy = title;
-                        SortingClass.SortByCurrentWeek(users);
-                    }
-                    else if (title == "lWeek") {
-                        ViewBag.SortedBy = title;
-                        SortingClass.SortByLastWeek(users);
-                    }
-                    else if (title == "2Week") {
-                        ViewBag.SortedBy = title;
-                        SortingClass.SortByLastTwoWeeks(users);
-                    }
-                    else if (title == "3Week") {
-                        ViewBag.SortedBy = title;
-                        SortingClass.SortByLastThreeWeeks(users);
-                    }
-                    else if (title == "4Week") {
-                        ViewBag.SortedBy = title;
-                        SortingClass.SortByLastFourWeeks(users);
-                    }
-                    else if (title == "Month") {
-                        ViewBag.SortedBy = title;
-                        SortingClass.SortByMonthToDate(users);
-                    }
-                    else if (title == "YTD") {
-                        ViewBag.SortedBy = title;
-                        SortingClass.SortByYearToDate(users);
-                    }
-                    else
-                        SortingClass.SortByMonthToDate(users);
-
-                    ViewBag.Controller = "Admin";
-                    ViewBag.Action = "BoardSort";
-                    ViewBag.CurrentMonthAll = Repository.CalcMonthYearSales(DateTime.Now.Month, DateTime.Now.Year).ToString("c");
-                    ViewBag.LastMonthAll = Repository.CalcMonthYearSales(DateTime.Now.AddMonths(-1).Month, DateTime.Now.AddMonths(-1).Year).ToString("c");
-                    ViewBag.LastYearMonthAll = Repository.CalcMonthLastYearSales().ToString("c");
-                    ViewBag.TodaySalesCount = Repository.CalcTodaySales().ToString("c");
-
-                    return View("Board", users);
+                else if (title == "cWeek")
+                {
+                    ViewBag.SortedBy = title;
+                    SortingClass.SortByCurrentWeek(users);
                 }
-                else {
-                    return View("Board", users);
+                else if (title == "lWeek")
+                {
+                    ViewBag.SortedBy = title;
+                    SortingClass.SortByLastWeek(users);
                 }
+                else if (title == "2Week")
+                {
+                    ViewBag.SortedBy = title;
+                    SortingClass.SortByLastTwoWeeks(users);
+                }
+                else if (title == "3Week")
+                {
+                    ViewBag.SortedBy = title;
+                    SortingClass.SortByLastThreeWeeks(users);
+                }
+                else if (title == "4Week")
+                {
+                    ViewBag.SortedBy = title;
+                    SortingClass.SortByLastFourWeeks(users);
+                }
+                else if (title == "Month")
+                {
+                    ViewBag.SortedBy = title;
+                    SortingClass.SortByMonthToDate(users);
+                }
+                else if (title == "YTD")
+                {
+                    ViewBag.SortedBy = title;
+                    SortingClass.SortByYearToDate(users);
+                }
+                else
+                    SortingClass.SortByMonthToDate(users);
 
+                ViewBag.Controller = "Admin";
+                ViewBag.Action = "BoardSort";
+                ViewBag.CurrentMonthAll = Repository.CalcMonthYearSales(DateTime.Now.Month, DateTime.Now.Year).ToString("c");
+                ViewBag.LastMonthAll = Repository.CalcMonthYearSales(DateTime.Now.AddMonths(-1).Month, DateTime.Now.AddMonths(-1).Year).ToString("c");
+                ViewBag.LastYearMonthAll = Repository.CalcMonthLastYearSales().ToString("c");
+                ViewBag.TodaySalesCount = Repository.CalcTodaySales().ToString("c");
             }
-            else {
-                return View(users);
-            }
+
+            return View("Board", users);
         }
 
         // Returns a table full of people that have made a sale in the user role
