@@ -76,6 +76,8 @@ namespace MTRSalesBoard.Models.Repository
                     context.SaveChanges();
                 }
             }
+
+            context.Users.Remove(u);
             context.SaveChanges();
         }
 
