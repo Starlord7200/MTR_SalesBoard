@@ -13,16 +13,13 @@
         <table class="table table-striped" style="width:100%">
             <thead>
                 <tr class="thead-dark">
-                    <th>Username</th>
                     <th>Name</th>
                 </tr>
-
             </thead>
             <tbody>
                 @foreach (AppUser u in Model) {
                     <tr>
-                        <td><a href="#" data-toggle="modal" data-target="#@u.UserName">@u.UserName</a></td>
-                        <td>@u.Name</td>
+                        <td><a href="#" data-toggle="modal" data-target="#@u.UserName">@u.Name</a></td>
                     </tr>
                 }
             </tbody>

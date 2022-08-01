@@ -45,13 +45,13 @@ namespace MTRSalesBoard.Models.Repository
         // Adds a sale to the DB
         // Adds sale to user sale list
         public void AddSale(Sale s, AppUser User) {
-            this.context.Sales.Add(s);
-            this.context.SaveChanges();
+            context.Sales.Add(s);
+            context.SaveChanges();
 
             User.Sales.Add(s);
-            this.context.Update(User);
-            this.context.SaveChanges();
-            this.context.Dispose();
+            context.Update(User);
+            context.SaveChanges();
+            context.Dispose();
         }
 
         // Updates the sale in the DB
@@ -76,7 +76,14 @@ namespace MTRSalesBoard.Models.Repository
                     context.SaveChanges();
                 }
             }
+
+            context.Users.Remove(u);
             context.SaveChanges();
+        }
+
+        public List<Sale> GetUnknownSales()
+        {
+            return context.Sales.Where(s => s.Name == null).ToList();
         }
 
         // Deletes a sale from the DB

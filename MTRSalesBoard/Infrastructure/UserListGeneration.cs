@@ -1,13 +1,60 @@
-﻿using MTRSalesBoard.Models;
+﻿using Microsoft.AspNetCore.Identity;
+using MTRSalesBoard.Models;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MTRSalesBoard.Infrastructure
 {
-    /// <summary>
-    /// This class is used to sort lists of AppUsers
-    /// </summary>
+    public class UserListGeneration
+    {
+        public async Task<List<AppUser>> GenerateAppUserList(RoleManager<IdentityRole> roleManager, UserManager<AppUser> userManager)
+        {
+            List<AppUser> users = new List<AppUser>();
+            IdentityRole role = await roleManager.FindByNameAsync("User");
+            if (role != null)
+            {
+                foreach (var user in userManager.Users.ToList())
+                {
+                    if (user != null
+                        && await userManager.IsInRoleAsync(user, role.Name))
+                    {
+                        users.Add(user);
+                    }
+                }
+            }
+
+            return users;
+        }
+    }
+
     public class SortingClass
     {
+        public static List<AppUser> ListSorter(List<AppUser> users, string title = "")
+        {
+            switch (title)
+            {
+                case "Today":
+                    return SortByToday(users);
+                case "cWeek":
+                    return SortByCurrentWeek(users);
+                case "lWeek":
+                    return SortByLastWeek(users);
+                case "2Week":
+                    return SortByLastTwoWeeks(users);         
+                case "3Week":
+                    return SortByLastThreeWeeks(users);                    
+                case "4Week":
+                    return SortByLastFourWeeks(users);                    
+                case "Month":
+                    return SortByMonthToDate(users);                    
+                case "YTD":
+                    return SortByYearToDate(users);                    
+                default:
+                    return SortByMonthToDate(users);
+            }
+        }
+
         //Sorts list by who has the highest sales for the current day
         public static List<AppUser> SortByToday(List<AppUser> users) {
             users.Sort((s1, s2) => decimal.Compare(s1.CalcTodaySalesAmt(), s2.CalcTodaySalesAmt()));
