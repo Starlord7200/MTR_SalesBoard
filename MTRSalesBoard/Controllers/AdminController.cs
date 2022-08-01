@@ -71,7 +71,6 @@ namespace MTRSalesBoard.Controllers
         // If it succeeds, user is deleted
         [HttpPost]
         public async Task<IActionResult> Delete(string id) {
-            var salesFromDb = Repository.Sales.ToList();
             AppUser user = await userManager.FindByIdAsync(id);
             if (user != null) {
                 try {
@@ -229,48 +228,7 @@ namespace MTRSalesBoard.Controllers
 
             if (users.Count > 0)
             {
-                if (title == "Today")
-                {
-                    ViewBag.SortedBy = title;
-                    SortingClass.SortByToday(users);
-                }
-                else if (title == "cWeek")
-                {
-                    ViewBag.SortedBy = title;
-                    SortingClass.SortByCurrentWeek(users);
-                }
-                else if (title == "lWeek")
-                {
-                    ViewBag.SortedBy = title;
-                    SortingClass.SortByLastWeek(users);
-                }
-                else if (title == "2Week")
-                {
-                    ViewBag.SortedBy = title;
-                    SortingClass.SortByLastTwoWeeks(users);
-                }
-                else if (title == "3Week")
-                {
-                    ViewBag.SortedBy = title;
-                    SortingClass.SortByLastThreeWeeks(users);
-                }
-                else if (title == "4Week")
-                {
-                    ViewBag.SortedBy = title;
-                    SortingClass.SortByLastFourWeeks(users);
-                }
-                else if (title == "Month")
-                {
-                    ViewBag.SortedBy = title;
-                    SortingClass.SortByMonthToDate(users);
-                }
-                else if (title == "YTD")
-                {
-                    ViewBag.SortedBy = title;
-                    SortingClass.SortByYearToDate(users);
-                }
-                else
-                    SortingClass.SortByMonthToDate(users);
+                SortingClass.ListSorter(users, title);
 
                 ViewBag.Controller = "Admin";
                 ViewBag.Action = "BoardSort";
