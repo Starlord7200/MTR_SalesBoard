@@ -20,19 +20,6 @@
                 <th>Sale Date</th>
                 <th colspan="2">Edit Options</th>
             </tr>
-            @*@for (int j = 0, i = Model.Sales.Count() - 1; i >= 0 && j <= 30; i--, j++) {
-                    <tr>
-                        <td>@Model.Sales[i].SaleAmount.ToString("c")</td>
-                        <td>@Model.Sales[i].SaleDate.ToString("MM/dd/yyyy")</td>
-                        <td><a href="#" data-toggle="modal" data-target="@("#UpdateModal" + i.ToString())">Update</a></td>
-                        <td>
-                            <a class="text-decoration-none" asp-action="DeleteSale" asp-route-id="@Model.Sales[i].SaleID"
-                               onclick="return confirm('Are you sure you want to delete this sale?')">
-                                Delete
-                            </a>
-                        </td>
-                    </tr>
-                }*@
             @for (int j = 0, i = Model.Sales.Count() - 1; i >= 0; i--) {
                 <tr>
                     <td>@Model.Sales[i].SaleAmount.ToString("c")</td>
@@ -50,13 +37,6 @@
     }
 </div>
 
-@*@for (int j = 0, i = Model.Sales.Count() - 1; i >= 0 && j <= 30; i--, j++) {
-        string lowerCase = "UpdateModal" + i.ToString();
-        <partial name="_UserUpdateSaleModalPartial" model="@new UpdateSaleViewModel { ModalID = lowerCase,
-                                                                                       Id = Model.Sales[i].SaleID,
-                                                                                       SaleAmount = Model.Sales[i].SaleAmount,
-                                                                                       Date = Model.Sales[i].SaleDate }" />
-    }*@
 @for (int j = 0, i = Model.Sales.Count() - 1; i >= 0; i--) {
     string lowerCase = "UpdateModal" + i.ToString();
     <partial name="_UserUpdateSaleModalPartial" model="@new UpdateSaleViewModel { ModalID = lowerCase,
