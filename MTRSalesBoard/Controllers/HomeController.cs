@@ -15,9 +15,9 @@ namespace MTRSalesBoard.Controllers
     public class HomeController : Controller
     {
         // Variables
-        IRepository Repository;
-        private UserManager<AppUser> userManager;
-        private RoleManager<IdentityRole> roleManager;
+        readonly IRepository Repository;
+        private readonly UserManager<AppUser> userManager;
+        private readonly RoleManager<IdentityRole> roleManager;
 
         // Constructor
         public HomeController(IRepository r, UserManager<AppUser> userMgr, RoleManager<IdentityRole> roleMgr) {
@@ -78,7 +78,7 @@ namespace MTRSalesBoard.Controllers
         public async Task<IActionResult> SalesEntry(SaleEntryViewModel model) {
             if (ModelState.IsValid) {
                 AppUser user = await userManager.FindByNameAsync(HttpContext.User.Identity.Name);
-                Sale s = new Sale() { SaleAmount = model.SaleAmount, SaleDate = DateTime.Today, Name = user };
+                Sale s = new () { SaleAmount = model.SaleAmount, SaleDate = DateTime.Today, Name = user };
                 Repository.AddSale(s, user);
                 return RedirectToAction("Index");
             }
@@ -103,7 +103,7 @@ namespace MTRSalesBoard.Controllers
         [HttpPost]
         public IActionResult UpdateSale(UpdateSaleViewModel model) {
             if (ModelState.IsValid) {
-                Sale s = new Sale
+                Sale s = new ()
                 {
                     SaleID = model.Id,
                     SaleDate = model.Date.Date,
