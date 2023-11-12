@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29806.167
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MTRSalesBoard", "MTRSalesBoard\MTRSalesBoard.csproj", "{8ED55310-F804-4876-8ABF-F67791321695}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MTRSalesBoard", "MTRSalesBoard\MTRSalesBoard.csproj", "{8ED55310-F804-4876-8ABF-F67791321695}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MTRSalesBoardTests", "MTRSalesBoardTests\MTRSalesBoardTests.csproj", "{46ABD93A-2CFB-4DBC-9EDB-D6CD196D2549}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MTRSalesBoardTests", "MTRSalesBoardTests\MTRSalesBoardTests.csproj", "{46ABD93A-2CFB-4DBC-9EDB-D6CD196D2549}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesBoard2.0", "SalesBoard2.0\SalesBoard2.0.csproj", "{51CF8BDB-4859-44F7-9891-8F46BF9CE3E2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{46ABD93A-2CFB-4DBC-9EDB-D6CD196D2549}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46ABD93A-2CFB-4DBC-9EDB-D6CD196D2549}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46ABD93A-2CFB-4DBC-9EDB-D6CD196D2549}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51CF8BDB-4859-44F7-9891-8F46BF9CE3E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51CF8BDB-4859-44F7-9891-8F46BF9CE3E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51CF8BDB-4859-44F7-9891-8F46BF9CE3E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51CF8BDB-4859-44F7-9891-8F46BF9CE3E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
