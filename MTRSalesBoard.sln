@@ -7,6 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MTRSalesBoard", "MTRSalesBo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MTRSalesBoardTests", "MTRSalesBoardTests\MTRSalesBoardTests.csproj", "{46ABD93A-2CFB-4DBC-9EDB-D6CD196D2549}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "V1", "V1", "{EB795CA0-095D-4749-8985-9718130B2226}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "V2", "V2", "{72D6FBFF-BCF5-4130-902E-82D2B0271AD2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesBoardBlazor", "SalesBoardBlazor\SalesBoardBlazor.csproj", "{D96A0169-4C7C-4CD1-B29D-6D18CF3CCCB3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,9 +27,18 @@ Global
 		{46ABD93A-2CFB-4DBC-9EDB-D6CD196D2549}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46ABD93A-2CFB-4DBC-9EDB-D6CD196D2549}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46ABD93A-2CFB-4DBC-9EDB-D6CD196D2549}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D96A0169-4C7C-4CD1-B29D-6D18CF3CCCB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D96A0169-4C7C-4CD1-B29D-6D18CF3CCCB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D96A0169-4C7C-4CD1-B29D-6D18CF3CCCB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D96A0169-4C7C-4CD1-B29D-6D18CF3CCCB3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8ED55310-F804-4876-8ABF-F67791321695} = {EB795CA0-095D-4749-8985-9718130B2226}
+		{46ABD93A-2CFB-4DBC-9EDB-D6CD196D2549} = {EB795CA0-095D-4749-8985-9718130B2226}
+		{D96A0169-4C7C-4CD1-B29D-6D18CF3CCCB3} = {72D6FBFF-BCF5-4130-902E-82D2B0271AD2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9B76125A-8674-4B28-80DC-57609ADC3528}
